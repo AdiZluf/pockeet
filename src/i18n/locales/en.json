@@ -53,7 +53,18 @@
     "saveFailedTitle": "Couldn't save receipt",
     "saveFailedBody": "Please try again.",
     "noPages": "No photos in this session.",
-    "backToCamera": "Back to camera"
+    "backToCamera": "Back to camera",
+    "editImage": "Edit image",
+    "editPageHint": "Opens crop editor for this page",
+    "pageThumbA11y": "Page {{page}} of {{total}}",
+    "cropTitle": "Crop receipt",
+    "cropHint": "Pinch to zoom and drag to position the receipt inside the frame.",
+    "cropFrameLabel": "Crop area",
+    "cropApply": "Use crop",
+    "cropApplying": "Applying…",
+    "cropFailedTitle": "Couldn't crop image",
+    "cropFailedBody": "Please try again.",
+    "cropMissingImage": "This page is no longer in the session."
   },
   "processing": {
     "screenLabel": "Receipt processing",

@@ -139,10 +139,13 @@ export function CaptureCameraView() {
 
   return (
     <View className="flex-1 bg-black">
-      <CameraView ref={cameraRef} style={{ flex: 1 }} facing="back">
+      <CameraView ref={cameraRef} style={{ flex: 1 }} facing="back" />
+
+      <View className="absolute inset-0" pointerEvents="box-none">
         <View
           className="absolute left-0 right-0 top-0 flex-row items-center justify-between px-5"
           style={{ paddingTop: insets.top + 8 }}
+          pointerEvents="box-none"
         >
           <Pressable
             accessibilityRole="button"
@@ -170,7 +173,7 @@ export function CaptureCameraView() {
         </View>
 
         {images.length > 0 ? (
-          <View className="absolute bottom-36 left-0 right-0">
+          <View className="absolute bottom-36 left-0 right-0" pointerEvents="box-none">
             <ThumbnailStrip
               images={images}
               selectedIndex={selectedIndex}
@@ -182,6 +185,7 @@ export function CaptureCameraView() {
         <View
           className="absolute bottom-0 left-0 right-0 flex-row items-center justify-between px-10"
           style={{ paddingBottom: insets.bottom + 24 }}
+          pointerEvents="box-none"
         >
           <Pressable
             accessibilityRole="button"
@@ -205,7 +209,7 @@ export function CaptureCameraView() {
 
           <View className="h-12 w-12" />
         </View>
-      </CameraView>
+      </View>
     </View>
   );
 }

@@ -53,7 +53,18 @@
     "saveFailedTitle": "לא הצלחנו לשמור",
     "saveFailedBody": "נסה שוב.",
     "noPages": "אין תמונות בסשן.",
-    "backToCamera": "חזרה למצלמה"
+    "backToCamera": "חזרה למצלמה",
+    "editImage": "ערוך תמונה",
+    "editPageHint": "פותח עורך חיתוך לעמוד זה",
+    "pageThumbA11y": "עמוד {{page}} מתוך {{total}}",
+    "cropTitle": "חיתוך קבלה",
+    "cropHint": "צביטה להגדלה וגרירה למיקום הקבלה בתוך המסגרת.",
+    "cropFrameLabel": "אזור חיתוך",
+    "cropApply": "השתמש בחיתוך",
+    "cropApplying": "מחיל…",
+    "cropFailedTitle": "לא הצלחנו לחתוך",
+    "cropFailedBody": "נסה שוב.",
+    "cropMissingImage": "העמוד הזה כבר לא בסשן."
   },
   "processing": {
     "screenLabel": "עיבוד קבלה",

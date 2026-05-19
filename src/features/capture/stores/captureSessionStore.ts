@@ -10,6 +10,7 @@ type CaptureSessionState = {
   addImage: (image: CaptureSessionImage) => boolean;
   addImages: (images: CaptureSessionImage[]) => number;
   removeImage: (id: string) => void;
+  updateImage: (id: string, patch: Partial<CaptureSessionImage>) => void;
   selectImage: (index: number) => void;
   canAddMore: () => boolean;
 };
@@ -46,6 +47,11 @@ export const useCaptureSessionStore = create<CaptureSessionState>((set, get) => 
       const selectedIndex = Math.min(state.selectedIndex, Math.max(images.length - 1, 0));
       return { images, selectedIndex };
     });
+  },
+  updateImage: (id, patch) => {
+    set((state) => ({
+      images: state.images.map((img) => (img.id === id ? { ...img, ...patch } : img)),
+    }));
   },
   selectImage: (index) => {
     set((state) => {

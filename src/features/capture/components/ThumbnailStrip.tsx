@@ -1,4 +1,5 @@
 import { Image, Pressable, ScrollView, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui";
 import { cn } from "@/utils/cn";
@@ -9,6 +10,7 @@ type ThumbnailStripProps = {
   images: CaptureSessionImage[];
   selectedIndex: number;
   onSelect: (index: number) => void;
+  onEdit?: (index: number) => void;
   label?: string;
 };
 
@@ -16,8 +18,10 @@ export function ThumbnailStrip({
   images,
   selectedIndex,
   onSelect,
+  onEdit,
   label,
 }: ThumbnailStripProps) {
+  const { t } = useTranslation();
   if (images.length === 0) return null;
 
   return (
@@ -36,8 +40,13 @@ export function ThumbnailStrip({
           <Pressable
             key={image.id}
             accessibilityRole="button"
-            accessibilityLabel={`Page ${index + 1} of ${images.length}`}
+            accessibilityLabel={t("capture.pageThumbA11y", {
+              page: index + 1,
+              total: images.length,
+            })}
+            accessibilityHint={onEdit ? t("capture.editPageHint") : undefined}
             onPress={() => onSelect(index)}
+            onLongPress={onEdit ? () => onEdit(index) : undefined}
             className={cn(
               "overflow-hidden rounded-md border-2",
               selectedIndex === index ? "border-accent" : "border-transparent",

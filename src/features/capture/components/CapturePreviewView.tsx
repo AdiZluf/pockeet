@@ -32,6 +32,12 @@ export function CapturePreviewView() {
     router.back();
   };
 
+  const openCrop = (index = selectedIndex) => {
+    const target = images[index];
+    if (!target) return;
+    router.push({ pathname: "/capture/crop", params: { imageId: target.id } });
+  };
+
   const handleDeletePage = () => {
     if (!selected) return;
     if (images.length === 1) {
@@ -92,27 +98,31 @@ export function CapturePreviewView() {
         images={images}
         selectedIndex={selectedIndex}
         onSelect={selectImage}
+        onEdit={openCrop}
         label={t("capture.filmstripLabel")}
       />
 
-      <View className="mx-5 mt-4 flex-1 overflow-hidden rounded-lg bg-surface-muted">
+      <Pressable
+        accessibilityRole="imagebutton"
+        accessibilityLabel={t("capture.previewImage", { page: selectedIndex + 1 })}
+        accessibilityHint={t("capture.editPageHint")}
+        onPress={() => openCrop()}
+        className="mx-5 mt-4 flex-1 overflow-hidden rounded-lg bg-surface-muted"
+      >
         {selected ? (
           <Image
             source={{ uri: selected.uri }}
             className="h-full w-full"
             resizeMode="contain"
-            accessibilityLabel={t("capture.previewImage", {
-              page: selectedIndex + 1,
-            })}
           />
         ) : null}
-      </View>
+      </Pressable>
 
       <View className="flex-row gap-3 px-5 py-4">
         <Button
           variant="secondary"
-          label={t("capture.addPage")}
-          onPress={handleBack}
+          label={t("capture.editImage")}
+          onPress={() => openCrop()}
           block={false}
           className="flex-1"
         />
@@ -122,6 +132,14 @@ export function CapturePreviewView() {
           onPress={handleDeletePage}
           block={false}
           className="flex-1"
+        />
+      </View>
+
+      <View className="px-5 pb-2">
+        <Button
+          variant="secondary"
+          label={t("capture.addPage")}
+          onPress={handleBack}
         />
       </View>
 
