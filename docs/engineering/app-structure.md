@@ -1,0 +1,62 @@
+# App structure
+
+Target layout after scaffold. Routes stay thin; logic in `features/` and `services/`.
+
+```
+pockeet/
+├── app/                      # expo-router
+│   ├── (auth)/
+│   │   ├── login.tsx
+│   │   └── onboarding.tsx
+│   ├── (tabs)/
+│   │   ├── index.tsx         # Home
+│   │   └── receipts.tsx
+│   ├── capture/
+│   │   ├── index.tsx
+│   │   └── preview.tsx
+│   ├── receipt/
+│   │   └── [id]/
+│   │       ├── index.tsx     # detail
+│   │       ├── review.tsx
+│   │       └── processing.tsx
+│   ├── needs-review.tsx
+│   └── _layout.tsx
+├── src/
+│   ├── components/ui/        # Button, Card, Input, Sheet, ListRow, …
+│   ├── features/
+│   │   ├── capture/
+│   │   ├── review/
+│   │   ├── home/
+│   │   ├── receipts/
+│   │   └── settings/
+│   ├── db/
+│   │   ├── schema.ts
+│   │   ├── migrations/
+│   │   └── repositories/
+│   ├── services/
+│   │   ├── api/
+│   │   ├── sync/
+│   │   └── parse/
+│   ├── theme/                # tokens — see design/tokens.md
+│   ├── i18n/
+│   │   ├── en.json
+│   │   └── he.json
+│   └── utils/                # money, dates, rtl
+├── supabase/
+│   └── functions/parse-receipt/
+├── docs/                     # this documentation
+└── app.config.ts
+```
+
+## Import rules
+
+- `app/**` → `features`, `components/ui`, `services` — not reverse.
+- `features/*` → `components/ui`, `db`, `services` — **not** other features.
+- `components/ui` → `theme` only — no feature imports.
+- No hex in `app/` or `features/`.
+
+## Related
+
+- [architecture](architecture.md)
+- [stack](stack.md)
+- [components](../design/components.md)

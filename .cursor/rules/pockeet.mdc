@@ -1,0 +1,31 @@
+---
+description: Pockeet product, design, and engineering conventions. Read docs before implementing features.
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Pockeet
+
+Mobile receipt app: scan → parse → review → monthly clarity. EN/HE, RTL, calm premium UI.
+
+## Required reading (before features)
+
+- `docs/product/mvp-scope.md` — scope and loop
+- `docs/ux/navigation.md` — routes
+- `docs/design/tokens.md` + `docs/design/components.md`
+- `docs/ai/cursor-rules.md` — full agent rules
+
+## Hard rules
+
+- Local-first capture; never block scan on network
+- Semantic tokens only in features (no raw hex)
+- Compose `src/components/ui` primitives; no feature-to-feature imports
+- Money: `amountMinor` + `currencyCode`
+- One chart max on Home; 2 tabs + FAB for MVP
+- 44pt min touch targets; WCAG AA-oriented defaults
+- RTL: logical start/end; amounts stay LTR
+
+## Docs index
+
+`docs/README.md`
