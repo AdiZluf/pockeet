@@ -1,6 +1,8 @@
 # App structure
 
-Target layout after scaffold. Routes stay thin; logic in `features/` and `services/`.
+Target layout — **foundations scaffolded** in repo. Routes stay thin; logic in `features/` and `services/`.
+
+**Current state:** `(tabs)/index` runs `FoundationPlayground`; product routes (`capture/`, `receipt/`, etc.) are not added until the next phase.
 
 ```
 pockeet/

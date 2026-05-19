@@ -14,6 +14,18 @@ All product, design, and engineering specs live in **[`docs/`](docs/README.md)**
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for PR expectations.
 
+## Development
+
+```bash
+npm install
+npm start          # Expo dev server
+npm run ios        # iOS simulator
+npm run android    # Android emulator
+npm run typecheck
+```
+
+**Foundation app:** Home tab shows the UI primitives playground (not product screens). Receipt flows are not implemented yet.
+
 ## Status
 
-Pre-implementation — greenfield repo. See [MVP scope](docs/product/mvp-scope.md) and [build order](docs/product/mvp-scope.md#build-order).
+**Foundations scaffolded** — Expo SDK 54, expo-router 6, NativeWind, theme tokens, i18n/RTL, SQLite/Drizzle, UI primitives. See [app structure](docs/engineering/app-structure.md).

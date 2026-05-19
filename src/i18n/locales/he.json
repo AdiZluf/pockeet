@@ -1,0 +1,31 @@
+{
+  "common": {
+    "appName": "Pockeet",
+    "loading": "טוען",
+    "retry": "נסה שוב",
+    "cancel": "ביטול",
+    "save": "שמור"
+  },
+  "tabs": {
+    "home": "בית",
+    "receipts": "קבלות"
+  },
+  "foundation": {
+    "title": "תשתית עיצוב",
+    "subtitle": "רכיבי מערכת — לא מסכי מוצר.",
+    "toggleLocale": "English",
+    "toggleLocaleEn": "English"
+  },
+  "fab": {
+    "scanReceipt": "סרוק קבלה"
+  },
+  "status": {
+    "processing": "מנתח…",
+    "needs_review": "דורש בדיקה",
+    "ready": "מוכן",
+    "failed": "לא הצלחנו לקרוא"
+  },
+  "a11y": {
+    "foundationScreen": "מגרש רכיבי ממשק"
+  }
+}

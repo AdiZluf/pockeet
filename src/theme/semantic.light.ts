@@ -1,0 +1,35 @@
+import { pocketTeal, stone } from "./primitives";
+
+export const semanticLight = {
+  background: stone[50],
+  surface: "#FFFCF9",
+  surfaceMuted: stone[100],
+  surfaceElevated: "#FFFFFF",
+  textPrimary: stone[900],
+  textSecondary: stone[600],
+  textTertiary: stone[500],
+  textInverse: "#FFFCF9",
+  borderDefault: stone[200],
+  borderSubtle: stone[100],
+  borderFocus: pocketTeal[500],
+  accent: pocketTeal[500],
+  accentHover: pocketTeal[600],
+  accentMuted: "rgba(31, 111, 120, 0.12)",
+  overlay: "rgba(28, 25, 23, 0.4)",
+  status: {
+    processing: { fg: "#5B6B7A", bg: "rgba(91, 107, 122, 0.1)" },
+    review: { fg: "#B45309", bg: "rgba(245, 158, 11, 0.12)" },
+    ready: { fg: "#4A7C59", bg: "rgba(74, 124, 89, 0.1)" },
+    failed: { fg: "#B84A4A", bg: "rgba(184, 74, 74, 0.1)" },
+  },
+  chart: [
+    "#5B8A8F",
+    "#7A8F6E",
+    "#9A7B6A",
+    "#8B7AA8",
+    "#6A8BAF",
+    "#AF8F6A",
+    "#6A9A8B",
+    "#A8A29E",
+  ],
+} as const;

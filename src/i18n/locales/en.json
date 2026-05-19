@@ -1,0 +1,31 @@
+{
+  "common": {
+    "appName": "Pockeet",
+    "loading": "Loading",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "tabs": {
+    "home": "Home",
+    "receipts": "Receipts"
+  },
+  "foundation": {
+    "title": "UI foundations",
+    "subtitle": "Design system primitives — not product screens.",
+    "toggleLocale": "עברית",
+    "toggleLocaleEn": "English"
+  },
+  "fab": {
+    "scanReceipt": "Scan receipt"
+  },
+  "status": {
+    "processing": "Analyzing…",
+    "needs_review": "Needs review",
+    "ready": "Ready",
+    "failed": "Couldn't read receipt"
+  },
+  "a11y": {
+    "foundationScreen": "UI foundations playground"
+  }
+}
