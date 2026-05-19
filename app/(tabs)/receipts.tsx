@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
 import { FAB, Text } from "@/components/ui";
+import { useOpenCapture } from "@/features/capture/hooks/useOpenCapture";
 
 /**
  * Receipts tab placeholder — list UI not implemented.
@@ -11,6 +12,7 @@ import { FAB, Text } from "@/components/ui";
 export default function ReceiptsTabScreen() {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const openCapture = useOpenCapture();
 
   return (
     <View
@@ -21,10 +23,7 @@ export default function ReceiptsTabScreen() {
       <Text variant="body" muted className="mt-2 text-center">
         Scaffold only — history list comes in product phase.
       </Text>
-      <FAB
-        accessibilityLabel={t("fab.scanReceipt")}
-        onPress={() => undefined}
-      />
+      <FAB accessibilityLabel={t("fab.scanReceipt")} onPress={openCapture} />
     </View>
   );
 }

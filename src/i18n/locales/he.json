@@ -21,9 +21,51 @@
   },
   "status": {
     "processing": "מנתח…",
-    "needs_review": "דורש בדיקה",
+    "needs_review": "נדרשת בדיקה",
     "ready": "מוכן",
-    "failed": "לא הצלחנו לקרוא"
+    "failed": "לא הצלחנו לקרוא",
+    "draft": "טיוטה"
+  },
+  "capture": {
+    "permissionTitle": "נדרשת גישה למצלמה",
+    "permissionBody": "Pockeet משתמשת במצלמה לסריקת קבלות. אפשר גם לבחור תמונות מהגלריה.",
+    "allowCamera": "אפשר מצלמה",
+    "openSettings": "פתח הגדרות",
+    "gallery": "בחר מהגלריה",
+    "shutter": "צלם תמונה",
+    "continue": "המשך",
+    "discardTitle": "למחוק את הקבלה?",
+    "discardBody": "התמונות ימחקו מההיסטוריה הנוכחית.",
+    "discardConfirm": "מחק",
+    "maxPagesTitle": "הגעת למגבלת עמודים",
+    "maxPagesBody": "ניתן להוסיף עד {{max}} תמונות לכל קבלה.",
+    "back": "חזרה",
+    "pageCount": "{{count}} מתוך {{max}} עמודים",
+    "filmstripLabel": "עמודים",
+    "previewImage": "עמוד קבלה {{page}}",
+    "addPage": "הוסף עמוד",
+    "removePage": "הסר עמוד",
+    "lastPageTitle": "השאר לפחות עמוד אחד",
+    "lastPageBody": "לקבלה נדרשת לפחות תמונה אחת.",
+    "saveAndAnalyze": "שמור ונתח",
+    "saving": "שומר…",
+    "savedLocallyHint": "נשמר במכשיר. ניתוח בענן יתווסף בהמשך.",
+    "saveFailedTitle": "לא הצלחנו לשמור",
+    "saveFailedBody": "נסה שוב.",
+    "noPages": "אין תמונות בסשן.",
+    "backToCamera": "חזרה למצלמה"
+  },
+  "processing": {
+    "screenLabel": "עיבוד קבלה",
+    "thumbnailLabel": "תמונת קבלה",
+    "title": "נשמר Pockeet",
+    "bodyLocal": "הקבלה נשמרה במכשיר. הניתוח יופעל כשעיבוד בענן יהיה זמין.",
+    "continueBackground": "המשך ברקע"
+  },
+  "home": {
+    "recentReceipts": "קבלות אחרונות",
+    "receiptPlaceholder": "קבלה · {{n}} תמונות",
+    "receiptRowA11y": "קבלה, סטטוס {{status}}"
   },
   "a11y": {
     "foundationScreen": "מגרש רכיבי ממשק"

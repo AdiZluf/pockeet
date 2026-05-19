@@ -23,7 +23,49 @@
     "processing": "Analyzing…",
     "needs_review": "Needs review",
     "ready": "Ready",
-    "failed": "Couldn't read receipt"
+    "failed": "Couldn't read receipt",
+    "draft": "Draft"
+  },
+  "capture": {
+    "permissionTitle": "Camera access needed",
+    "permissionBody": "Pockeet uses your camera to scan receipts. You can also pick photos from your gallery.",
+    "allowCamera": "Allow camera",
+    "openSettings": "Open Settings",
+    "gallery": "Choose from gallery",
+    "shutter": "Take photo",
+    "continue": "Continue",
+    "discardTitle": "Discard receipt?",
+    "discardBody": "Your photos will be removed from this session.",
+    "discardConfirm": "Discard",
+    "maxPagesTitle": "Page limit reached",
+    "maxPagesBody": "You can add up to {{max}} photos per receipt.",
+    "back": "Back",
+    "pageCount": "{{count}} of {{max}} pages",
+    "filmstripLabel": "Pages",
+    "previewImage": "Receipt page {{page}}",
+    "addPage": "Add page",
+    "removePage": "Remove page",
+    "lastPageTitle": "Keep at least one page",
+    "lastPageBody": "A receipt needs at least one photo.",
+    "saveAndAnalyze": "Save & analyze",
+    "saving": "Saving…",
+    "savedLocallyHint": "Saved on this device. Cloud analysis comes later.",
+    "saveFailedTitle": "Couldn't save receipt",
+    "saveFailedBody": "Please try again.",
+    "noPages": "No photos in this session.",
+    "backToCamera": "Back to camera"
+  },
+  "processing": {
+    "screenLabel": "Receipt processing",
+    "thumbnailLabel": "Receipt thumbnail",
+    "title": "Saved to Pockeet",
+    "bodyLocal": "Your receipt is stored locally. Analysis will run when cloud processing is enabled.",
+    "continueBackground": "Continue in background"
+  },
+  "home": {
+    "recentReceipts": "Recent receipts",
+    "receiptPlaceholder": "Receipt · {{n}} photos",
+    "receiptRowA11y": "Receipt, status {{status}}"
   },
   "a11y": {
     "foundationScreen": "UI foundations playground"

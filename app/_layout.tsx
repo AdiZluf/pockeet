@@ -4,6 +4,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import { AppProviders } from "@/providers/AppProviders";
+import React from "react";
 
 export default function RootLayout() {
   return (
@@ -11,6 +12,11 @@ export default function RootLayout() {
       <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="capture"
+          options={{ presentation: "fullScreenModal", animation: "slide_from_bottom" }}
+        />
+        <Stack.Screen name="receipt/[id]/processing" />
       </Stack>
     </AppProviders>
   );

@@ -18,7 +18,12 @@ import {
 import { setAppLocale, type AppLocale } from "@/i18n";
 import { formatMoney } from "@/utils/money";
 
-export function FoundationPlayground() {
+type FoundationPlaygroundProps = {
+  /** When true, content is rendered without an outer ScrollView (for embedding in Home). */
+  nested?: boolean;
+};
+
+export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {}) {
   const { t, i18n } = useTranslation();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sampleInput, setSampleInput] = useState("");
@@ -28,13 +33,8 @@ export function FoundationPlayground() {
     setAppLocale(next);
   };
 
-  return (
+  const body = (
     <>
-      <ScrollView
-        className="flex-1 bg-background"
-        contentContainerClassName="gap-2 pb-32 pt-4"
-        accessibilityLabel={t("a11y.foundationScreen")}
-      >
         <View className="px-5">
           <Text variant="titleLg">{t("foundation.title")}</Text>
           <Text variant="body" muted className="mt-1">
@@ -148,7 +148,6 @@ export function FoundationPlayground() {
         <Section title="Sheet" className="px-5">
           <Button label="Open sheet" onPress={() => setSheetOpen(true)} />
         </Section>
-      </ScrollView>
 
       <Sheet
         visible={sheetOpen}
@@ -161,5 +160,19 @@ export function FoundationPlayground() {
         </Text>
       </Sheet>
     </>
+  );
+
+  if (nested) {
+    return body;
+  }
+
+  return (
+    <ScrollView
+      className="flex-1 bg-background"
+      contentContainerClassName="gap-2 pb-32 pt-4"
+      accessibilityLabel={t("a11y.foundationScreen")}
+    >
+      {body}
+    </ScrollView>
   );
 }

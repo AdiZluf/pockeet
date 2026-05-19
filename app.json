@@ -33,7 +33,19 @@
       "expo-router",
       "expo-localization",
       "expo-sqlite",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Pockeet to access your camera to scan receipts."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Pockeet to access your photos to upload receipt images."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
