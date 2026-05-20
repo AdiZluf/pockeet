@@ -8,12 +8,10 @@ import {
   type ReceiptFilters,
   type ReceiptStatusFilter,
 } from "@/db/receiptFilters";
-import { Button, PressableScale, Sheet, Text } from "@/components/ui";
+import { Button, FilterChip, Sheet, Text } from "@/components/ui";
 import { countReceiptsFiltered } from "@/db/repositories/receiptRepository";
 import { monthKeyFromDate } from "@/features/receipts/utils/filterParams";
 import { formatMonthChipLabel } from "@/features/receipts/utils/filterLabels";
-import { cn } from "@/utils/cn";
-
 type PeriodPreset = "this_month" | "last_month" | "last_3_months" | "custom" | null;
 
 type ReceiptFiltersSheetProps = {
@@ -103,6 +101,7 @@ export function ReceiptFiltersSheet({
     <Sheet
       visible={visible}
       onClose={onClose}
+      scrimAccessibilityLabel={t("common.closeSheet")}
       title={t("receipts.filters.sheetTitle")}
       footer={
         <>
@@ -145,45 +144,25 @@ export function ReceiptFiltersSheet({
                   ["last_3_months", "receipts.filters.last3Months"],
                 ] as const
               ).map(([preset, labelKey]) => (
-                <PressableScale
+                <FilterChip
                   key={preset}
-                  accessibilityRole="button"
+                  label={t(labelKey)}
+                  selected={periodPreset === preset}
                   onPress={() => applyPeriod(preset)}
-                  className={cn(
-                    "rounded-full px-3 py-2",
-                    periodPreset === preset ? "bg-accent" : "bg-surface-muted",
-                  )}
-                >
-                  <Text
-                    variant="caption"
-                    className={periodPreset === preset ? "font-semibold text-foreground-inverse" : undefined}
-                  >
-                    {t(labelKey)}
-                  </Text>
-                </PressableScale>
+                />
               ))}
             </View>
             <View className="flex-row flex-wrap gap-2">
               {recentMonths.map((key) => (
-                <PressableScale
+                <FilterChip
                   key={key}
-                  accessibilityRole="button"
+                  label={formatMonthChipLabel(key)}
+                  selected={draft.month === key}
                   onPress={() => {
                     setPeriodPreset(null);
                     setDraft((p) => ({ ...p, month: key, from: undefined, to: undefined }));
                   }}
-                  className={cn(
-                    "rounded-full px-3 py-2",
-                    draft.month === key ? "bg-accent" : "bg-surface-muted",
-                  )}
-                >
-                  <Text
-                    variant="caption"
-                    className={draft.month === key ? "font-semibold text-foreground-inverse" : undefined}
-                  >
-                    {formatMonthChipLabel(key)}
-                  </Text>
-                </PressableScale>
+                />
               ))}
             </View>
           </View>
@@ -196,22 +175,12 @@ export function ReceiptFiltersSheet({
               {categorySeeds.map((cat) => {
                 const selected = draft.categories.includes(cat.id);
                 return (
-                  <PressableScale
+                  <FilterChip
                     key={cat.id}
-                    accessibilityRole="button"
+                    label={cat.nameEn}
+                    selected={selected}
                     onPress={() => toggleCategory(cat.id)}
-                    className={cn(
-                      "rounded-full px-3 py-2",
-                      selected ? "bg-accent" : "bg-surface-muted",
-                    )}
-                  >
-                    <Text
-                      variant="caption"
-                      className={selected ? "font-semibold text-foreground-inverse" : undefined}
-                    >
-                      {cat.nameEn}
-                    </Text>
-                  </PressableScale>
+                  />
                 );
               })}
             </View>
@@ -223,24 +192,12 @@ export function ReceiptFiltersSheet({
             </Text>
             <View className="flex-row flex-wrap gap-2">
               {STATUS_OPTIONS.map((status) => (
-                <PressableScale
+                <FilterChip
                   key={status}
-                  accessibilityRole="button"
+                  label={t(`receipts.filters.status.${status}`)}
+                  selected={draft.status === status}
                   onPress={() => setDraft((p) => ({ ...p, status }))}
-                  className={cn(
-                    "rounded-full px-3 py-2",
-                    draft.status === status ? "bg-accent" : "bg-surface-muted",
-                  )}
-                >
-                  <Text
-                    variant="caption"
-                    className={
-                      draft.status === status ? "font-semibold text-foreground-inverse" : undefined
-                    }
-                  >
-                    {t(`receipts.filters.status.${status}`)}
-                  </Text>
-                </PressableScale>
+                />
               ))}
             </View>
           </View>

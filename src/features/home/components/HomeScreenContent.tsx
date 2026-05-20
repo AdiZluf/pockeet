@@ -1,13 +1,15 @@
 import { useCallback, useMemo, useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
 import type { ReceiptStatusFilter } from "@/db/receiptFilters";
-import { EmptyState, LoadingSkeleton, LoadingSkeletonGroup } from "@/components/ui";
+import { EmptyState, LoadingSkeleton, LoadingSkeletonGroup, PressableScale, ScreenHeader } from "@/components/ui";
 import { AskPockeetCard } from "@/features/ask/components/AskPockeetCard";
 import { useAddReceiptSheetStore } from "@/features/capture/stores/addReceiptSheetStore";
 import { useFocusRefresh } from "@/hooks/useFocusRefresh";
+import { useIconColors } from "@/theme";
 
 import { useHomeNavigation } from "../hooks/useHomeNavigation";
 import { loadHomeSummary } from "../services/homeSummary";
@@ -15,7 +17,6 @@ import { CategoryBreakdownSection } from "./CategoryBreakdownSection";
 import { HomeMonthHero } from "./HomeMonthHero";
 import { HomeMonthSelector } from "./HomeMonthSelector";
 import { HomeStatusOverview } from "./HomeStatusOverview";
-import { HomeTopBar } from "./HomeTopBar";
 import { ReceiptQueueSection } from "./ReceiptQueueSection";
 import { HomeInsightsSection } from "./HomeInsightsSection";
 import { RecentReceiptsSection } from "./RecentReceiptsSection";
@@ -23,6 +24,7 @@ import { RecentReceiptsSection } from "./RecentReceiptsSection";
 export function HomeScreenContent() {
   const { t } = useTranslation();
   const router = useRouter();
+  const iconColors = useIconColors();
   const openAddReceipt = useAddReceiptSheetStore((s) => s.open);
   const { openReceiptsFiltered, openAllReceipts } = useHomeNavigation();
   const [refreshing, setRefreshing] = useState(false);
@@ -90,7 +92,21 @@ export function HomeScreenContent() {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => void onRefresh()} />}
       showsVerticalScrollIndicator={false}
     >
-      <HomeTopBar />
+      <ScreenHeader
+        large={false}
+        title={t("home.greeting")}
+        subtitle={t("home.subtitle")}
+        trailing={
+          <PressableScale
+            accessibilityRole="button"
+            accessibilityLabel={t("settings.open")}
+            onPress={() => router.push("/settings")}
+            className="h-11 w-11 items-center justify-center rounded-full border border-border-subtle bg-surface-elevated"
+          >
+            <Ionicons name="settings-outline" size={22} color={iconColors.secondary} />
+          </PressableScale>
+        }
+      />
       <HomeMonthSelector
         monthLabel={summary.monthLabel}
         onPrevious={goPreviousMonth}
@@ -98,7 +114,6 @@ export function HomeScreenContent() {
         canGoNext={canGoNext}
       />
       <HomeMonthHero
-        monthLabel={summary.monthLabel}
         totalMinor={summary.totalMinor}
         currencyCode={summary.currencyCode}
         hasParsedTotals={summary.hasParsedTotals}
@@ -124,22 +139,29 @@ export function HomeScreenContent() {
             currencyCode={summary.currencyCode}
             onCategoryPress={(categoryId) => openFiltered({ categories: [categoryId] })}
           />
-          <View className="px-5 pt-4">
+          <HomeStatusOverview
+            counts={summary.statusCounts}
+            onStatusPress={(status) => openFiltered({ status })}
+          />
+          <ReceiptQueueSection
+            title={t("home.needsReview")}
+            receipts={summary.needsReview}
+            accentEdge
+          />
+          <ReceiptQueueSection
+            title={t("home.processing")}
+            receipts={summary.processing}
+          />
+          <View className="px-5 pt-6 pb-4">
             <AskPockeetCard
               onOpen={(prefill) =>
                 router.push(prefill ? { pathname: "/ask", params: { prefill } } : "/ask")
               }
             />
           </View>
-          <HomeStatusOverview
-            counts={summary.statusCounts}
-            onStatusPress={(status) => openFiltered({ status })}
-          />
           <RecentReceiptsSection onSeeAll={openAllReceipts} />
         </>
       )}
-
-
     </ScrollView>
   );
 }

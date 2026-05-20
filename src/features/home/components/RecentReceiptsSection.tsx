@@ -55,7 +55,7 @@ export function RecentReceiptsSection({ onSeeAll }: RecentReceiptsSectionProps) 
               onPress={onSeeAll}
               className="min-h-[44px] justify-center px-1"
             >
-              <Text variant="label" className="font-semibold text-accent">
+              <Text variant="label" className="text-accent">
                 {t("home.seeAll")}
               </Text>
             </PressableScale>

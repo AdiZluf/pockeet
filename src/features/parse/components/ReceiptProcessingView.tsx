@@ -24,7 +24,7 @@ import {
 import { motion, useIconColors, useReducedMotion } from "@/theme";
 
 const POLL_MS = 400;
-const SUCCESS_NAV_DELAY_MS = 1400;
+const SUCCESS_NAV_DELAY_MS = 800;
 const STAGE_STEP_MS = Math.floor(FAKE_PARSE_DELAY_MS / 3);
 
 const STAGE_KEYS = ["stepReading", "stepExtracting", "stepOrganizing"] as const;
@@ -97,7 +97,9 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
             successScale.value = 1;
           }
 
-          void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          if (!reduceMotion) {
+            void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          }
 
           if (!navigatedRef.current) {
             navigatedRef.current = true;

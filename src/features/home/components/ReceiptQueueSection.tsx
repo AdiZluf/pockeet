@@ -16,7 +16,7 @@ export function ReceiptQueueSection({ title, receipts, accentEdge }: ReceiptQueu
   if (receipts.length === 0) return null;
 
   return (
-    <View className="pb-2 pt-6">
+    <View className="pb-4 pt-6">
       <SectionHeader title={title} className="mb-3" />
       <ElevatedGroup accentEdge={accentEdge}>
         <DividerList>

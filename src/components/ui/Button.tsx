@@ -49,7 +49,7 @@ export function Button({
       disabled={isDisabled}
       scaleTo={isDisabled ? 1 : motion.scale.pressed}
       className={cn(
-        "min-h-[52px] items-center justify-center rounded-xl px-5",
+        "min-h-[52px] items-center justify-center rounded-lg px-5",
         variantClasses[variant],
         block && "w-full",
         isDisabled && "opacity-45",

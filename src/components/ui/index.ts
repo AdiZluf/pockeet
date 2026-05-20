@@ -1,4 +1,6 @@
 export { Button, type ButtonProps, type ButtonVariant } from "./Button";
+export { FilterChip, type FilterChipProps, type FilterChipVariant } from "./FilterChip";
+export { ModalHeader, type ModalHeaderProps } from "./ModalHeader";
 export { Card, type CardProps } from "./Card";
 export { PressableScale } from "./PressableScale";
 export { ScreenHeader, type ScreenHeaderProps } from "./ScreenHeader";

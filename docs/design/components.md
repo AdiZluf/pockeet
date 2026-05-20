@@ -89,7 +89,20 @@ Money: LTR, decimal pad.
 
 Grabber, `radius-2xl` top, `elevation-2`, overlay scrim.  
 Slots: title, body, footer actions.  
-a11y: focus trap, return focus on dismiss.
+Required prop: `scrimAccessibilityLabel` (localized).  
+`onDismissed`: iOS — run native pickers after modal teardown.  
+a11y: focus trap (follow-up), return focus on dismiss.
+
+## FilterChip
+
+44pt min-height pill for filters and Ask suggestions.  
+Variants: `select` (toggle active/inactive), `removable` (active filter with close icon).  
+Use in Receipts filter bar/sheet, Ask card/empty state, Settings currency row.
+
+## ModalHeader
+
+Grabber + 44pt close + title (`title-lg`) + optional subtitle for expo-router modals (Ask, Settings).  
+Default close icon: `chevron-down` (sheet dismiss).
 
 ## ListRow
 
@@ -99,7 +112,8 @@ Pressable: combined a11y label e.g. “Shufersal, 342 shekels, May 18, needs rev
 
 ## ScreenHeader
 
-Editorial screen title (`display-lg` or `title-lg`) + optional subtitle. Use instead of bare `Text` titles in tabs.
+Editorial screen title (`display-lg` when `large`, else `title-lg`) + optional subtitle + optional `trailing` slot.  
+Home tab: `large={false}` (compact) with settings action. Receipts tab: `large` (default).
 
 ## PressableScale
 
@@ -135,6 +149,8 @@ Label: localized “Scan receipt”. Position: [layout](layout.md#fab).
 | Card | surface, radius-lg |
 | Input | surface-muted, border-focus |
 | Sheet | surface, radius-2xl, overlay |
+| FilterChip | accent, accent-soft, surface-muted |
+| ModalHeader | surface-elevated, border-subtle |
 | GroupedList | surface-muted (inset), border-default separators |
 | StatusChip | status-* fg/bg |
 

@@ -58,7 +58,7 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
 
   const cropWindow = useMemo(() => {
     const cropWidth = screenWidth - CROP_PADDING * 2;
-    const workspaceTop = insets.top + HEADER_HEIGHT + 12;
+    const workspaceTop = insets.top + 8 + HEADER_HEIGHT + 12;
     const workspaceBottom = screenHeight - (FOOTER_BASE_HEIGHT + insets.bottom);
     const workspaceHeight = Math.max(200, workspaceBottom - workspaceTop);
     const cropHeight = Math.min(cropWidth * 1.35, workspaceHeight * 0.82);
@@ -78,6 +78,9 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
   const imageHeight = useSharedValue(1);
   const cropWindowWidth = useSharedValue(cropWindow.cropWidth);
   const cropWindowHeight = useSharedValue(cropWindow.cropHeight);
+  const initialScale = useSharedValue(1);
+  const initialTranslateX = useSharedValue(0);
+  const initialTranslateY = useSharedValue(0);
 
   useEffect(() => {
     cropWindowWidth.value = cropWindow.cropWidth;
@@ -113,10 +116,13 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
         minScale.value = coverScale;
         scale.value = coverScale;
         savedScale.value = coverScale;
+        initialScale.value = coverScale;
         translateX.value = centered.x;
         translateY.value = centered.y;
         savedTranslateX.value = centered.x;
         savedTranslateY.value = centered.y;
+        initialTranslateX.value = centered.x;
+        initialTranslateY.value = centered.y;
         setIsReady(true);
       } catch {
         if (!cancelled) {
@@ -217,6 +223,15 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
     router.back();
   };
 
+  const handleResetCrop = () => {
+    scale.value = initialScale.value;
+    savedScale.value = initialScale.value;
+    translateX.value = initialTranslateX.value;
+    translateY.value = initialTranslateY.value;
+    savedTranslateX.value = initialTranslateX.value;
+    savedTranslateY.value = initialTranslateY.value;
+  };
+
   const handleApply = async () => {
     if (!image || isApplying) return;
 
@@ -267,7 +282,7 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
     <View className="flex-1 bg-background">
       <View
         className="flex-row items-center justify-between px-5 py-3"
-        style={{ paddingTop: insets.top, minHeight: insets.top + HEADER_HEIGHT }}
+        style={{ paddingTop: insets.top + 8, minHeight: insets.top + 8 + HEADER_HEIGHT }}
       >
         <CaptureActionButton
           variant="default"
@@ -357,6 +372,13 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
           <Text variant="body" muted align="center" className="leading-5">
             {t("capture.cropHint")}
           </Text>
+          <CaptureActionButton
+            variant="default"
+            icon="refresh-outline"
+            label={t("capture.cropReset")}
+            onPress={handleResetCrop}
+            disabled={!isReady || isApplying}
+          />
           <View className="flex-row gap-3">
             <CaptureActionButton
               variant="default"

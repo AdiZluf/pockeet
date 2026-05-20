@@ -1,14 +1,12 @@
 import { ScrollView, View } from "react-native";
 import { useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 
 import { DevSeedActions } from "@/features/home/components/DevSeedActions";
-import { ElevatedGroup, ListRow, PressableScale, Text } from "@/components/ui";
+import { ElevatedGroup, ListRow, ModalHeader, Section, Text } from "@/components/ui";
 import { useDisplayCurrency } from "@/features/settings/hooks/useDisplayCurrency";
-import { useIconColors, useTheme } from "@/theme";
 
 import { CurrencySettingRow } from "./CurrencySettingRow";
 
@@ -16,36 +14,17 @@ export function SettingsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const iconColors = useIconColors();
-  const { colors } = useTheme();
   const version = (Constants.expoConfig?.version ?? Constants.manifest?.version ?? "—") as string;
   const { currency, setCurrency } = useDisplayCurrency();
 
   return (
     <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
-      <View className="items-center pb-2 pt-2">
-        <View className="h-1 w-10 rounded-full bg-border" accessibilityElementsHidden />
-      </View>
-
-      <View className="flex-row items-center gap-2 px-5 pb-4">
-        <PressableScale
-          accessibilityRole="button"
-          accessibilityLabel={t("common.back")}
-          onPress={() => router.back()}
-          className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated"
-          style={{ borderWidth: 0.5, borderColor: colors.borderSubtle }}
-        >
-          <Ionicons name="chevron-back" size={24} color={iconColors.primary} />
-        </PressableScale>
-        <View className="min-w-0 flex-1 gap-0.5">
-          <Text variant="titleLg" align="start">
-            {t("settings.title")}
-          </Text>
-          <Text variant="caption" muted align="start">
-            {t("settings.subtitle")}
-          </Text>
-        </View>
-      </View>
+      <ModalHeader
+        title={t("settings.title")}
+        subtitle={t("settings.subtitle")}
+        onClose={() => router.back()}
+        closeIcon="chevron-down"
+      />
 
       <ScrollView
         className="flex-1"
@@ -54,10 +33,7 @@ export function SettingsScreen() {
       >
         <CurrencySettingRow value={currency} onChange={setCurrency} />
 
-        <View className="gap-3">
-          <Text variant="micro" muted align="start" className="uppercase tracking-wide">
-            {t("settings.aboutSection")}
-          </Text>
+        <Section title={t("settings.aboutSection")}>
           <ElevatedGroup className="mx-0">
             <ListRow
               title={<Text variant="bodyLg" align="start">{t("settings.appName")}</Text>}
@@ -68,17 +44,14 @@ export function SettingsScreen() {
               }
             />
           </ElevatedGroup>
-        </View>
+        </Section>
 
         {__DEV__ ? (
-          <View className="gap-3">
-            <Text variant="micro" muted align="start" className="uppercase tracking-wide">
-              {t("settings.developerSection")}
-            </Text>
+          <Section title={t("settings.developerSection")}>
             <ElevatedGroup className="mx-0 gap-0 p-4">
               <DevSeedActions onSeeded={() => router.back()} />
             </ElevatedGroup>
-          </View>
+          </Section>
         ) : null}
       </ScrollView>
     </View>

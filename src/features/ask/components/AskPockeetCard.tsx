@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
-import { PressableScale, Surface, Text } from "@/components/ui";
+import { FilterChip, PressableScale, Surface, Text } from "@/components/ui";
 import { useIconColors } from "@/theme";
 
 const SUGGESTED_KEYS = [
@@ -42,19 +42,15 @@ export function AskPockeetCard({ onOpen }: AskPockeetCardProps) {
           <Ionicons name="chevron-forward" size={20} color={iconColors.secondary} />
         </View>
       </PressableScale>
-      <View className="flex-row flex-wrap gap-2 border-t border-border-subtle px-5 pb-5 pt-0">
+      <View className="flex-row flex-wrap gap-2 border-t border-border-subtle px-5 pb-5 pt-4">
         {SUGGESTED_KEYS.map((key) => (
-          <PressableScale
+          <FilterChip
             key={key}
-            accessibilityRole="button"
-            accessibilityLabel={t(key)}
+            label={t(key)}
+            selected={false}
             onPress={() => onOpen(t(key))}
-            className="mt-4 rounded-full border border-border-subtle bg-surface-muted px-3 py-2"
-          >
-            <Text variant="caption" align="start" className="leading-5">
-              {t(key)}
-            </Text>
-          </PressableScale>
+            className="bg-surface-muted"
+          />
         ))}
       </View>
     </Surface>

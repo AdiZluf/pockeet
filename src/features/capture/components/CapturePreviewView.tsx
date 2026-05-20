@@ -91,7 +91,7 @@ export function CapturePreviewView() {
   }
 
   return (
-    <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
+    <View className="flex-1 bg-background" style={{ paddingTop: insets.top + 8 }}>
       <View className="flex-row items-center justify-between px-5 py-3">
         <Pressable
           accessibilityRole="button"

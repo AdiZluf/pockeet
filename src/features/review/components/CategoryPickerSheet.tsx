@@ -24,7 +24,12 @@ export function CategoryPickerSheet({
   const { t } = useTranslation();
 
   return (
-    <Sheet visible={visible} onClose={onClose} title={t("review.categorySheetTitle")}>
+    <Sheet
+      visible={visible}
+      onClose={onClose}
+      scrimAccessibilityLabel={t("common.closeSheet")}
+      title={t("review.categorySheetTitle")}
+    >
       <ScrollView className="max-h-80">
         <GroupedList>
           {categories.map((category) => (

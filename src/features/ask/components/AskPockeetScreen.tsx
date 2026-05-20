@@ -7,14 +7,13 @@ import {
   View,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Button, PressableScale, Text } from "@/components/ui";
+import { Button, ModalHeader, Text } from "@/components/ui";
 import { respondToAskQuestion } from "@/features/ask/services/askResponder";
 import type { AskResponse } from "@/features/ask/types";
-import { useIconColors, useTheme } from "@/theme";
+import { useTheme } from "@/theme";
 
 import { AskEmptyState } from "./AskEmptyState";
 import { AskMessageBubble } from "./AskMessageBubble";
@@ -28,7 +27,6 @@ export function AskPockeetScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const iconColors = useIconColors();
   const { colors } = useTheme();
   const { prefill } = useLocalSearchParams<{ prefill?: string }>();
   const scrollRef = useRef<ScrollView>(null);
@@ -76,28 +74,13 @@ export function AskPockeetScreen() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={{ paddingTop: insets.top }}
     >
-      <View className="items-center pb-1 pt-2">
-        <View className="h-1 w-10 rounded-full bg-border" accessibilityElementsHidden />
-      </View>
-      <View className="flex-row items-center gap-2 px-5 pb-3">
-        <PressableScale
-          accessibilityRole="button"
-          accessibilityLabel={t("common.back")}
-          onPress={() => router.back()}
-          className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated"
-          style={{ borderWidth: 0.5, borderColor: colors.borderSubtle }}
-        >
-          <Ionicons name="chevron-down" size={24} color={iconColors.primary} />
-        </PressableScale>
-        <View className="min-w-0 flex-1 gap-0.5">
-          <Text variant="titleLg" align="start">
-            {t("ask.title")}
-          </Text>
-          <Text variant="caption" muted align="start">
-            {t("ask.sheetSubtitle")}
-          </Text>
-        </View>
-      </View>
+      <ModalHeader
+        title={t("ask.title")}
+        subtitle={t("ask.sheetSubtitle")}
+        onClose={() => router.back()}
+        closeIcon="chevron-down"
+        className="pb-3"
+      />
 
       <ScrollView
         ref={scrollRef}

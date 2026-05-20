@@ -5,7 +5,6 @@ import { Surface, Text } from "@/components/ui";
 import { formatMoney, moneyWritingProps } from "@/utils/money";
 
 type HomeMonthHeroProps = {
-  monthLabel: string;
   totalMinor: number;
   currencyCode: string;
   hasParsedTotals: boolean;
@@ -14,7 +13,6 @@ type HomeMonthHeroProps = {
 };
 
 export function HomeMonthHero({
-  monthLabel,
   totalMinor,
   currencyCode,
   hasParsedTotals,
@@ -57,9 +55,6 @@ export function HomeMonthHero({
             {hasParsedTotals
               ? formatMoney(totalMinor, currencyCode)
               : t("home.monthTotalPending")}
-          </Text>
-          <Text variant="body" muted align="start" className="mt-3 font-medium">
-            {monthLabel}
           </Text>
           {deltaLabel ? (
             <Text variant="caption" muted align="start" className="mt-2 leading-5">

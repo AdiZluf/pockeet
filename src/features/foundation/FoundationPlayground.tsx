@@ -133,6 +133,7 @@ export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {})
       <Sheet
         visible={sheetOpen}
         onClose={() => setSheetOpen(false)}
+        scrimAccessibilityLabel="Close sheet"
         title="Bottom sheet"
         footer={<Button label="Close" onPress={() => setSheetOpen(false)} />}
       >

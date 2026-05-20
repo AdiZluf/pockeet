@@ -15,6 +15,8 @@ export type SheetProps = ModalProps & {
   onClose: () => void;
   /** iOS: fired after dismiss animation; use to run native pickers blocked by Modal. */
   onDismissed?: () => void;
+  /** Localized label for scrim tap-to-dismiss (required for a11y). */
+  scrimAccessibilityLabel: string;
   title?: string;
   children: React.ReactNode;
   footer?: React.ReactNode;
@@ -24,6 +26,7 @@ export function Sheet({
   visible,
   onClose,
   onDismissed,
+  scrimAccessibilityLabel,
   title,
   children,
   footer,
@@ -42,7 +45,7 @@ export function Sheet({
     >
       <Pressable
         className="flex-1 bg-overlay"
-        accessibilityLabel="Close sheet"
+        accessibilityLabel={scrimAccessibilityLabel}
         onPress={onClose}
       />
       <View

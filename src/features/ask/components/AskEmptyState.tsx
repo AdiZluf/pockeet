@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
-import { PressableScale, Surface, Text } from "@/components/ui";
+import { FilterChip, Surface, Text } from "@/components/ui";
 import { useIconColors } from "@/theme";
 
 const SUGGESTED_KEYS = [
@@ -39,17 +39,13 @@ export function AskEmptyState({ onSuggestionPress }: AskEmptyStateProps) {
         </Text>
         <View className="flex-row flex-wrap gap-2">
           {SUGGESTED_KEYS.map((key) => (
-            <PressableScale
+            <FilterChip
               key={key}
-              accessibilityRole="button"
-              accessibilityLabel={t(key)}
+              label={t(key)}
+              selected={false}
               onPress={() => onSuggestionPress(t(key))}
-              className="rounded-full border border-border-subtle bg-surface-elevated px-3.5 py-2.5"
-            >
-              <Text variant="caption" align="start" className="leading-5">
-                {t(key)}
-              </Text>
-            </PressableScale>
+              className="border border-border-subtle bg-surface-elevated"
+            />
           ))}
         </View>
       </View>

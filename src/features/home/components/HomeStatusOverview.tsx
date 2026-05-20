@@ -35,7 +35,7 @@ export function HomeStatusOverview({ counts, onStatusPress }: HomeStatusOverview
     .join(", ");
 
   return (
-    <View className="pb-2 pt-4">
+    <View className="pb-4 pt-6">
       <SectionHeader title={t("home.statusOverview")} className="mb-3" />
       <View
         className="flex-row flex-wrap gap-2 px-5"
@@ -53,7 +53,7 @@ export function HomeStatusOverview({ counts, onStatusPress }: HomeStatusOverview
             className="min-h-[44px] flex-row items-center gap-2 rounded-full bg-surface-elevated px-4 py-2"
           >
             <View className={`h-2 w-2 rounded-full ${item.colorClass}`} accessibilityElementsHidden />
-            <Text variant="label" className="font-medium">
+            <Text variant="label">
               {t(item.labelKey)}
             </Text>
             <Text variant="label" tabular muted>

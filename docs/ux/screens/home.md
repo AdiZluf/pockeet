@@ -5,14 +5,15 @@
 
 ## Layout (top → bottom)
 
-1. Quiet app bar + Settings + **month selector**
-2. Hero: **typography-led** month total (amount → month label → **delta vs previous month**)
-3. Category breakdown (flat bars; **rows tappable** → Receipts with filters)
-4. **Receipt status overview** strip (processing, needs review, ready, failed — hide zero counts)
-5. Needs-review rows (flat list, accent edge — if count &gt; 0)
-6. Processing queue (if count &gt; 0)
-7. Recent receipts (5) + **See all** → Receipts
+1. `ScreenHeader` (compact) + Settings + **month selector** (month label lives here only)
+2. Hero: **typography-led** month total (amount → **delta vs previous month** → footnotes)
+3. Insights strip (horizontal cards; MVP+ canned)
+4. Category breakdown (flat bars; **rows tappable** → Receipts with filters)
+5. **Receipt status overview** strip (processing, needs review, ready, failed — hide zero counts)
+6. Needs-review rows (flat list, accent edge — if count &gt; 0)
+7. Processing queue (if count &gt; 0)
 8. **Ask Pockeet** card → [ask modal](ask-pockeet.md)
+9. Recent receipts (5) + **See all** → Receipts
 
 ## Actions
 

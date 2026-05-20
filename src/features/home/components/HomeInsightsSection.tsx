@@ -30,7 +30,7 @@ export function HomeInsightsSection({ referenceDate }: HomeInsightsSectionProps)
   if (insights.length === 0) return null;
 
   return (
-    <View className="pb-2 pt-5">
+    <View className="pb-4 pt-6">
       <SectionHeader title={t("home.insights")} className="mb-3" />
       <ScrollView
         horizontal

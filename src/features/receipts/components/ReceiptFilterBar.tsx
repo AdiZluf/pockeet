@@ -3,10 +3,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
 import type { ReceiptFilters } from "@/db/receiptFilters";
-import { PressableScale, Text } from "@/components/ui";
+import { FilterChip, PressableScale, Text } from "@/components/ui";
 import { countActiveFilters, isDefaultFilters } from "@/features/receipts/utils/filterParams";
 import { buildFilterChips } from "@/features/receipts/utils/filterLabels";
-import { useIconColors, useTheme } from "@/theme";
+import { useIconColors } from "@/theme";
 import { cn } from "@/utils/cn";
 
 type ReceiptFilterBarProps = {
@@ -24,17 +24,13 @@ export function ReceiptFilterBar({
 }: ReceiptFilterBarProps) {
   const { t } = useTranslation();
   const iconColors = useIconColors();
-  const { colors } = useTheme();
   const activeCount = countActiveFilters(filters);
   const chips = buildFilterChips(filters, t, onChangeFilters);
   const showClear = !isDefaultFilters(filters);
   const filtersActive = activeCount > 0;
 
   return (
-    <View
-      className="z-10 border-b border-border-subtle bg-background pb-2"
-      style={{ borderBottomColor: colors.borderSubtle }}
-    >
+    <View className="z-10 border-b border-border-subtle bg-background pb-2">
       <View className="flex-row items-center gap-2 px-5 pt-1">
         <PressableScale
           accessibilityRole="button"
@@ -52,7 +48,7 @@ export function ReceiptFilterBar({
           />
           <Text
             variant="label"
-            className={cn("font-semibold", filtersActive && "text-foreground-inverse")}
+            className={filtersActive ? "text-foreground-inverse" : undefined}
           >
             {t("receipts.filters.title")}
           </Text>
@@ -71,7 +67,7 @@ export function ReceiptFilterBar({
             onPress={onClearAll}
             className="min-h-[44px] justify-center rounded-full px-3"
           >
-            <Text variant="label" className="font-semibold text-accent">
+            <Text variant="label" className="text-accent">
               {t("receipts.filters.clearAll")}
             </Text>
           </PressableScale>
@@ -84,18 +80,13 @@ export function ReceiptFilterBar({
           contentContainerClassName="gap-2 px-5 pt-3"
         >
           {chips.map((chip) => (
-            <PressableScale
+            <FilterChip
               key={chip.id}
-              accessibilityRole="button"
+              variant="removable"
+              label={chip.label}
               accessibilityLabel={t("receipts.filters.removeChip", { label: chip.label })}
               onPress={chip.onRemove}
-              className="min-h-[36px] flex-row items-center gap-1.5 rounded-full border border-border-subtle bg-accent-soft px-3 py-1.5"
-            >
-              <Text variant="caption" className="font-semibold text-accent">
-                {chip.label}
-              </Text>
-              <Ionicons name="close-circle" size={16} color={iconColors.accent} />
-            </PressableScale>
+            />
           ))}
         </ScrollView>
       ) : null}

@@ -5,7 +5,8 @@
     "retry": "Try again",
     "cancel": "Cancel",
     "save": "Save",
-    "back": "Back"
+    "back": "Back",
+    "closeSheet": "Close sheet"
   },
   "onboarding": {
     "screenLabel": "Welcome to Pockeet",
@@ -76,6 +77,7 @@
     "chooseGalleryBody": "Import one or more photos from your library",
     "uploadPdf": "Upload PDF",
     "uploadPdfBody": "Browse files for a digital receipt PDF",
+    "optionA11y": "{{title}}. {{body}}",
     "galleryFailedTitle": "Couldn't import photos",
     "galleryFailedBody": "Please try again or use Take photo.",
     "pdfInvalidTitle": "Not a PDF",
@@ -133,6 +135,7 @@
     "pageThumbA11y": "Page {{page}} of {{total}}",
     "cropTitle": "Crop receipt",
     "cropHint": "Pinch to zoom and drag to position the receipt inside the frame.",
+    "cropReset": "Reset position",
     "cropFrameLabel": "Crop area",
     "cropApply": "Use crop",
     "cropApplying": "Applying…",

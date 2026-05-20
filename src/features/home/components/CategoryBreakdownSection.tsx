@@ -39,7 +39,7 @@ export function CategoryBreakdownSection({
       : undefined;
 
   return (
-    <View className="pb-2 pt-6">
+    <View className="pb-4 pt-6">
       <SectionHeader title={t("home.categoryBreakdown")} className="mb-3" />
       <ElevatedGroup>
         <View className="gap-5 px-5 py-5" accessibilityLabel={chartSummary}>
@@ -47,7 +47,7 @@ export function CategoryBreakdownSection({
             const rowContent = (
               <>
                 <View className="flex-row items-baseline justify-between gap-4">
-                  <Text variant="bodyLg" align="start" className="flex-1 font-semibold">
+                  <Text variant="bodyLg" align="start" className="flex-1">
                     {row.name}
                   </Text>
                   <Text variant="label" muted tabular align="end" {...moneyTextProps}>
