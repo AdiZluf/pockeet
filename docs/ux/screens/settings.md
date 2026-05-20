@@ -7,7 +7,7 @@
 
 | Setting | Options |
 |---------|---------|
-| Language | English / עברית (instant RTL switch) |
+| Language | English / עברית — persisted in SQLite; **one** app reload when LTR↔RTL changes (guarded by `rtl_reload_pending`) |
 | Currency | ILS / USD (default display) |
 | Sign out | confirm optional |
 

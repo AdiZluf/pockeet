@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-import { Section, Surface } from "@/components/ui";
+import { GroupedList, Section } from "@/components/ui";
 import { listRecentReceipts } from "@/db/repositories/receiptRepository";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 import { ReceiptListRow } from "@/features/receipts/components/ReceiptListRow";
@@ -40,7 +40,7 @@ export function RecentReceiptsSection() {
 
   return (
     <Section title={t("home.recentReceipts")} className="px-5">
-      <Surface variant="elevated" className="overflow-hidden p-1">
+      <GroupedList>
         {rows.map((row) => (
           <ReceiptListRow
             key={row.id}
@@ -48,7 +48,7 @@ export function RecentReceiptsSection() {
             onPress={() => openReceipt(row.id, row.status)}
           />
         ))}
-      </Surface>
+      </GroupedList>
     </Section>
   );
 }

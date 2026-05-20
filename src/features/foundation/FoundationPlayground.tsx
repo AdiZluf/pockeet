@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   EmptyState,
+  GroupedList,
   Input,
   ListRow,
   LoadingSkeleton,
@@ -30,7 +31,7 @@ export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {})
 
   const toggleLocale = () => {
     const next: AppLocale = i18n.language === "he" ? "en" : "he";
-    setAppLocale(next);
+    void setAppLocale(next);
   };
 
   const body = (
@@ -52,6 +53,9 @@ export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {})
               block={false}
               className="self-start px-6"
             />
+            <Text variant="caption" muted className="mt-2">
+              {t("settings.languageReloadHint")}
+            </Text>
           </View>
         </View>
 
@@ -102,8 +106,8 @@ export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {})
           </Card>
         </Section>
 
-        <Section title="List rows" className="px-5">
-          <Card className="p-0 overflow-hidden">
+        <Section title="Grouped list" className="px-5">
+          <GroupedList>
             <ListRow
               title={<Text variant="label">Shufersal</Text>}
               subtitle={
@@ -117,13 +121,12 @@ export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {})
                 </Text>
               }
             />
-            <View className="ms-5 h-px bg-border" />
             <ListRow
               compact
               title={<Text variant="label">Settings row</Text>}
               trailing={<Text variant="caption">56pt</Text>}
             />
-          </Card>
+          </GroupedList>
         </Section>
 
         <Section title="Skeleton" className="px-5">

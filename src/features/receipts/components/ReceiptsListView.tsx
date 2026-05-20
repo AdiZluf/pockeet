@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next";
 
 import {
   EmptyState,
+  GroupedList,
   LoadingSkeleton,
   LoadingSkeletonGroup,
   Section,
-  Surface,
 } from "@/components/ui";
 import { listAllReceipts } from "@/db/repositories/receiptRepository";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
@@ -69,9 +69,10 @@ export function ReceiptsListView() {
     return (
       <View className="flex-1 gap-3 px-5 pt-2">
         <LoadingSkeletonGroup busy label={t("common.loading")}>
-          <LoadingSkeleton height={88} rounded="xl" />
-          <LoadingSkeleton height={88} rounded="xl" />
-          <LoadingSkeleton height={88} rounded="xl" />
+          <LoadingSkeleton height={14} width="30%" />
+          <LoadingSkeleton height={72} rounded="xl" />
+          <LoadingSkeleton height={72} rounded="xl" />
+          <LoadingSkeleton height={72} rounded="xl" />
         </LoadingSkeletonGroup>
       </View>
     );
@@ -100,7 +101,7 @@ export function ReceiptsListView() {
           className="px-5"
           first={sectionIndex === 0}
         >
-          <Surface variant="elevated" className="overflow-hidden p-1">
+          <GroupedList>
             {monthRows.map((row) => (
               <ReceiptListRow
                 key={row.id}
@@ -108,7 +109,7 @@ export function ReceiptsListView() {
                 onPress={() => openReceipt(row.id, row.status)}
               />
             ))}
-          </Surface>
+          </GroupedList>
         </Section>
       ))}
     </ScrollView>

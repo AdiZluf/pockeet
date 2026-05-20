@@ -15,9 +15,15 @@
 
 ## Tab bar
 
-- Background `surface`; hairline top or tonal contrast.
-- Active: accent icon + label; inactive: `text-tertiary`.
+- Background `surface`; hairline top `border-default`.
+- Active: `accent` icon + label; inactive: `text-tertiary` (via `useTheme()` in tab layout).
 - Min 44×44pt per tab item.
+
+## Grouped lists (Home, Receipts)
+
+- Month sections: `Section` overline + **`GroupedList`** inset well (not elevated card).
+- Home month total: typography on `background` with small accent mark — not a hero card panel.
+- Category breakdown: rows inside one `GroupedList`; chart summary `accessibilityLabel` on the group.
 
 ## FAB
 
@@ -53,12 +59,14 @@ Separator: inset from start gutter, `border-default` hairline.
 
 | Mirror | Do not mirror |
 |--------|----------------|
-| Tabs, FAB side, chevrons, padding start/end | Digits, decimal keyboard |
+| Tabs, FAB side (`end-5`), chevrons (`getBackChevronIcon`), padding start/end | Digits, decimal keyboard |
 | Form label edge | Chart bar meaning (keep readable) |
-| Filmstrip scroll origin | Currency display order |
+| Filmstrip scroll origin | Currency display order (`moneyTextProps` on amounts) |
 
 **Rule:** mirror flow, not numbers.  
 Design HE screens early — not mirrored EN comps.
+
+**Implementation:** `needsRtlReload()` compares `I18nManager.isRTL` to locale before any `forceRTL`. Reload runs **once** per transition; `rtl_reload_pending` in `app_preferences` prevents startup loops. Settings: Home gear → `/settings` modal.
 
 ## Implementation
 

@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
 import { Button, Surface, Text } from "@/components/ui";
+import { useIconColors } from "@/theme";
 
 type CapturePermissionViewProps = {
   onClose: () => void;
@@ -16,12 +17,13 @@ export function CapturePermissionView({
   showRequest = false,
 }: CapturePermissionViewProps) {
   const { t } = useTranslation();
+  const iconColors = useIconColors();
 
   return (
     <View className="flex-1 items-center justify-center px-6">
       <Surface variant="elevated" className="w-full max-w-[340px] items-center gap-4 p-6">
         <Surface variant="inset" className="h-16 w-16 items-center justify-center rounded-full">
-          <Ionicons name="camera-outline" size={32} color="#1F6F78" />
+          <Ionicons name="camera-outline" size={32} color={iconColors.accent} />
         </Surface>
         <Text variant="titleMd" className="text-center">
           {t("capture.permissionTitle")}

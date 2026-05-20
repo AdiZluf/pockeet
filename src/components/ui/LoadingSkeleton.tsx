@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { motion } from "@/theme";
+import { motion, useReducedMotion } from "@/theme";
 import { cn } from "@/utils/cn";
 
 export type LoadingSkeletonProps = ViewProps & {
@@ -31,25 +31,32 @@ export function LoadingSkeleton({
   className,
   ...props
 }: LoadingSkeletonProps) {
+  const reduceMotion = useReducedMotion();
   const opacity = useSharedValue(0.55);
 
   useEffect(() => {
+    if (reduceMotion) {
+      opacity.value = 0.72;
+      return;
+    }
     opacity.value = withRepeat(
       withTiming(1, { duration: motion.duration.slow * 3 }),
       -1,
       true,
     );
-  }, [opacity]);
+  }, [opacity, reduceMotion]);
 
   const pulseStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
   }));
 
+  const SkeletonView = reduceMotion ? View : Animated.View;
+
   return (
-    <Animated.View
+    <SkeletonView
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
-      style={[pulseStyle, { height, width }]}
+      style={reduceMotion ? { height, width, opacity: 0.72 } : [pulseStyle, { height, width }]}
       className={cn("bg-surface-muted", roundedClass[rounded], className)}
       {...props}
     />

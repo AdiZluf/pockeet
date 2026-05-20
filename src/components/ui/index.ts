@@ -5,6 +5,7 @@ export { ScreenHeader, type ScreenHeaderProps } from "./ScreenHeader";
 export { Surface, type SurfaceProps, type SurfaceVariant } from "./Surface";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { FAB, type FABProps } from "./FAB";
+export { GroupedList, type GroupedListProps } from "./GroupedList";
 export { Input, type InputProps } from "./Input";
 export {
   LoadingSkeleton,

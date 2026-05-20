@@ -9,8 +9,8 @@ Locked for MVP unless [decisions](decisions.md) records a change.
 | Framework | **Expo SDK 54** (managed, New Architecture) |
 | Language | **TypeScript ~5.9** |
 | Navigation | **expo-router 6** |
-| Styling | **NativeWind v4** + semantic tokens |
-| Animation | reanimated + gesture-handler |
+| Styling | **NativeWind v4** + semantic tokens (`src/theme/`, `useTheme`, `useIconColors`) |
+| Animation | reanimated + gesture-handler; `useReducedMotion` for a11y |
 | Forms | react-hook-form + zod |
 | Local DB | expo-sqlite + **Drizzle** |
 | Server state | TanStack Query |

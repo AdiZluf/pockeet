@@ -1,6 +1,6 @@
 import { ActivityIndicator, type PressableProps } from "react-native";
 
-import { a11y, motion } from "@/theme";
+import { a11y, motion, useIconColors } from "@/theme";
 import { cn } from "@/utils/cn";
 
 import { PressableScale } from "./PressableScale";
@@ -39,6 +39,7 @@ export function Button({
   accessibilityState,
   ...props
 }: ButtonProps) {
+  const iconColors = useIconColors();
   const isDisabled = disabled || loading;
 
   return (
@@ -58,7 +59,9 @@ export function Button({
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={variant === "primary" ? "#FFFCF9" : "#1F6F78"} />
+        <ActivityIndicator
+          color={variant === "primary" ? iconColors.inverse : iconColors.accent}
+        />
       ) : (
         <Text variant="label" className={labelClasses[variant]}>
           {label}

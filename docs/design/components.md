@@ -34,6 +34,17 @@ No icon-only without `accessibilityLabel`.
 
 Prefer **Surface** over ad-hoc `View` backgrounds in features.
 
+## GroupedList
+
+iOS Settings–style **inset** well (`Surface variant="inset"`) with hairline separators between child rows.
+
+| Prop | Use |
+|------|-----|
+| `highlight` | Optional 3pt `accent` leading stripe (e.g. needs-review queue) |
+
+Use for receipt lists on Home and Receipts tab — **not** elevated card + manual dividers.  
+Separator inset: `ms-16` from leading thumbnail. Children are typically `ListRow` or custom row content (e.g. category bars).
+
 ## Card
 
 Composable wrapper around **Surface** (+ optional `PressableScale` when interactive).
@@ -70,7 +81,12 @@ Editorial screen title (`display-lg` or `title-lg`) + optional subtitle. Use ins
 
 ## PressableScale
 
-Subtle scale on press (`0.98`, 100ms). Use on buttons, list rows, interactive cards. Respects [motion](../accessibility/README.md#motion).
+Subtle scale on press (`0.98`, 100ms). Use on buttons, list rows, interactive cards.  
+When system **Reduce Motion** is on, renders a plain `Pressable` (no scale). Hook: `useReducedMotion()` in `src/theme/`.
+
+## LoadingSkeleton
+
+Pulse animation on `surface-muted`; static opacity when Reduce Motion is on. Parent `LoadingSkeletonGroup` sets `busy` for AT.
 
 ## Section
 
@@ -79,11 +95,6 @@ Micro **overline** label (`font-micro`, uppercase, tracking) + optional subtitle
 ## EmptyState
 
 Icon 64pt, title, body, single primary CTA.
-
-## LoadingSkeleton
-
-Match final geometry; `surface-muted`; hide from AT (`importantForAccessibility=no`).  
-Parent region `busy` when loading.
 
 ## StatusChip
 
@@ -102,7 +113,18 @@ Label: localized “Scan receipt”. Position: [layout](layout.md#fab).
 | Card | surface, radius-lg |
 | Input | surface-muted, border-focus |
 | Sheet | surface, radius-2xl, overlay |
+| GroupedList | surface-muted (inset), border-default separators |
 | StatusChip | status-* fg/bg |
+
+## Theme hooks (icons & motion)
+
+| Hook | Use |
+|------|-----|
+| `useIconColors()` | `Ionicons` / `ActivityIndicator` — never raw hex in UI |
+| `useTheme()` | Tab bar, placeholders, programmatic colors |
+| `useReducedMotion()` | Disable press scale and skeleton pulse |
+
+Tab bar in `app/(tabs)/_layout.tsx` reads `colors` from `useTheme()`.
 
 ## Storybook (post-scaffold)
 

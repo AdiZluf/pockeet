@@ -1,6 +1,8 @@
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+import { useIconColors } from "@/theme";
+
 import { Button } from "./Button";
 import { Surface } from "./Surface";
 import { Text } from "./Text";
@@ -20,6 +22,8 @@ export function EmptyState({
   onAction,
   icon = "sparkles-outline",
 }: EmptyStateProps) {
+  const iconColors = useIconColors();
+
   return (
     <View
       className="items-center gap-5 px-6 py-12"
@@ -27,7 +31,7 @@ export function EmptyState({
       accessibilityLabel={`${title}. ${body}`}
     >
       <Surface variant="inset" className="h-20 w-20 items-center justify-center rounded-full">
-        <Ionicons name={icon} size={36} color="#1F6F78" />
+        <Ionicons name={icon} size={36} color={iconColors.accent} />
       </Surface>
       <View className="max-w-[280px] items-center gap-2">
         <Text variant="titleMd" className="text-center">

@@ -1,11 +1,13 @@
 import { useCallback, useState } from "react";
-import { Alert, Image, I18nManager, Pressable, ScrollView, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, View } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Button, StatusChip, Surface, Text } from "@/components/ui";
+import { useIconColors } from "@/theme";
+import { getBackChevronIcon, moneyTextProps } from "@/utils/rtl";
 import {
   getReceiptWithImages,
   softDeleteReceipt,
@@ -29,6 +31,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const iconColors = useIconColors();
   const [receipt, setReceipt] = useState<ReceiptDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
@@ -108,11 +111,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
           hitSlop={12}
           className="h-11 w-11 items-center justify-center rounded-full bg-surface-muted"
         >
-          <Ionicons
-            name={I18nManager.isRTL ? "chevron-forward" : "chevron-back"}
-            size={24}
-            color="#1C1917"
-          />
+          <Ionicons name={getBackChevronIcon()} size={24} color={iconColors.primary} />
         </Pressable>
         <Button
           variant="text"
@@ -161,7 +160,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
               <Text variant="micro" muted className="uppercase tracking-wide">
                 {t("receiptDetail.total")}
               </Text>
-              <Text variant="displayLg" tabular>
+              <Text variant="displayLg" tabular {...moneyTextProps}>
                 {formatMoney(receipt.totalMinor, receipt.currencyCode, i18n.language)}
               </Text>
               {categoryName ? (

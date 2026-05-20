@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ListRow, StatusChip, Text } from "@/components/ui";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 import { formatMoney } from "@/utils/money";
+import { moneyTextProps } from "@/utils/rtl";
 
 import {
   formatReceiptDate,
@@ -38,7 +39,7 @@ export function ReceiptListRow({ receipt, onPress, showAmount = true }: ReceiptL
       trailing={
         <View className="items-end gap-1">
           {showAmount && parsed && receipt.totalMinor != null ? (
-            <Text variant="label" className="tabular-nums">
+            <Text variant="label" className="tabular-nums" {...moneyTextProps}>
               {formatMoney(receipt.totalMinor, receipt.currencyCode, i18n.language)}
             </Text>
           ) : null}

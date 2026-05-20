@@ -37,8 +37,10 @@ CI: automated token pair checks on PR. Category charts: **never color-only** —
 
 ## Motion
 
-Honor `Reduce Motion`:
-- Disable chart width animation, button scale, shimmer.
+Honor `Reduce Motion` (implemented via `useReducedMotion()` in `src/theme/`):
+- **PressableScale:** no scale — plain `Pressable`.
+- **LoadingSkeleton:** static opacity (~0.72), no pulse.
+- Chart width animation: disabled when added (static bars today).
 - Crossfade ≤120ms OK.
 - Consider disabling haptics when reduced.
 
@@ -76,7 +78,8 @@ Honor `Reduce Motion`:
 ## RTL
 
 Mirror layout flow; **isolate** bidi for mixed merchant names.  
-Numbers and charts stay LTR — [layout](../design/layout.md#rtl).
+Switching EN↔HE reloads the app so `I18nManager` direction applies (Settings from Home gear).  
+Money uses `moneyTextProps` (LTR). Numbers and charts stay LTR — [layout](../design/layout.md#rtl).
 
 ## QA (each release)
 

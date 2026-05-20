@@ -4,7 +4,20 @@
     "loading": "טוען",
     "retry": "נסה שוב",
     "cancel": "ביטול",
-    "save": "שמור"
+    "save": "שמור",
+    "back": "חזרה"
+  },
+  "settings": {
+    "title": "הגדרות",
+    "open": "הגדרות",
+    "languageSection": "שפה",
+    "languageEn": "English",
+    "languageHe": "עברית",
+    "languageEnA11y": "אנגלית",
+    "languageEnA11ySelected": "אנגלית, נבחר",
+    "languageHeA11y": "עברית",
+    "languageHeA11ySelected": "עברית, נבחר",
+    "languageReloadHint": "האפליקציה מתרעננת בעת מעבר בין אנגלית לעברית כדי לעדכן את כיוון הממשק."
   },
   "tabs": {
     "home": "בית",
@@ -83,6 +96,7 @@
     "categoryBreakdown": "לפי קטגוריה",
     "categoryBreakdownDemo": "פיצול לדוגמה — עדיין לא מהקבלות שלך.",
     "categoryBarA11y": "{{name}}, {{percent}} אחוז",
+    "categoryChartSummary": "קטגוריה מובילה: {{name}}, {{percent}} אחוז, {{amount}}",
     "needsReview": "נדרשת בדיקה",
     "processing": "בניתוח"
   },

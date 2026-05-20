@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { a11y, surfaceElevation } from "@/theme";
+import { a11y, surfaceElevation, useIconColors } from "@/theme";
 import { cn } from "@/utils/cn";
 
 import { PressableScale } from "./PressableScale";
@@ -22,6 +22,7 @@ export function FAB({
   className,
 }: FABProps) {
   const insets = useSafeAreaInsets();
+  const iconColors = useIconColors();
 
   if (!visible) return null;
 
@@ -43,7 +44,7 @@ export function FAB({
         ...surfaceElevation.fab,
       }}
     >
-      <Ionicons name="camera" size={26} color="#FFFCF9" />
+      <Ionicons name="camera" size={26} color={iconColors.inverse} />
     </PressableScale>
   );
 }

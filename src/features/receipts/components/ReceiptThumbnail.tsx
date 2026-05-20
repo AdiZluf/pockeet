@@ -1,6 +1,7 @@
 import { Image, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+import { useIconColors } from "@/theme";
 import { cn } from "@/utils/cn";
 
 type ReceiptThumbnailProps = {
@@ -15,6 +16,8 @@ const sizeClasses = {
 };
 
 export function ReceiptThumbnail({ uri, className, size = "md" }: ReceiptThumbnailProps) {
+  const iconColors = useIconColors();
+
   if (uri) {
     return (
       <Image
@@ -38,7 +41,7 @@ export function ReceiptThumbnail({ uri, className, size = "md" }: ReceiptThumbna
         className,
       )}
     >
-      <Ionicons name="receipt-outline" size={20} color="#1F6F78" />
+      <Ionicons name="receipt-outline" size={20} color={iconColors.accent} />
     </View>
   );
 }

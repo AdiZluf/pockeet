@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Alert, I18nManager, Image, Pressable, View } from "react-native";
+import { Alert, Image, Pressable, View } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Button, Text } from "@/components/ui";
+import { useIconColors } from "@/theme";
+import { getBackChevronIcon } from "@/utils/rtl";
 
 import { MAX_RECEIPT_PAGES } from "../constants";
 import { useDefaultCurrency } from "../hooks/useDefaultCurrency";
@@ -17,6 +19,7 @@ export function CapturePreviewView() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const iconColors = useIconColors();
   const currencyCode = useDefaultCurrency();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -82,11 +85,7 @@ export function CapturePreviewView() {
           hitSlop={12}
           className="h-11 w-11 items-center justify-center"
         >
-          <Ionicons
-            name={I18nManager.isRTL ? "chevron-forward" : "chevron-back"}
-            size={28}
-            color="#1C1917"
-          />
+          <Ionicons name={getBackChevronIcon()} size={28} color={iconColors.primary} />
         </Pressable>
         <Text variant="label">
           {t("capture.pageCount", { count: images.length, max: MAX_RECEIPT_PAGES })}

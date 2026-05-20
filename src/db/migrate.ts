@@ -57,6 +57,10 @@ const SCHEMA_STATEMENTS = [
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
   );`,
   `CREATE INDEX IF NOT EXISTS line_items_receipt_id_idx ON line_items(receipt_id);`,
+  `CREATE TABLE IF NOT EXISTS app_preferences (
+    key TEXT PRIMARY KEY NOT NULL,
+    value TEXT NOT NULL
+  );`,
   `CREATE TABLE IF NOT EXISTS sync_outbox (
     id TEXT PRIMARY KEY NOT NULL,
     entity TEXT NOT NULL,

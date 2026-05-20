@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Alert, Pressable, View } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Haptics from "expo-haptics";
@@ -10,7 +10,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { randomUUID } from "expo-crypto";
 
 import { Text } from "@/components/ui";
-import { a11y } from "@/theme";
+import { a11y, useIconColors } from "@/theme";
 
 import { MAX_RECEIPT_PAGES } from "../constants";
 import { useCaptureSessionStore } from "../stores/captureSessionStore";
@@ -21,6 +21,7 @@ export function CaptureCameraView() {
   const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const iconColors = useIconColors();
   const cameraRef = useRef<CameraView>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [isCapturing, setIsCapturing] = useState(false);
@@ -32,12 +33,6 @@ export function CaptureCameraView() {
   const selectImage = useCaptureSessionStore((s) => s.selectImage);
   const canAddMore = useCaptureSessionStore((s) => s.canAddMore);
   const reset = useCaptureSessionStore((s) => s.reset);
-
-  useEffect(() => {
-    if (permission && !permission.granted && permission.canAskAgain) {
-      void requestPermission();
-    }
-  }, [permission, requestPermission]);
 
   const handleClose = () => {
     if (images.length === 0) {
@@ -92,6 +87,11 @@ export function CaptureCameraView() {
   const handlePickGallery = async () => {
     if (!canAddMore()) {
       Alert.alert(t("capture.maxPagesTitle"), t("capture.maxPagesBody", { max: MAX_RECEIPT_PAGES }));
+      return;
+    }
+
+    const libraryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!libraryPermission.granted) {
       return;
     }
 
@@ -154,7 +154,7 @@ export function CaptureCameraView() {
             hitSlop={12}
             className="h-11 w-11 items-center justify-center rounded-full bg-overlay"
           >
-            <Ionicons name="close" size={24} color="#FFFCF9" />
+            <Ionicons name="close" size={24} color={iconColors.inverse} />
           </Pressable>
           {images.length > 0 ? (
             <Pressable
@@ -193,7 +193,7 @@ export function CaptureCameraView() {
             onPress={() => void handlePickGallery()}
             className="h-12 w-12 items-center justify-center rounded-full bg-overlay"
           >
-            <Ionicons name="images-outline" size={26} color="#FFFCF9" />
+            <Ionicons name="images-outline" size={26} color={iconColors.inverse} />
           </Pressable>
 
           <Pressable

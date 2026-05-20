@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Button, StatusChip, Surface, Text } from "@/components/ui";
+import { useIconColors } from "@/theme";
 import { getReceiptWithImages } from "@/db/repositories/receiptRepository";
 
 export default function ReceiptProcessingScreen() {
@@ -12,6 +13,7 @@ export default function ReceiptProcessingScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const iconColors = useIconColors();
   const [thumbUri, setThumbUri] = useState<string | null>(null);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function ReceiptProcessingScreen() {
               />
             ) : (
               <View className="h-44 w-36 items-center justify-center rounded-xl bg-accent-soft">
-                <ActivityIndicator color="#1F6F78" />
+                <ActivityIndicator color={iconColors.accent} />
               </View>
             )}
 

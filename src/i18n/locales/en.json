@@ -4,7 +4,20 @@
     "loading": "Loading",
     "retry": "Try again",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "back": "Back"
+  },
+  "settings": {
+    "title": "Settings",
+    "open": "Settings",
+    "languageSection": "Language",
+    "languageEn": "English",
+    "languageHe": "עברית",
+    "languageEnA11y": "English",
+    "languageEnA11ySelected": "English, selected",
+    "languageHeA11y": "Hebrew",
+    "languageHeA11ySelected": "Hebrew, selected",
+    "languageReloadHint": "The app refreshes when switching between English and Hebrew so layout direction updates correctly."
   },
   "tabs": {
     "home": "Home",
@@ -83,6 +96,7 @@
     "categoryBreakdown": "By category",
     "categoryBreakdownDemo": "Sample breakdown for demo — not from your receipts yet.",
     "categoryBarA11y": "{{name}}, {{percent}} percent",
+    "categoryChartSummary": "Top category: {{name}}, {{percent}} percent, {{amount}}",
     "needsReview": "Needs review",
     "processing": "Still analyzing"
   },

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextInput, View, type TextInputProps } from "react-native";
 
+import { useTheme } from "@/theme";
 import { cn } from "@/utils/cn";
 import { moneyTextProps } from "@/utils/rtl";
 
@@ -21,6 +22,7 @@ export function Input({
   onBlur,
   ...props
 }: InputProps) {
+  const { colors } = useTheme();
   const [focused, setFocused] = useState(false);
 
   return (
@@ -34,7 +36,7 @@ export function Input({
           error && "border-status-failed",
           className,
         )}
-        placeholderTextColor="#78716C"
+        placeholderTextColor={colors.textTertiary}
         onFocus={(e) => {
           setFocused(true);
           onFocus?.(e);

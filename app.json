@@ -37,13 +37,17 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow Pockeet to access your camera to scan receipts."
+          "cameraPermission": "Allow Pockeet to access your camera to scan receipts.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow Pockeet to access your photos to upload receipt images."
+          "photosPermission": "Allow Pockeet to access your photos to upload receipt images.",
+          "microphonePermission": false,
+          "cameraPermission": false
         }
       ]
     ],

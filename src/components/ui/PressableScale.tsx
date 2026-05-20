@@ -1,11 +1,11 @@
-import { Pressable, View, type PressableProps } from "react-native";
+import { Pressable, type PressableProps } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 
-import { motion } from "@/theme";
+import { motion, useReducedMotion } from "@/theme";
 
 type PressableScaleProps = PressableProps & {
   scaleTo?: number;
@@ -21,11 +21,20 @@ export function PressableScale({
   style,
   ...props
 }: PressableScaleProps) {
+  const reduceMotion = useReducedMotion();
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
+
+  if (reduceMotion) {
+    return (
+      <Pressable disabled={disabled} style={style} {...props}>
+        {children}
+      </Pressable>
+    );
+  }
 
   return (
     <Pressable
