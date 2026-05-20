@@ -75,8 +75,12 @@
   "processing": {
     "screenLabel": "Receipt processing",
     "thumbnailLabel": "Receipt thumbnail",
-    "title": "Saved to Pockeet",
-    "bodyLocal": "Your receipt is stored locally. Analysis will run when cloud processing is enabled.",
+    "title": "Analyzing receipt",
+    "analyzingBody": "Reading totals and line items on your device. This usually takes a few seconds.",
+    "analyzingA11y": "Analyzing receipt",
+    "completeTitle": "Ready to review",
+    "completeBody": "We filled in merchant, date, and line items. Check them before saving.",
+    "completeA11y": "Receipt ready for review",
     "reviewNow": "Review now",
     "continueBackground": "Continue in background"
   },

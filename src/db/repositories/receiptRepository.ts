@@ -145,6 +145,61 @@ export type UpdateReceiptReviewInput = {
   }[];
 };
 
+export type ApplyParsedReceiptInput = {
+  receiptId: string;
+  merchantName: string;
+  purchasedAt: string;
+  currencyCode: string;
+  subtotalMinor?: number;
+  taxMinor?: number;
+  totalMinor: number;
+  defaultCategoryId: string;
+  confidence?: number;
+  lineItems: {
+    id: string;
+    name: string;
+    totalMinor: number;
+    categoryId: string;
+    quantity?: number;
+  }[];
+};
+
+export async function applyParsedReceipt(input: ApplyParsedReceiptInput) {
+  const now = new Date().toISOString();
+
+  await db
+    .update(receipts)
+    .set({
+      merchantName: input.merchantName,
+      purchasedAt: input.purchasedAt,
+      currencyCode: input.currencyCode,
+      subtotalMinor: input.subtotalMinor,
+      taxMinor: input.taxMinor,
+      totalMinor: input.totalMinor,
+      defaultCategoryId: input.defaultCategoryId,
+      confidence: input.confidence,
+      status: "needs_review",
+      updatedAt: now,
+    })
+    .where(eq(receipts.id, input.receiptId));
+
+  await db.delete(lineItems).where(eq(lineItems.receiptId, input.receiptId));
+
+  if (input.lineItems.length > 0) {
+    await insertLineItems(
+      input.lineItems.map((item, index) => ({
+        id: item.id,
+        receiptId: input.receiptId,
+        sortOrder: index,
+        name: item.name,
+        totalMinor: item.totalMinor,
+        categoryId: item.categoryId,
+        quantity: item.quantity,
+      })),
+    );
+  }
+}
+
 export async function updateReceiptFromReview(input: UpdateReceiptReviewInput) {
   const now = new Date().toISOString();
 

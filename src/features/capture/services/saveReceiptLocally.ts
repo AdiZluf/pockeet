@@ -2,6 +2,7 @@ import * as FileSystem from "expo-file-system/legacy";
 import { randomUUID } from "expo-crypto";
 
 import { insertReceipt, insertReceiptImages } from "@/db/repositories/receiptRepository";
+import { runFakeParse } from "@/features/parse/services/fakeParseReceipt";
 
 import { LOCAL_USER_ID } from "../constants";
 import type { CaptureSessionImage } from "../types";
@@ -50,6 +51,8 @@ export async function saveReceiptLocally(
     userId: LOCAL_USER_ID,
   });
   await insertReceiptImages(imageRows);
+
+  void runFakeParse(receiptId);
 
   return receiptId;
 }
