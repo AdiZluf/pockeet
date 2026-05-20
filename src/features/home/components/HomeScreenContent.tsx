@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import type { ReceiptStatusFilter } from "@/db/receiptFilters";
 import { EmptyState, LoadingSkeleton, LoadingSkeletonGroup } from "@/components/ui";
 import { AskPockeetCard } from "@/features/ask/components/AskPockeetCard";
-import { useOpenCapture } from "@/features/capture/hooks/useOpenCapture";
+import { useAddReceiptSheetStore } from "@/features/capture/stores/addReceiptSheetStore";
 import { useFocusRefresh } from "@/hooks/useFocusRefresh";
 
 import { useHomeNavigation } from "../hooks/useHomeNavigation";
@@ -17,12 +17,13 @@ import { HomeMonthSelector } from "./HomeMonthSelector";
 import { HomeStatusOverview } from "./HomeStatusOverview";
 import { HomeTopBar } from "./HomeTopBar";
 import { ReceiptQueueSection } from "./ReceiptQueueSection";
+import { HomeInsightsSection } from "./HomeInsightsSection";
 import { RecentReceiptsSection } from "./RecentReceiptsSection";
 
 export function HomeScreenContent() {
   const { t } = useTranslation();
   const router = useRouter();
-  const openCapture = useOpenCapture();
+  const openAddReceipt = useAddReceiptSheetStore((s) => s.open);
   const { openReceiptsFiltered, openAllReceipts } = useHomeNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(() => new Date());
@@ -112,11 +113,12 @@ export function HomeScreenContent() {
             body={t("home.emptyBody")}
             icon="scan-outline"
             actionLabel={t("home.emptyAction")}
-            onAction={openCapture}
+            onAction={openAddReceipt}
           />
         </View>
       ) : (
         <>
+          <HomeInsightsSection referenceDate={selectedMonth} />
           <CategoryBreakdownSection
             categories={summary.categories}
             currencyCode={summary.currencyCode}

@@ -1,9 +1,7 @@
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTranslation } from "react-i18next";
 
-import { FAB } from "@/components/ui";
-import { useOpenCapture } from "@/features/capture/hooks/useOpenCapture";
+import { AddReceiptFAB } from "@/features/capture/components/AddReceiptFAB";
 import { HomeScreenContent } from "@/features/home/components/HomeScreenContent";
 
 /**
@@ -12,13 +10,10 @@ import { HomeScreenContent } from "@/features/home/components/HomeScreenContent"
  */
 export default function HomeTabScreen() {
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation();
-  const openCapture = useOpenCapture();
-
   return (
     <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
       <HomeScreenContent />
-      <FAB accessibilityLabel={t("fab.scanReceipt")} onPress={openCapture} />
+      <AddReceiptFAB />
     </View>
   );
 }

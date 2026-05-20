@@ -6,16 +6,25 @@ import { cn } from "@/utils/cn";
 
 import { PressableScale } from "./PressableScale";
 
+export type FABIcon = "camera" | "add";
+
 export type FABProps = {
   accessibilityLabel: string;
+  icon?: FABIcon;
   visible?: boolean;
   tabBarOffset?: number;
   onPress?: () => void;
   className?: string;
 };
 
+const FAB_ICONS: Record<FABIcon, keyof typeof Ionicons.glyphMap> = {
+  camera: "camera",
+  add: "add",
+};
+
 export function FAB({
   accessibilityLabel,
+  icon = "add",
   visible = true,
   tabBarOffset = 49,
   onPress,
@@ -44,7 +53,7 @@ export function FAB({
         ...surfaceElevation.fab,
       }}
     >
-      <Ionicons name="camera" size={26} color={iconColors.inverse} />
+      <Ionicons name={FAB_ICONS[icon]} size={icon === "add" ? 28 : 26} color={iconColors.inverse} />
     </PressableScale>
   );
 }

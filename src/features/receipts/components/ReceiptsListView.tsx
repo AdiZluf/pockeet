@@ -90,7 +90,7 @@ export function ReceiptsListView({ filters, onClearFilters }: ReceiptsListViewPr
         <EmptyState
           title={filteredEmpty ? t("receipts.filteredEmptyTitle") : t("receipts.emptyTitle")}
           body={filteredEmpty ? t("receipts.filteredEmptyBody") : t("receipts.emptyBody")}
-          icon="receipt-outline"
+          icon={filteredEmpty ? "funnel-outline" : "receipt-outline"}
           actionLabel={
             filteredEmpty ? t("receipts.filters.clearAll") : t("receipts.emptyAction")
           }

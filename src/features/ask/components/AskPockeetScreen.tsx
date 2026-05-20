@@ -1,6 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -14,20 +13,16 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Button, PressableScale, Text } from "@/components/ui";
 import { respondToAskQuestion } from "@/features/ask/services/askResponder";
+import type { AskResponse } from "@/features/ask/types";
 import { useIconColors, useTheme } from "@/theme";
 
-const SUGGESTED_KEYS = [
-  "ask.suggested.restaurants",
-  "ask.suggested.categoryIncrease",
-  "ask.suggested.shufersal",
-  "ask.suggested.monthTotal",
-] as const;
+import { AskEmptyState } from "./AskEmptyState";
+import { AskMessageBubble } from "./AskMessageBubble";
+import { AskThinkingBubble } from "./AskThinkingBubble";
 
-type ChatMessage = {
-  id: string;
-  role: "user" | "assistant";
-  text: string;
-};
+type ChatMessage =
+  | { id: string; role: "user"; text: string }
+  | { id: string; role: "assistant"; response: AskResponse };
 
 export function AskPockeetScreen() {
   const { t } = useTranslation();
@@ -36,10 +31,17 @@ export function AskPockeetScreen() {
   const iconColors = useIconColors();
   const { colors } = useTheme();
   const { prefill } = useLocalSearchParams<{ prefill?: string }>();
+  const scrollRef = useRef<ScrollView>(null);
 
   const [input, setInput] = useState(prefill ?? "");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isThinking, setIsThinking] = useState(false);
+
+  const scrollToEnd = useCallback(() => {
+    requestAnimationFrame(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    });
+  }, []);
 
   const sendQuestion = useCallback(
     async (text: string) => {
@@ -54,16 +56,18 @@ export function AskPockeetScreen() {
       setMessages((prev) => [...prev, userMsg]);
       setInput("");
       setIsThinking(true);
+      scrollToEnd();
 
       await new Promise((r) => setTimeout(r, 500 + Math.random() * 300));
       const answer = await respondToAskQuestion(trimmed);
       setMessages((prev) => [
         ...prev,
-        { id: `a-${Date.now()}`, role: "assistant", text: answer },
+        { id: `a-${Date.now()}`, role: "assistant", response: answer },
       ]);
       setIsThinking(false);
+      scrollToEnd();
     },
-    [isThinking],
+    [isThinking, scrollToEnd],
   );
 
   return (
@@ -72,7 +76,10 @@ export function AskPockeetScreen() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={{ paddingTop: insets.top }}
     >
-      <View className="flex-row items-center gap-2 px-5 pb-3 pt-2">
+      <View className="items-center pb-1 pt-2">
+        <View className="h-1 w-10 rounded-full bg-border" accessibilityElementsHidden />
+      </View>
+      <View className="flex-row items-center gap-2 px-5 pb-3">
         <PressableScale
           accessibilityRole="button"
           accessibilityLabel={t("common.back")}
@@ -93,61 +100,29 @@ export function AskPockeetScreen() {
       </View>
 
       <ScrollView
+        ref={scrollRef}
         className="flex-1 px-5"
-        contentContainerClassName="gap-3 pb-4"
+        contentContainerClassName="gap-4 pb-4"
         keyboardShouldPersistTaps="handled"
+        onContentSizeChange={scrollToEnd}
       >
-        {messages.length === 0 ? (
-          <Text variant="body" muted align="start" className="py-2">
-            {t("ask.emptyHint")}
-          </Text>
+        {messages.length === 0 && !isThinking ? (
+          <AskEmptyState onSuggestionPress={(q) => void sendQuestion(q)} />
         ) : null}
-        {messages.map((msg) => (
-          <View
-            key={msg.id}
-            className={
-              msg.role === "user"
-                ? "self-end max-w-[88%] rounded-2xl rounded-br-md bg-accent px-4 py-3"
-                : "self-start max-w-[88%] rounded-2xl rounded-bl-md bg-surface-elevated px-4 py-3"
-            }
-          >
-            <Text
-              variant="body"
-              align="start"
-              className={msg.role === "user" ? "text-foreground-inverse" : undefined}
-            >
-              {msg.text}
-            </Text>
-          </View>
-        ))}
-        {isThinking ? (
-          <View className="flex-row items-center gap-2 self-start px-1 py-2">
-            <ActivityIndicator size="small" color={iconColors.secondary} />
-            <Text variant="caption" muted>
-              {t("ask.thinking")}
-            </Text>
-          </View>
-        ) : null}
+        {messages.map((msg) =>
+          msg.role === "user" ? (
+            <AskMessageBubble key={msg.id} role="user" text={msg.text} />
+          ) : (
+            <AskMessageBubble key={msg.id} role="assistant" response={msg.response} />
+          ),
+        )}
+        {isThinking ? <AskThinkingBubble /> : null}
       </ScrollView>
 
-      <View className="gap-3 border-t border-border-subtle px-5 pt-3" style={{ paddingBottom: insets.bottom + 12 }}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-grow-0">
-          <View className="flex-row gap-2">
-            {SUGGESTED_KEYS.map((key) => (
-              <PressableScale
-                key={key}
-                accessibilityRole="button"
-                accessibilityLabel={t(key)}
-                onPress={() => void sendQuestion(t(key))}
-                className="rounded-full bg-surface-muted px-3 py-2"
-              >
-                <Text variant="caption" className="leading-5">
-                  {t(key)}
-                </Text>
-              </PressableScale>
-            ))}
-          </View>
-        </ScrollView>
+      <View
+        className="gap-3 border-t border-border-subtle bg-background px-5 pt-3"
+        style={{ paddingBottom: insets.bottom + 12 }}
+      >
         <View className="flex-row items-end gap-2">
           <TextInput
             value={input}
@@ -155,7 +130,7 @@ export function AskPockeetScreen() {
             placeholder={t("ask.inputPlaceholder")}
             placeholderTextColor={colors.textSecondary}
             multiline
-            className="min-h-[44px] max-h-28 flex-1 rounded-2xl border border-border-subtle bg-surface px-4 py-3 text-base text-foreground"
+            className="min-h-[48px] max-h-28 flex-1 rounded-2xl border border-border-subtle bg-surface px-4 py-3 text-base"
             style={{ color: colors.textPrimary }}
             accessibilityLabel={t("ask.inputA11y")}
           />

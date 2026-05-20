@@ -6,7 +6,8 @@ import type { ReceiptFilters } from "@/db/receiptFilters";
 import { PressableScale, Text } from "@/components/ui";
 import { countActiveFilters, isDefaultFilters } from "@/features/receipts/utils/filterParams";
 import { buildFilterChips } from "@/features/receipts/utils/filterLabels";
-import { useIconColors } from "@/theme";
+import { useIconColors, useTheme } from "@/theme";
+import { cn } from "@/utils/cn";
 
 type ReceiptFilterBarProps = {
   filters: ReceiptFilters;
@@ -23,26 +24,41 @@ export function ReceiptFilterBar({
 }: ReceiptFilterBarProps) {
   const { t } = useTranslation();
   const iconColors = useIconColors();
+  const { colors } = useTheme();
   const activeCount = countActiveFilters(filters);
   const chips = buildFilterChips(filters, t, onChangeFilters);
   const showClear = !isDefaultFilters(filters);
+  const filtersActive = activeCount > 0;
 
   return (
-    <View className="gap-3 pb-2">
-      <View className="flex-row items-center gap-2 px-5">
+    <View
+      className="z-10 border-b border-border-subtle bg-background pb-2"
+      style={{ borderBottomColor: colors.borderSubtle }}
+    >
+      <View className="flex-row items-center gap-2 px-5 pt-1">
         <PressableScale
           accessibilityRole="button"
           accessibilityLabel={t("receipts.filters.open")}
           onPress={onOpenFilters}
-          className="min-h-[44px] flex-row items-center gap-2 rounded-full bg-surface-elevated px-4 py-2"
+          className={cn(
+            "min-h-[44px] flex-row items-center gap-2 rounded-full px-4 py-2",
+            filtersActive ? "bg-accent" : "bg-surface-elevated",
+          )}
         >
-          <Ionicons name="options-outline" size={18} color={iconColors.primary} />
-          <Text variant="label" className="font-semibold">
+          <Ionicons
+            name="options-outline"
+            size={18}
+            color={filtersActive ? iconColors.inverse : iconColors.primary}
+          />
+          <Text
+            variant="label"
+            className={cn("font-semibold", filtersActive && "text-foreground-inverse")}
+          >
             {t("receipts.filters.title")}
           </Text>
           {activeCount > 0 ? (
-            <View className="min-h-[20px] min-w-[20px] items-center justify-center rounded-full bg-accent px-1.5">
-              <Text variant="micro" className="font-bold text-foreground-inverse">
+            <View className="min-h-[20px] min-w-[20px] items-center justify-center rounded-full bg-surface px-1.5">
+              <Text variant="micro" className="font-bold text-accent">
                 {activeCount}
               </Text>
             </View>
@@ -53,7 +69,7 @@ export function ReceiptFilterBar({
             accessibilityRole="button"
             accessibilityLabel={t("receipts.filters.clearAll")}
             onPress={onClearAll}
-            className="min-h-[44px] justify-center px-2"
+            className="min-h-[44px] justify-center rounded-full px-3"
           >
             <Text variant="label" className="font-semibold text-accent">
               {t("receipts.filters.clearAll")}
@@ -65,7 +81,7 @@ export function ReceiptFilterBar({
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerClassName="gap-2 px-5"
+          contentContainerClassName="gap-2 px-5 pt-3"
         >
           {chips.map((chip) => (
             <PressableScale
@@ -73,12 +89,12 @@ export function ReceiptFilterBar({
               accessibilityRole="button"
               accessibilityLabel={t("receipts.filters.removeChip", { label: chip.label })}
               onPress={chip.onRemove}
-              className="min-h-[36px] flex-row items-center gap-1.5 rounded-full bg-surface-muted px-3 py-1.5"
+              className="min-h-[36px] flex-row items-center gap-1.5 rounded-full border border-border-subtle bg-accent-soft px-3 py-1.5"
             >
-              <Text variant="caption" className="font-medium">
+              <Text variant="caption" className="font-semibold text-accent">
                 {chip.label}
               </Text>
-              <Ionicons name="close" size={14} color={iconColors.secondary} />
+              <Ionicons name="close-circle" size={16} color={iconColors.accent} />
             </PressableScale>
           ))}
         </ScrollView>

@@ -20,42 +20,43 @@ export function AskPockeetCard({ onOpen }: AskPockeetCardProps) {
   const iconColors = useIconColors();
 
   return (
-    <PressableScale
-      accessibilityRole="button"
-      accessibilityLabel={t("ask.cardA11y")}
-      onPress={() => onOpen()}
-    >
-      <Surface variant="elevated" className="gap-4 p-5">
+    <Surface variant="elevated" className="overflow-hidden">
+      <PressableScale
+        accessibilityRole="button"
+        accessibilityLabel={t("ask.cardA11y")}
+        onPress={() => onOpen()}
+        className="gap-4 p-5"
+      >
         <View className="flex-row items-center gap-3">
-          <View className="h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
-            <Ionicons name="sparkles-outline" size={22} color={iconColors.accent} />
+          <View className="h-11 w-11 items-center justify-center rounded-2xl bg-accent-soft">
+            <Ionicons name="sparkles" size={22} color={iconColors.accent} />
           </View>
-          <View className="min-w-0 flex-1 gap-0.5">
+          <View className="min-w-0 flex-1 gap-1">
             <Text variant="titleMd" align="start">
               {t("ask.title")}
             </Text>
-            <Text variant="caption" muted align="start">
+            <Text variant="caption" muted align="start" className="leading-5">
               {t("ask.subtitle")}
             </Text>
           </View>
           <Ionicons name="chevron-forward" size={20} color={iconColors.secondary} />
         </View>
-        <View className="flex-row flex-wrap gap-2">
-          {SUGGESTED_KEYS.map((key) => (
-            <PressableScale
-              key={key}
-              accessibilityRole="button"
-              accessibilityLabel={t(key)}
-              onPress={() => onOpen(t(key))}
-              className="rounded-full bg-surface-muted px-3 py-2"
-            >
-              <Text variant="caption" align="start" className="leading-5">
-                {t(key)}
-              </Text>
-            </PressableScale>
-          ))}
-        </View>
-      </Surface>
-    </PressableScale>
+      </PressableScale>
+      <View className="flex-row flex-wrap gap-2 border-t border-border-subtle px-5 pb-5 pt-0">
+        {SUGGESTED_KEYS.map((key) => (
+          <PressableScale
+            key={key}
+            accessibilityRole="button"
+            accessibilityLabel={t(key)}
+            onPress={() => onOpen(t(key))}
+            className="mt-4 rounded-full border border-border-subtle bg-surface-muted px-3 py-2"
+          >
+            <Text variant="caption" align="start" className="leading-5">
+              {t(key)}
+            </Text>
+          </PressableScale>
+        ))}
+      </View>
+    </Surface>
   );
 }

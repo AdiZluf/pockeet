@@ -64,7 +64,18 @@
     "subtitle": "Design system primitives — not product screens."
   },
   "fab": {
-    "scanReceipt": "Scan receipt"
+    "scanReceipt": "Scan receipt",
+    "addReceipt": "Add receipt"
+  },
+  "addReceipt": {
+    "title": "Add receipt",
+    "subtitle": "Scan, import, or upload — saved on this device instantly.",
+    "takePhoto": "Take photo",
+    "takePhotoBody": "Use your camera to capture a paper receipt",
+    "chooseGallery": "Choose from gallery",
+    "chooseGalleryBody": "Import one or more photos from your library",
+    "uploadPdf": "Upload PDF",
+    "uploadPdfBody": "Browse files for a digital receipt PDF"
   },
   "status": {
     "processing": "Analyzing…",
@@ -209,7 +220,8 @@
     "statusReady": "Ready",
     "statusFailed": "Failed",
     "needsReview": "Needs review",
-    "processing": "Still analyzing"
+    "processing": "Still analyzing",
+    "insights": "Insights"
   },
   "receipts": {
     "subtitle": "Everything you've saved on this device",
@@ -223,6 +235,7 @@
     "filters": {
       "title": "Filters",
       "sheetTitle": "Filter receipts",
+      "sheetHint": "Narrow your list by month, category, or status. Changes apply instantly.",
       "open": "Open filters",
       "apply": "Apply filters",
       "applyCount": "Show {{count}} receipts",
@@ -251,8 +264,17 @@
     "subtitle": "Questions about your spending",
     "sheetSubtitle": "Answers from your saved receipts",
     "cardA11y": "Ask Pockeet about your spending",
-    "emptyHint": "Ask about categories, merchants, or this month's total.",
+    "emptyTitle": "What would you like to know?",
+    "emptyHint": "Ask about categories, merchants, or how much you've spent this month.",
+    "suggestionsLabel": "Try asking",
     "thinking": "Thinking…",
+    "basedOnReceipts": "Based on {{count}} receipt(s) · {{scope}}",
+    "basedOnSaved": "Based on your saved receipts",
+    "source": {
+      "this_month": "this month",
+      "last_90_days": "last 90 days",
+      "all_saved": "all saved receipts"
+    },
     "inputPlaceholder": "Ask a question…",
     "inputA11y": "Question input",
     "send": "Send",

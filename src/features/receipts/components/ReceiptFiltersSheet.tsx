@@ -130,6 +130,9 @@ export function ReceiptFiltersSheet({
     >
       <ScrollView className="max-h-[60vh]" showsVerticalScrollIndicator={false}>
         <View className="gap-6 pb-4">
+          <Text variant="body" muted align="start" className="leading-6">
+            {t("receipts.filters.sheetHint")}
+          </Text>
           <View className="gap-3">
             <Text variant="label" muted align="start" className="uppercase tracking-wide">
               {t("receipts.filters.period")}

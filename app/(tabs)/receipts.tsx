@@ -4,12 +4,12 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
-import { FAB, ScreenHeader } from "@/components/ui";
+import { ScreenHeader } from "@/components/ui";
 import {
   DEFAULT_RECEIPT_FILTERS,
   type ReceiptFilters,
 } from "@/db/receiptFilters";
-import { useOpenCapture } from "@/features/capture/hooks/useOpenCapture";
+import { AddReceiptFAB } from "@/features/capture/components/AddReceiptFAB";
 import { ReceiptFilterBar } from "@/features/receipts/components/ReceiptFilterBar";
 import { ReceiptFiltersSheet } from "@/features/receipts/components/ReceiptFiltersSheet";
 import { ReceiptsListView } from "@/features/receipts/components/ReceiptsListView";
@@ -27,7 +27,6 @@ export default function ReceiptsTabScreen() {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const router = useRouter();
-  const openCapture = useOpenCapture();
   const params = useLocalSearchParams();
   const [filters, setFilters] = useState<ReceiptFilters>(() =>
     filtersFromSearchParams(params),
@@ -67,7 +66,7 @@ export default function ReceiptsTabScreen() {
         onClose={() => setSheetOpen(false)}
         onApply={applyFilters}
       />
-      <FAB accessibilityLabel={t("fab.scanReceipt")} onPress={openCapture} />
+      <AddReceiptFAB />
     </View>
   );
 }

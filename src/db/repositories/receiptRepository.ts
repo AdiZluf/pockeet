@@ -423,6 +423,39 @@ export async function listReceiptsByStatus(statuses: ReceiptStatus[], limit = 5)
   });
 }
 
+export async function listMonthReadyReceipts(
+  referenceDate = new Date(),
+  displayCurrency?: string,
+) {
+  const { start, end } = monthRange(referenceDate);
+  const currencyClause = displayCurrency
+    ? eq(receipts.currencyCode, displayCurrency)
+    : undefined;
+
+  return db.query.receipts.findMany({
+    where: and(
+      isNull(receipts.deletedAt),
+      eq(receipts.status, "ready"),
+      gte(receipts.purchasedAt, start),
+      lt(receipts.purchasedAt, end),
+      sql`${receipts.totalMinor} IS NOT NULL`,
+      currencyClause,
+    ),
+    columns: {
+      id: true,
+      merchantName: true,
+      totalMinor: true,
+      defaultCategoryId: true,
+      currencyCode: true,
+    },
+    with: {
+      lineItems: {
+        columns: { name: true, totalMinor: true, categoryId: true },
+      },
+    },
+  });
+}
+
 export async function getCategoryBreakdownForMonth(
   referenceDate = new Date(),
   displayCurrency?: string,
