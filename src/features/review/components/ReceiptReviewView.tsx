@@ -23,7 +23,7 @@ import {
   LoadingSkeleton,
   LoadingSkeletonGroup,
   PressableScale,
-  ReceiptHeroImage,
+  ReceiptAttachmentPreview,
   SectionHeader,
   StatusChip,
   Text,
@@ -31,6 +31,7 @@ import {
 import { listCategories } from "@/db/repositories/categoryRepository";
 import { getReceiptWithImages } from "@/db/repositories/receiptRepository";
 import { useIconColors, useTheme } from "@/theme";
+import { isPdfUri } from "@/utils/receiptMedia";
 
 import { saveReceiptReview, validateForSave } from "../services/saveReceiptReview";
 import type { ReviewFormDraft, ReviewSource } from "../types";
@@ -249,9 +250,11 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
 
         {heroUri ? (
           <FadeInView className="px-5 gap-3" delay={80}>
-            <ReceiptHeroImage
+            <ReceiptAttachmentPreview
               uri={heroUri}
-              accessibilityLabel={t("review.heroImage")}
+              accessibilityLabel={
+                isPdfUri(heroUri) ? t("review.pdfAttachment") : t("review.heroImage")
+              }
               maxHeight={320}
             />
             {images.length > 1 ? (
@@ -269,7 +272,13 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
                       index === selectedImageIndex ? "border-accent" : "border-border-subtle"
                     }`}
                   >
-                    <Image source={{ uri: image.localUri }} className="h-16 w-12" resizeMode="cover" />
+                    {isPdfUri(image.localUri) ? (
+                      <View className="h-16 w-12 items-center justify-center bg-accent-soft">
+                        <Ionicons name="document-text-outline" size={20} color={iconColors.accent} />
+                      </View>
+                    ) : (
+                      <Image source={{ uri: image.localUri }} className="h-16 w-12" resizeMode="cover" />
+                    )}
                   </PressableScale>
                 ))}
               </ScrollView>

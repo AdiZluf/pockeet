@@ -10,6 +10,7 @@ import { useIconColors } from "@/theme";
 
 import { MAX_RECEIPT_PAGES } from "../constants";
 import { useDefaultCurrency } from "../hooks/useDefaultCurrency";
+import { useUploadReceiptPdf } from "../hooks/useUploadReceiptPdf";
 import { saveReceiptLocally } from "../services/saveReceiptLocally";
 import { useCaptureSessionStore } from "../stores/captureSessionStore";
 import { CaptureActionButton, CaptureActionsPanel } from "./CaptureActionButton";
@@ -22,6 +23,7 @@ export function CapturePreviewView() {
   const iconColors = useIconColors();
   const currencyCode = useDefaultCurrency();
   const [isSaving, setIsSaving] = useState(false);
+  const uploadPdf = useUploadReceiptPdf();
 
   const images = useCaptureSessionStore((s) => s.images);
   const selectedIndex = useCaptureSessionStore((s) => s.selectedIndex);
@@ -185,6 +187,13 @@ export function CapturePreviewView() {
                       max: MAX_RECEIPT_PAGES,
                     })
               }
+            />
+
+            <CaptureActionButton
+              variant="default"
+              icon="document-outline"
+              label={t("capture.uploadPdf")}
+              onPress={() => void uploadPdf({ replaceSession: true })}
             />
           </View>
         </CaptureActionsPanel>

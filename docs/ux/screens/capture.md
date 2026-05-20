@@ -5,9 +5,10 @@
 
 ## Camera
 
-- Full-bleed viewfinder; Close; Gallery; Shutter; flash
+- Full-bleed viewfinder; Close; Gallery; Shutter; **Upload PDF** (document picker, PDF only)
 - Shutter → add to session strip; stay on camera
-- Max **5** pages; min 1 to continue
+- **Upload PDF** (empty session) → save locally → `processing` → fake parse → review (skips preview/crop)
+- Max **5** photo pages; min 1 photo to continue to preview
 
 | State | UI |
 |-------|-----|
@@ -19,7 +20,7 @@
 ## Preview
 
 - Filmstrip + large selected preview (crop hint on image + selected thumb badge)
-- **Page actions** panel: Edit image, Remove page (destructive tonal), Add page (emphasis)
+- **Page actions** panel: Edit image, Remove page, Add page, Upload PDF (replaces photo session after confirm)
 - Primary **Save & analyze** docked below panel → SQLite `processing` + → [processing](processing.md)
 
 | State | UI |

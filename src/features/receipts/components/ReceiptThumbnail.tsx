@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { useIconColors } from "@/theme";
 import { cn } from "@/utils/cn";
+import { isPdfUri } from "@/utils/receiptMedia";
 
 type ReceiptThumbnailProps = {
   uri: string | null;
@@ -17,6 +18,21 @@ const sizeClasses = {
 
 export function ReceiptThumbnail({ uri, className, size = "md" }: ReceiptThumbnailProps) {
   const iconColors = useIconColors();
+
+  if (uri && isPdfUri(uri)) {
+    return (
+      <View
+        className={cn(
+          "items-center justify-center rounded-xl border-2 border-surface bg-accent-soft",
+          sizeClasses[size],
+          className,
+        )}
+        accessibilityLabel="PDF receipt"
+      >
+        <Ionicons name="document-text-outline" size={size === "sm" ? 18 : 22} color={iconColors.accent} />
+      </View>
+    );
+  }
 
   if (uri) {
     return (

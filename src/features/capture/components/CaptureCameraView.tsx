@@ -12,6 +12,7 @@ import { randomUUID } from "expo-crypto";
 import { Text } from "@/components/ui";
 import { a11y, useIconColors } from "@/theme";
 
+import { useUploadReceiptPdf } from "../hooks/useUploadReceiptPdf";
 import { MAX_RECEIPT_PAGES } from "../constants";
 import { useCaptureSessionStore } from "../stores/captureSessionStore";
 import { ThumbnailStrip } from "./ThumbnailStrip";
@@ -25,6 +26,8 @@ export function CaptureCameraView() {
   const cameraRef = useRef<CameraView>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [isCapturing, setIsCapturing] = useState(false);
+  const [isUploadingPdf, setIsUploadingPdf] = useState(false);
+  const uploadPdf = useUploadReceiptPdf();
 
   const images = useCaptureSessionStore((s) => s.images);
   const selectedIndex = useCaptureSessionStore((s) => s.selectedIndex);
@@ -81,6 +84,15 @@ export function CaptureCameraView() {
       }
     } finally {
       setIsCapturing(false);
+    }
+  };
+
+  const handlePickPdf = async () => {
+    setIsUploadingPdf(true);
+    try {
+      await uploadPdf();
+    } finally {
+      setIsUploadingPdf(false);
     }
   };
 
@@ -208,7 +220,16 @@ export function CaptureCameraView() {
             <View className="h-full w-full rounded-full bg-foreground-inverse" />
           </Pressable>
 
-          <View className="h-12 w-12" />
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("capture.uploadPdf")}
+            accessibilityState={{ busy: isUploadingPdf, disabled: isUploadingPdf }}
+            onPress={() => void handlePickPdf()}
+            disabled={isUploadingPdf}
+            className="h-12 w-12 items-center justify-center rounded-full bg-overlay"
+          >
+            <Ionicons name="document-outline" size={26} color={iconColors.inverse} />
+          </Pressable>
         </View>
       </View>
     </View>

@@ -14,7 +14,8 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { Button, FadeInView, StatusChip, Surface, Text } from "@/components/ui";
+import { Button, FadeInView, ReceiptAttachmentPreview, StatusChip, Surface, Text } from "@/components/ui";
+import { isPdfUri } from "@/utils/receiptMedia";
 import { getReceiptWithImages } from "@/db/repositories/receiptRepository";
 import {
   FAKE_PARSE_DELAY_MS,
@@ -180,7 +181,15 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
 
             <View className="items-center gap-5 px-6 py-9">
               <Animated.View style={thumbStyle} className="relative">
-                {thumbUri ? (
+                {thumbUri && isPdfUri(thumbUri) ? (
+                  <View className="w-[148px] overflow-hidden rounded-2xl">
+                    <ReceiptAttachmentPreview
+                      uri={thumbUri}
+                      variant="processing"
+                      accessibilityLabel={t("processing.pdfThumbnailLabel")}
+                    />
+                  </View>
+                ) : thumbUri ? (
                   <View className="overflow-hidden rounded-2xl border border-border-subtle bg-surface-muted">
                     <Image
                       source={{ uri: thumbUri }}

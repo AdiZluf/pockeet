@@ -11,12 +11,13 @@ import {
   LoadingSkeleton,
   LoadingSkeletonGroup,
   PressableScale,
-  ReceiptHeroImage,
+  ReceiptAttachmentPreview,
   StatusChip,
   Surface,
   Text,
 } from "@/components/ui";
 import { useIconColors, useTheme } from "@/theme";
+import { isPdfUri } from "@/utils/receiptMedia";
 import { formatMoney, moneyWritingProps } from "@/utils/money";
 import {
   getReceiptWithImages,
@@ -165,9 +166,13 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
         </View>
 
         {heroUri ? (
-          <ReceiptHeroImage
+          <ReceiptAttachmentPreview
             uri={heroUri}
-            accessibilityLabel={t("receiptDetail.imagePage", { page: 1 })}
+            accessibilityLabel={
+              isPdfUri(heroUri)
+                ? t("receiptDetail.pdfAttachment")
+                : t("receiptDetail.imagePage", { page: 1 })
+            }
             maxHeight={280}
           />
         ) : null}
@@ -176,12 +181,18 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {receipt.images.map((image, index) => (
               <Surface key={image.id} variant="elevated" className="me-3 overflow-hidden p-0">
-                <Image
-                  source={{ uri: image.localUri }}
-                  className="h-20 w-16 bg-surface-muted"
-                  resizeMode="cover"
-                  accessibilityLabel={t("receiptDetail.imagePage", { page: index + 1 })}
-                />
+                {isPdfUri(image.localUri) ? (
+                  <View className="h-20 w-16 items-center justify-center bg-accent-soft">
+                    <Ionicons name="document-text-outline" size={24} color={iconColors.accent} />
+                  </View>
+                ) : (
+                  <Image
+                    source={{ uri: image.localUri }}
+                    className="h-20 w-16 bg-surface-muted"
+                    resizeMode="cover"
+                    accessibilityLabel={t("receiptDetail.imagePage", { page: index + 1 })}
+                  />
+                )}
               </Surface>
             ))}
           </ScrollView>

@@ -6,12 +6,7 @@ import { runFakeParse } from "@/features/parse/services/fakeParseReceipt";
 
 import { LOCAL_USER_ID } from "../constants";
 import type { CaptureSessionImage } from "../types";
-
-function receiptStorageDir(receiptId: string) {
-  const base = FileSystem.documentDirectory;
-  if (!base) throw new Error("Document directory is unavailable");
-  return `${base}receipts/${receiptId}/`;
-}
+import { receiptStorageDir } from "./receiptStorage";
 
 export async function saveReceiptLocally(
   images: CaptureSessionImage[],
