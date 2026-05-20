@@ -26,7 +26,7 @@ export function EmptyState({
 
   return (
     <View
-      className="items-center gap-5 px-6 py-12"
+      className="items-center gap-6 px-6 py-14"
       accessibilityRole="text"
       accessibilityLabel={`${title}. ${body}`}
     >

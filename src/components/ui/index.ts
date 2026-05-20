@@ -24,3 +24,4 @@ export { StatusChip, type ReceiptStatusVariant, type StatusChipProps } from "./S
 export { Text, type TextProps } from "./Text";
 export { FadeInView, type FadeInViewProps } from "./FadeInView";
 export { ReceiptHeroImage, type ReceiptHeroImageProps } from "./ReceiptHeroImage";
+export { BrandedLaunch } from "./BrandedLaunch";

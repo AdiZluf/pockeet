@@ -24,7 +24,7 @@ const variantClasses: Record<ButtonVariant, string> = {
 
 const labelClasses: Record<ButtonVariant, string> = {
   primary: "text-foreground-inverse",
-  secondary: "text-accent",
+  secondary: "text-foreground",
   destructive: "text-status-failed",
   text: "text-accent",
 };

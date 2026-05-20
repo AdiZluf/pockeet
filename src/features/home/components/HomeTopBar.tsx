@@ -13,16 +13,21 @@ export function HomeTopBar() {
   const { colors } = useTheme();
 
   return (
-    <View className="flex-row items-center justify-between px-5 pb-2 pt-2">
-      <View className="flex-row items-center gap-2.5">
-        <View
-          className="h-9 w-9 items-center justify-center rounded-xl bg-accent-soft"
-          accessibilityElementsHidden
-        >
-          <View className="h-3.5 w-3.5 rounded-md bg-accent" />
+    <View className="flex-row items-center justify-between px-5 pb-3 pt-4">
+      <View className="min-w-0 flex-1 gap-0.5">
+        <View className="flex-row items-center gap-2.5">
+          <View
+            className="h-9 w-9 items-center justify-center rounded-xl bg-accent-soft"
+            accessibilityElementsHidden
+          >
+            <View className="h-3.5 w-3.5 rounded-md bg-accent" />
+          </View>
+          <Text variant="titleMd" align="start" className="font-semibold tracking-tight">
+            {t("home.greeting")}
+          </Text>
         </View>
-        <Text variant="titleMd" align="start" className="font-semibold tracking-tight">
-          {t("home.greeting")}
+        <Text variant="caption" muted align="start" className="ms-[46px]">
+          {t("home.subtitle")}
         </Text>
       </View>
       <PressableScale

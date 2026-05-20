@@ -16,13 +16,11 @@ const CHART_BAR_CLASSES = [
 type CategoryBreakdownSectionProps = {
   categories: CategoryBreakdownRow[];
   currencyCode: string;
-  usesMockCategories: boolean;
 };
 
 export function CategoryBreakdownSection({
   categories,
   currencyCode,
-  usesMockCategories,
 }: CategoryBreakdownSectionProps) {
   const { t } = useTranslation();
 
@@ -40,11 +38,7 @@ export function CategoryBreakdownSection({
 
   return (
     <View className="pb-2 pt-6">
-      <SectionHeader
-        title={t("home.categoryBreakdown")}
-        subtitle={usesMockCategories ? t("home.categoryBreakdownDemo") : undefined}
-        className="mb-3"
-      />
+      <SectionHeader title={t("home.categoryBreakdown")} className="mb-3" />
       <ElevatedGroup>
         <View className="gap-5 px-5 py-5" accessibilityLabel={chartSummary}>
           {categories.map((row, index) => (

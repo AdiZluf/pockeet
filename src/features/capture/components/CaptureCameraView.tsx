@@ -92,6 +92,7 @@ export function CaptureCameraView() {
 
     const libraryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!libraryPermission.granted) {
+      Alert.alert(t("capture.galleryDeniedTitle"), t("capture.galleryDeniedBody"));
       return;
     }
 

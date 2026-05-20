@@ -8,7 +8,7 @@ import { resetDemoData, seedDemoData } from "@/features/demo/seedDemoData";
 import { resetOnboardingState } from "@/features/onboarding/services/onboardingGate";
 
 type DevSeedActionsProps = {
-  onSeeded: () => void;
+  onSeeded?: () => void;
 };
 
 export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
@@ -27,7 +27,7 @@ export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
         return;
       }
       Alert.alert(t("demo.seededTitle"), t("demo.seededBody", { count: result.inserted }));
-      onSeeded();
+      onSeeded?.();
     } catch {
       Alert.alert(t("demo.seedFailedTitle"), t("demo.seedFailedBody"));
     } finally {
@@ -46,7 +46,7 @@ export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
             try {
               setBusy(true);
               await resetDemoData();
-              onSeeded();
+              onSeeded?.();
             } finally {
               setBusy(false);
             }
@@ -77,25 +77,27 @@ export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
   };
 
   return (
-    <View className="mx-5 mb-2 flex-row flex-wrap gap-x-4 gap-y-1 border-b border-border-subtle pb-3">
-      <Text variant="caption" muted className="w-full">
+    <View className="gap-3">
+      <Text variant="caption" muted align="start" className="leading-5">
         {t("demo.banner")}
       </Text>
-      <Pressable disabled={busy} onPress={() => void handleSeed()} accessibilityRole="button">
-        <Text variant="caption" className="text-accent">
-          {t("demo.seed")}
-        </Text>
-      </Pressable>
-      <Pressable disabled={busy} onPress={handleReset} accessibilityRole="button">
-        <Text variant="caption" muted>
-          {t("demo.reset")}
-        </Text>
-      </Pressable>
-      <Pressable disabled={busy} onPress={handleResetOnboarding} accessibilityRole="button">
-        <Text variant="caption" muted>
-          {t("demo.resetOnboarding")}
-        </Text>
-      </Pressable>
+      <View className="flex-row flex-wrap gap-x-5 gap-y-2">
+        <Pressable disabled={busy} onPress={() => void handleSeed()} accessibilityRole="button">
+          <Text variant="label" className="text-accent">
+            {t("demo.seed")}
+          </Text>
+        </Pressable>
+        <Pressable disabled={busy} onPress={handleReset} accessibilityRole="button">
+          <Text variant="label" muted>
+            {t("demo.reset")}
+          </Text>
+        </Pressable>
+        <Pressable disabled={busy} onPress={handleResetOnboarding} accessibilityRole="button">
+          <Text variant="label" muted>
+            {t("demo.resetOnboarding")}
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }

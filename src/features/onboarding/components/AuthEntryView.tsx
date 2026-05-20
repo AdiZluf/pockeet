@@ -1,4 +1,4 @@
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -15,13 +15,6 @@ export function AuthEntryView() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const iconColors = useIconColors();
-
-  const showComingSoon = (provider: "apple" | "google") => {
-    Alert.alert(
-      t("onboarding.comingSoonTitle"),
-      t("onboarding.comingSoonBody", { provider: t(`onboarding.provider.${provider}`) }),
-    );
-  };
 
   const handleGuest = async () => {
     await markGuestSession();
@@ -52,17 +45,11 @@ export function AuthEntryView() {
           </Surface>
         </View>
 
-        <View className="gap-3">
-          <AuthProviderButton
-            icon="logo-apple"
-            label={t("onboarding.continueApple")}
-            onPress={() => showComingSoon("apple")}
-          />
-          <AuthProviderButton
-            icon="logo-google"
-            label={t("onboarding.continueGoogle")}
-            onPress={() => showComingSoon("google")}
-          />
+        <View className="gap-4">
+          <Button label={t("onboarding.continueGuest")} onPress={() => void handleGuest()} />
+          <Text variant="caption" muted align="center" className="leading-5 px-2">
+            {t("onboarding.guestHint")}
+          </Text>
         </View>
 
         <View className="flex-row items-center gap-3">
@@ -73,10 +60,18 @@ export function AuthEntryView() {
           <View className="h-px flex-1 bg-border" />
         </View>
 
-        <Button label={t("onboarding.continueGuest")} onPress={() => void handleGuest()} />
-        <Text variant="caption" muted align="center" className="leading-5 px-2">
-          {t("onboarding.guestHint")}
-        </Text>
+        <View className="gap-3">
+          <AuthProviderButton
+            icon="logo-apple"
+            label={t("onboarding.continueApple")}
+            comingSoon
+          />
+          <AuthProviderButton
+            icon="logo-google"
+            label={t("onboarding.continueGoogle")}
+            comingSoon
+          />
+        </View>
       </FadeInView>
     </View>
   );

@@ -33,7 +33,8 @@
     "continueApple": "Continue with Apple",
     "continueGoogle": "Continue with Google",
     "continueGuest": "Continue as guest",
-    "guestHint": "Guest mode stores receipts locally on this device. Apple and Google sign-in are coming soon.",
+    "guestHint": "Receipts stay on this device. Sign in later to sync across devices.",
+    "comingSoonBadge": "Soon",
     "or": "or",
     "comingSoonTitle": "Coming soon",
     "comingSoonBody": "{{provider}} sign-in is not available in this build yet. Use Continue as guest for now.",
@@ -44,8 +45,10 @@
   },
   "settings": {
     "title": "Settings",
+    "subtitle": "Preferences and about",
     "open": "Settings",
     "aboutSection": "About",
+    "developerSection": "Developer",
     "appName": "Pockeet",
     "version": "Version {{version}}"
   },
@@ -93,7 +96,9 @@
     "lastPageBody": "A receipt needs at least one photo.",
     "saveAndAnalyze": "Save & analyze",
     "saving": "Saving…",
-    "savedLocallyHint": "Saved on this device. Cloud analysis comes later.",
+    "savedLocallyHint": "Saved on this device. Review details after analysis.",
+    "galleryDeniedTitle": "Photos access needed",
+    "galleryDeniedBody": "Allow photo library access in Settings to import receipt images.",
     "saveFailedTitle": "Couldn't save receipt",
     "saveFailedBody": "Please try again.",
     "noPages": "No photos in this session.",
@@ -122,6 +127,7 @@
     "completeTitle": "Ready to review",
     "completeBody": "We filled in merchant, date, and line items. Check them before saving.",
     "completeA11y": "Receipt ready for review",
+    "openingReview": "Opening review…",
     "reviewNow": "Review now",
     "continueBackground": "Continue in background"
   },
@@ -168,9 +174,10 @@
     "monthTotal": "This month",
     "monthTotalPending": "—",
     "monthTotalHint": "Totals appear after receipts are analyzed.",
-    "demoCategoryHint": "Includes demo category split when data is sparse.",
+    "emptyTitle": "Your month starts here",
+    "emptyBody": "Scan a receipt to see spending totals and categories fill in automatically.",
+    "emptyAction": "Scan a receipt",
     "categoryBreakdown": "By category",
-    "categoryBreakdownDemo": "Sample breakdown for demo — not from your receipts yet.",
     "categoryBarA11y": "{{name}}, {{percent}} percent",
     "categoryChartSummary": "Top category: {{name}}, {{percent}} percent, {{amount}}",
     "needsReview": "Needs review",
@@ -181,7 +188,8 @@
     "unnamedReceipt": "Receipt · {{count}} photos",
     "rowA11y": "{{merchant}}, {{status}}",
     "emptyTitle": "No receipts yet",
-    "emptyBody": "Scan your first receipt with the + button."
+    "emptyBody": "Scan a receipt to build your history on this device.",
+    "emptyAction": "Scan a receipt"
   },
   "receiptDetail": {
     "title": "Receipt",
@@ -196,7 +204,8 @@
     "deleteTitle": "Delete receipt?",
     "deleteBody": "This removes the receipt from your device.",
     "deleteConfirm": "Delete",
-    "notFound": "Receipt not found.",
+    "notFoundTitle": "Receipt not found",
+    "notFound": "This receipt may have been deleted or is no longer available.",
     "edit": "Edit",
     "addDetails": "Add details"
   },

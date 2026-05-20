@@ -23,7 +23,7 @@ import {
 import { motion, useIconColors, useReducedMotion } from "@/theme";
 
 const POLL_MS = 400;
-const SUCCESS_NAV_DELAY_MS = 720;
+const SUCCESS_NAV_DELAY_MS = 1400;
 const STAGE_STEP_MS = Math.floor(FAKE_PARSE_DELAY_MS / 3);
 
 const STAGE_KEYS = ["stepReading", "stepExtracting", "stepOrganizing"] as const;
@@ -145,7 +145,7 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
   };
 
   const openReview = () => {
-    router.push({
+    router.replace({
       pathname: "/receipt/[id]/review",
       params: { id: receiptId, source: "scan" },
     });
@@ -216,6 +216,11 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
                     ? t("processing.completeBody")
                     : t(`processing.${stageKey}`)}
                 </Text>
+                {phase === "complete" && canReview ? (
+                  <Text variant="caption" muted align="center">
+                    {t("processing.openingReview")}
+                  </Text>
+                ) : null}
               </View>
             </View>
           </Surface>

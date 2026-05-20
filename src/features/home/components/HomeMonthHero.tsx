@@ -9,7 +9,6 @@ type HomeMonthHeroProps = {
   totalMinor: number;
   currencyCode: string;
   hasParsedTotals: boolean;
-  usesMockCategories: boolean;
 };
 
 export function HomeMonthHero({
@@ -17,12 +16,11 @@ export function HomeMonthHero({
   totalMinor,
   currencyCode,
   hasParsedTotals,
-  usesMockCategories,
 }: HomeMonthHeroProps) {
   const { t } = useTranslation();
 
   return (
-    <View className="px-5 pb-4 pt-2" accessibilityRole="header">
+    <View className="px-5 pb-4 pt-3" accessibilityRole="header">
       <Surface variant="hero">
         <View className="h-1 bg-accent" accessibilityElementsHidden />
         <View className="bg-accent-soft px-6 pb-7 pt-5">
@@ -49,10 +47,6 @@ export function HomeMonthHero({
           {!hasParsedTotals ? (
             <Text variant="caption" muted align="start" className="mt-2 leading-5">
               {t("home.monthTotalHint")}
-            </Text>
-          ) : usesMockCategories ? (
-            <Text variant="caption" muted align="start" className="mt-2 leading-5">
-              {t("home.demoCategoryHint")}
             </Text>
           ) : null}
         </View>

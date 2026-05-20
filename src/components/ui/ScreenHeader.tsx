@@ -20,8 +20,8 @@ export function ScreenHeader({
   ...props
 }: ScreenHeaderProps) {
   return (
-    <View className={cn("flex-row items-start justify-between gap-4 px-5 pb-1 pt-2", className)} {...props}>
-      <View className="min-w-0 flex-1 gap-1">
+    <View className={cn("flex-row items-start justify-between gap-4 px-5 pb-3 pt-4", className)} {...props}>
+      <View className="min-w-0 flex-1 gap-1.5">
         <Text variant={large ? "displayLg" : "titleLg"} align="start" className="tracking-tight">
           {title}
         </Text>

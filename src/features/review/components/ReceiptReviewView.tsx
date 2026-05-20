@@ -18,6 +18,7 @@ import {
   Button,
   DividerList,
   ElevatedGroup,
+  EmptyState,
   FadeInView,
   LoadingSkeleton,
   LoadingSkeletonGroup,
@@ -29,7 +30,7 @@ import {
 } from "@/components/ui";
 import { listCategories } from "@/db/repositories/categoryRepository";
 import { getReceiptWithImages } from "@/db/repositories/receiptRepository";
-import { useIconColors } from "@/theme";
+import { useIconColors, useTheme } from "@/theme";
 
 import { saveReceiptReview, validateForSave } from "../services/saveReceiptReview";
 import type { ReviewFormDraft, ReviewSource } from "../types";
@@ -54,6 +55,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const iconColors = useIconColors();
+  const { colors } = useTheme();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -186,11 +188,17 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
 
   if (!form) {
     return (
-      <View className="flex-1 items-center justify-center bg-background px-5">
-        <Text variant="body" muted>
-          {t("receiptDetail.notFound")}
-        </Text>
-        <Button className="mt-4" label={t("common.back")} onPress={() => router.back()} />
+      <View
+        className="flex-1 justify-center bg-background px-5"
+        style={{ paddingTop: insets.top }}
+      >
+        <EmptyState
+          title={t("receiptDetail.notFoundTitle")}
+          body={t("receiptDetail.notFound")}
+          icon="document-outline"
+          actionLabel={t("common.back")}
+          onAction={() => router.back()}
+        />
       </View>
     );
   }
@@ -203,16 +211,16 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={{ paddingTop: insets.top }}
     >
-      <View className="flex-row items-center justify-between px-3 py-2">
-        <Pressable
+      <View className="flex-row items-center justify-between px-5 py-3">
+        <PressableScale
           accessibilityRole="button"
           accessibilityLabel={t("common.back")}
           onPress={() => router.back()}
-          hitSlop={12}
-          className="h-11 w-11 items-center justify-center rounded-full"
+          className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated"
+          style={{ borderWidth: 0.5, borderColor: colors.borderSubtle }}
         >
           <Ionicons name="chevron-back" size={24} color={iconColors.primary} />
-        </Pressable>
+        </PressableScale>
         <StatusChip
           variant={receiptStatusVariant(receiptStatus as Parameters<typeof receiptStatusVariant>[0])}
           label={t(receiptStatusI18nKey(receiptStatus as Parameters<typeof receiptStatusI18nKey>[0]))}

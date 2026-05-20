@@ -31,20 +31,13 @@ export type HomeSummary = {
   totalMinor: number;
   currencyCode: string;
   hasParsedTotals: boolean;
+  receiptCount: number;
+  isEmpty: boolean;
   needsReview: ReceiptSummaryRow[];
   processing: ReceiptSummaryRow[];
   recent: ReceiptSummaryRow[];
   categories: CategoryBreakdownRow[];
-  usesMockCategories: boolean;
 };
-
-const MOCK_CATEGORY_SHARES = [
-  { categoryId: "cat_groceries", percent: 38 },
-  { categoryId: "cat_dining", percent: 24 },
-  { categoryId: "cat_transport", percent: 18 },
-  { categoryId: "cat_household", percent: 12 },
-  { categoryId: "cat_other", percent: 8 },
-];
 
 function toRow(
   receipt: Awaited<ReturnType<typeof listRecentReceipts>>[number],
@@ -68,15 +61,6 @@ function categoryName(categoryId: string) {
   return seed.nameEn;
 }
 
-function buildMockCategories(totalMinor: number): CategoryBreakdownRow[] {
-  return MOCK_CATEGORY_SHARES.map((share) => ({
-    categoryId: share.categoryId,
-    name: categoryName(share.categoryId),
-    amountMinor: Math.round((totalMinor * share.percent) / 100),
-    percent: share.percent,
-  }));
-}
-
 const DISPLAY_LOCALE = "en-US";
 
 export async function loadHomeSummary(referenceDate = new Date()): Promise<HomeSummary> {
@@ -97,9 +81,8 @@ export async function loadHomeSummary(referenceDate = new Date()): Promise<HomeS
   const hasParsedTotals = monthTotals.parsedCount > 0;
 
   let categories: CategoryBreakdownRow[] = [];
-  let usesMockCategories = false;
 
-  if (breakdown.length >= 2 && totalMinor > 0) {
+  if (breakdown.length > 0 && totalMinor > 0) {
     categories = breakdown
       .map((row) => ({
         categoryId: row.categoryId,
@@ -109,23 +92,27 @@ export async function loadHomeSummary(referenceDate = new Date()): Promise<HomeS
       }))
       .sort((a, b) => b.amountMinor - a.amountMinor)
       .slice(0, 5);
-  } else if (totalMinor > 0) {
-    categories = buildMockCategories(totalMinor);
-    usesMockCategories = true;
-  } else if (hasParsedTotals === false) {
-    categories = buildMockCategories(42000);
-    usesMockCategories = true;
   }
+
+  const needsReviewRows = needsReview.map(toRow);
+  const processingRows = processing.map(toRow);
+  const recentRows = recent.map(toRow);
+  const isEmpty =
+    monthTotals.receiptCount === 0 &&
+    needsReviewRows.length === 0 &&
+    processingRows.length === 0 &&
+    recentRows.length === 0;
 
   return {
     monthLabel,
     totalMinor,
     currencyCode: monthTotals.currencyCode,
     hasParsedTotals,
-    needsReview: needsReview.map(toRow),
-    processing: processing.map(toRow),
-    recent: recent.map(toRow),
+    receiptCount: monthTotals.receiptCount,
+    isEmpty,
+    needsReview: needsReviewRows,
+    processing: processingRows,
+    recent: recentRows,
     categories,
-    usesMockCategories,
   };
 }

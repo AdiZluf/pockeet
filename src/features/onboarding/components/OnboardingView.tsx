@@ -81,10 +81,7 @@ export function OnboardingView() {
         />
       </View>
 
-      <View
-        className="gap-5 px-5"
-        style={{ paddingBottom: insets.bottom + 20 }}
-      >
+      <View className="gap-6 px-5" style={{ paddingBottom: insets.bottom + 24 }}>
         <View
           className="flex-row items-center justify-center gap-2"
           accessibilityRole="tablist"
