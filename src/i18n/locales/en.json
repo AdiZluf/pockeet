@@ -7,6 +7,41 @@
     "save": "Save",
     "back": "Back"
   },
+  "onboarding": {
+    "screenLabel": "Welcome to Pockeet",
+    "authScreenLabel": "Sign in to Pockeet",
+    "skip": "Skip",
+    "next": "Next",
+    "getStarted": "Get started",
+    "progressA11y": "Step {{current}} of {{total}}",
+    "slides": {
+      "scan": {
+        "title": "Scan receipts in seconds",
+        "body": "Snap a photo at the register. Pockeet keeps everything on your device until you are ready to sync."
+      },
+      "organize": {
+        "title": "AI organizes the details",
+        "body": "Merchants, totals, and line items are filled in for you so review is quick—not tedious."
+      },
+      "clarity": {
+        "title": "See the month at a glance",
+        "body": "Track spending by category and know what still needs a quick check before it is final."
+      }
+    },
+    "authTitle": "Save your receipts",
+    "authSubtitle": "Sign in to sync across devices later. Or start locally—your receipts stay on this phone.",
+    "continueApple": "Continue with Apple",
+    "continueGoogle": "Continue with Google",
+    "continueGuest": "Continue as guest",
+    "guestHint": "Guest mode stores receipts locally on this device. Apple and Google sign-in are coming soon.",
+    "or": "or",
+    "comingSoonTitle": "Coming soon",
+    "comingSoonBody": "{{provider}} sign-in is not available in this build yet. Use Continue as guest for now.",
+    "provider": {
+      "apple": "Apple",
+      "google": "Google"
+    }
+  },
   "settings": {
     "title": "Settings",
     "open": "Settings",
@@ -177,7 +212,11 @@
     "seedFailedBody": "Please try again.",
     "resetTitle": "Clear demo receipts?",
     "resetBody": "Only sample receipts tagged as demo will be removed.",
-    "resetConfirm": "Clear"
+    "resetConfirm": "Clear",
+    "resetOnboarding": "Reset onboarding",
+    "resetOnboardingTitle": "Show onboarding again?",
+    "resetOnboardingBody": "Clears onboarding and sign-in state. The app will restart the welcome flow.",
+    "resetOnboardingConfirm": "Reset"
   },
   "a11y": {
     "foundationScreen": "UI foundations playground"

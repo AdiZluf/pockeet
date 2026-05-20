@@ -94,6 +94,11 @@ export const lineItems = sqliteTable(
   (table) => [index("line_items_receipt_id_idx").on(table.receiptId)],
 );
 
+export const appPreferences = sqliteTable("app_preferences", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+});
+
 export const syncOutbox = sqliteTable("sync_outbox", {
   id: text("id").primaryKey(),
   entity: text("entity").notNull(),

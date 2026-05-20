@@ -1,24 +1,34 @@
 # Onboarding & auth
 
-**Routes:** `(auth)/onboarding`, `(auth)/login`  
-**Purpose:** Orient user, request camera permission, establish identity.
+**Routes:** `/(auth)/onboarding`, `/(auth)/login`  
+**Entry:** `app/index.tsx` resolves launch route from SQLite `app_preferences`.
 
-## Onboarding (2 screens)
+## First launch
 
-1. **Value** — what Pockeet does; single CTA “Get started”
-2. **Camera** — why camera access; request permission → login or tabs if already authed
+1. **Onboarding** (3 slides) — scan, AI organization, monthly clarity
+2. **Auth entry** — Apple / Google placeholders (alert: coming soon), **Continue as guest** → tabs
+3. **Home** — normal local MVP experience
 
-**Excluded MVP:** long carousels, account creation forms.
+Skip on slides 1–2 jumps to auth entry. **Get started** on slide 3 marks onboarding complete and opens auth.
 
-## Login
+## Persistence
 
-- **Apple** + **Google** (Supabase Auth)
-- No password / magic link in MVP
-- Success → tab shell (Home)
+| Key | Value | Meaning |
+|-----|-------|---------|
+| `onboarding_completed` | `1` | User finished or skipped onboarding |
+| `auth_session` | `guest` | Guest entry completed (real local flow) |
 
-## Post-login
+Stored in `app_preferences` (SQLite). No Supabase/auth backend in MVP.
 
-Empty Home may highlight FAB; do not force immediate scan.
+## Return launches
+
+- Both prefs set → `/(tabs)` directly
+- Onboarding done, no auth → `/(auth)/login`
+- Neither → `/(auth)/onboarding`
+
+## Dev
+
+Home dev banner: **Reset onboarding** clears prefs and `replace` → onboarding.
 
 ## Related
 

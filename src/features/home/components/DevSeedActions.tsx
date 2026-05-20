@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Alert, Pressable, View } from "react-native";
+import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui";
 import { resetDemoData, seedDemoData } from "@/features/demo/seedDemoData";
+import { resetOnboardingState } from "@/features/onboarding/services/onboardingGate";
 
 type DevSeedActionsProps = {
   onSeeded: () => void;
@@ -11,6 +13,7 @@ type DevSeedActionsProps = {
 
 export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
   const { t } = useTranslation();
+  const router = useRouter();
   const [busy, setBusy] = useState(false);
 
   if (!__DEV__) return null;
@@ -53,6 +56,26 @@ export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
     ]);
   };
 
+  const handleResetOnboarding = () => {
+    Alert.alert(t("demo.resetOnboardingTitle"), t("demo.resetOnboardingBody"), [
+      { text: t("common.cancel"), style: "cancel" },
+      {
+        text: t("demo.resetOnboardingConfirm"),
+        onPress: () => {
+          void (async () => {
+            try {
+              setBusy(true);
+              await resetOnboardingState();
+              router.replace("/(auth)/onboarding");
+            } finally {
+              setBusy(false);
+            }
+          })();
+        },
+      },
+    ]);
+  };
+
   return (
     <View className="mx-5 mb-2 flex-row flex-wrap gap-x-4 gap-y-1 border-b border-border-subtle pb-3">
       <Text variant="caption" muted className="w-full">
@@ -66,6 +89,11 @@ export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
       <Pressable disabled={busy} onPress={handleReset} accessibilityRole="button">
         <Text variant="caption" muted>
           {t("demo.reset")}
+        </Text>
+      </Pressable>
+      <Pressable disabled={busy} onPress={handleResetOnboarding} accessibilityRole="button">
+        <Text variant="caption" muted>
+          {t("demo.resetOnboarding")}
         </Text>
       </Pressable>
     </View>
