@@ -10,7 +10,7 @@ import {
   LoadingSkeleton,
   LoadingSkeletonGroup,
   ReceiptRow,
-  SectionHeader,
+  Text,
 } from "@/components/ui";
 import { useAddReceiptSheetStore } from "@/features/capture/stores/addReceiptSheetStore";
 import { listReceiptsFiltered } from "@/db/repositories/receiptRepository";
@@ -108,9 +108,11 @@ export function ReceiptsListView({ filters, onClearFilters }: ReceiptsListViewPr
     >
       {grouped.map(([key, monthRows]) => (
         <View key={key} className="gap-3">
-          <SectionHeader
-            title={formatReceiptMonth(monthRows[0]?.purchasedAt ?? monthRows[0]?.createdAt)}
-          />
+          <View className="mx-5 rounded-xl bg-surface-muted px-4 py-2">
+            <Text variant="titleMd">
+              {formatReceiptMonth(monthRows[0]?.purchasedAt ?? monthRows[0]?.createdAt)}
+            </Text>
+          </View>
           <ElevatedGroup>
             <DividerList>
               {monthRows.map((row) => (

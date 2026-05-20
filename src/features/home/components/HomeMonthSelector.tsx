@@ -22,32 +22,32 @@ export function HomeMonthSelector({
   const iconColors = useIconColors();
 
   return (
-    <View className="flex-row items-center justify-center gap-2 px-5 pb-2">
+    <View className="mx-5 mb-2 flex-row items-center justify-between rounded-2xl bg-surface-muted px-3 py-2">
       <PressableScale
         accessibilityRole="button"
         accessibilityLabel={t("home.previousMonth")}
         onPress={onPrevious}
-        className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated"
+        className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated shadow-card"
       >
-        <Ionicons name="chevron-back" size={22} color={iconColors.primary} />
+        <Ionicons name="chevron-back" size={20} color={iconColors.primary} />
       </PressableScale>
-      <Text
-        variant="label"
-        align="center"
-        className="min-w-[140px] font-semibold"
+      <View
+        className="rounded-full bg-surface-elevated px-5 py-2.5 shadow-card"
         accessibilityRole="header"
       >
-        {monthLabel}
-      </Text>
+        <Text variant="label" align="center">
+          {monthLabel}
+        </Text>
+      </View>
       <PressableScale
         accessibilityRole="button"
         accessibilityLabel={t("home.nextMonth")}
         onPress={onNext}
         disabled={!canGoNext}
-        className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated"
+        className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated shadow-card"
         style={{ opacity: canGoNext ? 1 : 0.35 }}
       >
-        <Ionicons name="chevron-forward" size={22} color={iconColors.primary} />
+        <Ionicons name="chevron-forward" size={20} color={iconColors.primary} />
       </PressableScale>
     </View>
   );

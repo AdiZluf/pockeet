@@ -1,6 +1,6 @@
-import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { CanvasBackground } from "@/components/ui";
 import { AddReceiptFAB } from "@/features/capture/components/AddReceiptFAB";
 import { HomeScreenContent } from "@/features/home/components/HomeScreenContent";
 
@@ -11,9 +11,9 @@ import { HomeScreenContent } from "@/features/home/components/HomeScreenContent"
 export default function HomeTabScreen() {
   const insets = useSafeAreaInsets();
   return (
-    <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
+    <CanvasBackground style={{ paddingTop: insets.top }}>
       <HomeScreenContent />
       <AddReceiptFAB />
-    </View>
+    </CanvasBackground>
   );
 }

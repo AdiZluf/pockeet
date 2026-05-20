@@ -7,5 +7,6 @@ export { radius } from "./radius";
 export { motion } from "./motion";
 export { a11y } from "./a11y";
 export { surfaceElevation } from "./surfaces";
+export { brandGradients } from "./gradients";
 export { useReducedMotion } from "./useReducedMotion";
 export { useIconColors } from "./useIconColors";

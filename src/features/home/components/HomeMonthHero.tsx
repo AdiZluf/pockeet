@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 
-import { Surface, Text } from "@/components/ui";
+import { DeltaChip, HeroSurface, Text } from "@/components/ui";
 import { formatMoney, moneyWritingProps } from "@/utils/money";
 
 type HomeMonthHeroProps = {
@@ -21,58 +21,55 @@ export function HomeMonthHero({
 }: HomeMonthHeroProps) {
   const { t } = useTranslation();
 
+  const deltaTone =
+    deltaMinor == null ? null : deltaMinor === 0 ? "neutral" : deltaMinor > 0 ? "up" : "down";
+
   const deltaLabel =
     deltaMinor == null
       ? null
       : deltaMinor === 0
         ? t("home.deltaSame")
         : deltaMinor > 0
-          ? t("home.deltaUp", {
-              amount: formatMoney(deltaMinor, currencyCode),
-            })
+          ? t("home.deltaUp", { amount: formatMoney(deltaMinor, currencyCode) })
           : t("home.deltaDown", {
               amount: formatMoney(Math.abs(deltaMinor), currencyCode),
             });
 
   return (
-    <View className="px-5 pb-4 pt-3" accessibilityRole="header">
-      <Surface variant="hero">
-        <View className="h-1 bg-accent" accessibilityElementsHidden />
-        <View className="bg-accent-soft px-6 pb-7 pt-5">
-          <View className="flex-row items-center gap-2">
-            <View className="h-2 w-2 rounded-full bg-accent" accessibilityElementsHidden />
-            <Text variant="caption" muted align="start" className="uppercase tracking-wide">
-              {t("home.monthTotal")}
-            </Text>
-          </View>
+    <View className="px-5 pb-4 pt-2" accessibilityRole="header">
+      <HeroSurface>
+        <View className="px-6 pb-8 pt-6">
+          <Text variant="caption" align="start" className="text-foreground-onAccent/80">
+            {t("home.monthTotal")}
+          </Text>
           <Text
-            variant="displayXl"
+            variant="displayHero"
             tabular
             align="start"
-            className="mt-3 leading-none text-foreground"
+            className="mt-2 text-foreground-onAccent"
             {...moneyWritingProps}
           >
             {hasParsedTotals
               ? formatMoney(totalMinor, currencyCode)
               : t("home.monthTotalPending")}
           </Text>
-          {deltaLabel ? (
-            <Text variant="caption" muted align="start" className="mt-2 leading-5">
-              {deltaLabel}
-            </Text>
+          {deltaLabel && deltaTone ? (
+            <View className="mt-4">
+              <DeltaChip label={deltaLabel} tone={deltaTone} />
+            </View>
           ) : null}
           {otherCurrencyCount > 0 ? (
-            <Text variant="caption" muted align="start" className="mt-2 leading-5">
+            <Text variant="caption" align="start" className="mt-3 text-foreground-onAccent/75">
               {t("home.otherCurrencyFootnote", { count: otherCurrencyCount })}
             </Text>
           ) : null}
           {!hasParsedTotals ? (
-            <Text variant="caption" muted align="start" className="mt-2 leading-5">
+            <Text variant="caption" align="start" className="mt-2 text-foreground-onAccent/75">
               {t("home.monthTotalHint")}
             </Text>
           ) : null}
         </View>
-      </Surface>
+      </HeroSurface>
     </View>
   );
 }

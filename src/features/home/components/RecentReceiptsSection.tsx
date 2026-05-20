@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-import { DividerList, ElevatedGroup, PressableScale, ReceiptRow, SectionHeader, Text } from "@/components/ui";
+import { DividerList, ElevatedGroup, PressableScale, ReceiptRow, SectionEyebrow, Text } from "@/components/ui";
 import { listRecentReceipts } from "@/db/repositories/receiptRepository";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 import { useReceiptNavigation } from "@/features/receipts/hooks/useReceiptNavigation";
@@ -44,7 +44,7 @@ export function RecentReceiptsSection({ onSeeAll }: RecentReceiptsSectionProps) 
 
   return (
     <View className="pb-4 pt-6">
-      <SectionHeader
+      <SectionEyebrow
         title={t("home.recentReceipts")}
         className="mb-3"
         trailing={

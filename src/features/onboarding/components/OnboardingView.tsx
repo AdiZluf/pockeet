@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Button, Text } from "@/components/ui";
+import { Button, CanvasBackground, Text } from "@/components/ui";
 
 import { markOnboardingCompleted } from "../services/onboardingGate";
 import { OnboardingSlide } from "./OnboardingSlide";
@@ -51,8 +51,7 @@ export function OnboardingView() {
   const current = slides[step];
 
   return (
-    <View
-      className="flex-1 bg-background"
+    <CanvasBackground
       accessibilityLabel={t("onboarding.screenLabel")}
     >
       <View
@@ -96,7 +95,7 @@ export function OnboardingView() {
               accessibilityRole="tab"
               accessibilityState={{ selected: index === step }}
               className={`h-2 rounded-full ${
-                index === step ? "w-6 bg-accent" : "w-2 bg-border"
+                index === step ? "h-2.5 w-8 bg-accent" : "w-2 bg-border"
               }`}
             />
           ))}
@@ -107,6 +106,6 @@ export function OnboardingView() {
           onPress={handleNext}
         />
       </View>
-    </View>
+    </CanvasBackground>
   );
 }

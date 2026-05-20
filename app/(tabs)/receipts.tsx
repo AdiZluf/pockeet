@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
-import { ScreenHeader } from "@/components/ui";
+import { CanvasBackground, ScreenHeader } from "@/components/ui";
 import {
   DEFAULT_RECEIPT_FILTERS,
   type ReceiptFilters,
@@ -48,7 +47,7 @@ export default function ReceiptsTabScreen() {
   const subtitle = filtersSubtitle(filters, t);
 
   return (
-    <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
+    <CanvasBackground style={{ paddingTop: insets.top }}>
       <ScreenHeader title={t("tabs.receipts")} subtitle={subtitle} large />
       <ReceiptFilterBar
         filters={filters}
@@ -67,6 +66,6 @@ export default function ReceiptsTabScreen() {
         onApply={applyFilters}
       />
       <AddReceiptFAB />
-    </View>
+    </CanvasBackground>
   );
 }

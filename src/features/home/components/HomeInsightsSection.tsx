@@ -3,7 +3,7 @@ import { ScrollView, View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-import { SectionHeader } from "@/components/ui";
+import { SectionEyebrow } from "@/components/ui";
 
 import { loadHomeInsights, type HomeInsight } from "../services/homeInsights";
 import { HomeInsightCard } from "./HomeInsightCard";
@@ -31,7 +31,7 @@ export function HomeInsightsSection({ referenceDate }: HomeInsightsSectionProps)
 
   return (
     <View className="pb-4 pt-6">
-      <SectionHeader title={t("home.insights")} className="mb-3" />
+      <SectionEyebrow title={t("home.insights")} className="mb-3" />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

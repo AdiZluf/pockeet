@@ -1,4 +1,9 @@
 export { Button, type ButtonProps, type ButtonVariant } from "./Button";
+export { CanvasBackground } from "./CanvasBackground";
+export { DeltaChip, type DeltaChipProps, type DeltaChipTone } from "./DeltaChip";
+export { GradientIconWell, type GradientIconWellProps } from "./GradientIconWell";
+export { HeroSurface, type HeroSurfaceProps } from "./HeroSurface";
+export { SectionEyebrow, type SectionEyebrowProps } from "./SectionEyebrow";
 export { FilterChip, type FilterChipProps, type FilterChipVariant } from "./FilterChip";
 export { ModalHeader, type ModalHeaderProps } from "./ModalHeader";
 export { Card, type CardProps } from "./Card";

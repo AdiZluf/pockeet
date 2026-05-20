@@ -7,163 +7,124 @@ Token reference: [tokens](tokens.md). Layout: [layout](layout.md). a11y: [access
 ## Philosophy
 
 - **Variants via props**, not copy-paste styles.
-- **One edit surface** patterns reused across screens.
+- **Warm Ledger** — layered sand canvas, gradient hero moments, tiered elevation.
 - Extend primitives before inventing screen-local UI.
 
 ## Button
 
 | Variant | Spec |
 |---------|------|
-| primary | accent fill, 52pt, `radius-lg`, inverse text |
+| primary | **accent gradient** fill, 52pt, `radius-lg`, on-accent text |
 | secondary | tonal/ghost |
 | destructive | text or outline dusty red |
-| text | Fix later, Continue in background |
+| text | tertiary actions |
 
-States: pressed opacity 0.92, disabled 0.45, loading keeps width.  
-a11y: `role="button"`, `accessibilityState.busy/disabled`.  
-No icon-only without `accessibilityLabel`.
+States: pressed opacity 0.92, disabled 0.45, loading keeps width.
 
 ## Surface
 
 | Variant | Spec |
 |---------|------|
-| default | `surface`, `radius-xl`, no shadow |
-| elevated | `surface-elevated`, hairline border, soft card shadow |
-| inset | `surface-muted`, grouped list well |
-| hero | `radius-2xl`, accent top strip + `accent-soft` wash |
-| panel | `radius-2xl`, elevated card (lists, review imagery) |
+| default | `surface`, `radius-2xl` |
+| elevated | warm white, hairline border, **raised** shadow + top highlight |
+| inset | `surface-inset` |
+| featured | raised + highlight — insights, Ask assistant, review blocks |
+| dock | inset + **floating** shadow — filter bar, composer, review footer |
+| hero | wrapper for `HeroSurface` gradient |
 
-Prefer **Surface** over ad-hoc `View` backgrounds in features.
+## HeroSurface
+
+`LinearGradient` hero card with optional accent orb. White/on-accent typography. Home month total, processing celebration, onboarding/auth headers.
+
+## GradientIconWell
+
+Icon in gradient circle (`expo-linear-gradient`). Add Receipt tiles, Ask, onboarding slides.
+
+## SectionEyebrow
+
+Teal dot + `title-md` **sentence-case** section title. Replaces uppercase `Section` overlines in features.
+
+## DeltaChip
+
+Colored pill for month-over-month delta on gradient hero (up / down / neutral).
+
+## CanvasBackground
+
+Warm sand vertical gradient for tab roots (Home, Receipts).
 
 ## ElevatedGroup
 
-Premium **panel** card (`Surface variant="panel"`) with card shadow. Optional `accentEdge` leading stripe (needs-review).  
-Use for Home/Receipts receipt queues, category breakdown, settings language picker, review form sections.
+Premium panel with **raised** shadow. Optional `accentEdge` leading stripe (queues).
 
 ## DividerList
 
-Hairline separators between rows inside an `ElevatedGroup`.  
-| Prop | Use |
-|------|-----|
-| `insetStart` | `ms-[4.5rem]` past thumbnail (receipt rows); `false` for form/settings rows |
+Hairline separators inside `ElevatedGroup`.
 
 ## SectionHeader
 
-Editorial section title (`title-md`) + optional subtitle. Sentence case; `Text align="start"` on copy.
+Legacy editorial title; prefer **SectionEyebrow** for new work.
 
 ## ReceiptRow
 
-Canonical receipt list row: thumbnail, merchant, date, amount (LTR), status dot + label, RTL disclosure chevron.  
-Use inside `ElevatedGroup` + `DividerList` on Home and Receipts tab.
-
-## GroupedList
-
-iOS Settings–style **inset** well (`Surface variant="inset"`) with hairline separators between child rows.
-
-| Prop | Use |
-|------|-----|
-| `highlight` | Optional 3pt `accent` leading stripe |
-
-Legacy inset well; prefer **ElevatedGroup** + **DividerList** for primary content lists.  
-Separator inset: `ms-[4.5rem]` when rows include a thumbnail.
-
-## Card
-
-Composable wrapper around **Surface** (+ optional `PressableScale` when interactive).
-
-| Variant | Spec |
-|---------|------|
-| default | Surface default, pad `space-4` |
-| elevated / hero | Surface elevated/hero |
-| interactive | PressableScale + elevated |
-
-Max **2** nested surfaces per screen section.
-
-## Input
-
-Label above (always visible) → field 48pt min → `surface-muted`, `radius-sm`.  
-Focus: 2pt `border-focus`. Error: caption + live region.  
-Money: LTR, decimal pad.
-
-## Sheet
-
-Grabber, `radius-2xl` top, `elevation-2`, overlay scrim.  
-Slots: title, body, footer actions.  
-Required prop: `scrimAccessibilityLabel` (localized).  
-`onDismissed`: iOS — run native pickers after modal teardown.  
-a11y: focus trap (follow-up), return focus on dismiss.
+Canonical receipt list row inside `ElevatedGroup` + `DividerList`.
 
 ## FilterChip
 
-44pt min-height pill for filters and Ask suggestions.  
-Variants: `select` (toggle active/inactive), `removable` (active filter with close icon).  
-Use in Receipts filter bar/sheet, Ask card/empty state, Settings currency row.
+44pt min-height pill. Active: accent fill (filters) or elevated tile (Ask). Receipts dock + Ask suggestions.
 
 ## ModalHeader
 
-Grabber + 44pt close + title (`title-lg`) + optional subtitle for expo-router modals (Ask, Settings).  
-Default close icon: `chevron-down` (sheet dismiss).
-
-## ListRow
-
-64pt min (receipts); 56pt compact (settings).  
-Slots: leading, title, subtitle, trailing.  
-Pressable: combined a11y label e.g. “Shufersal, 342 shekels, May 18, needs review”.
+Grabber + gradient band + close + `title-lg` on-accent. Ask, Settings modals.
 
 ## ScreenHeader
 
-Editorial screen title (`display-lg` when `large`, else `title-lg`) + optional subtitle + optional `trailing` slot.  
-Home tab: `large={false}` (compact) with settings action. Receipts tab: `large` (default).
+`display-lg` when `large` (Receipts), else `title-lg`. Optional subtitle + trailing.
 
-## PressableScale
+## Sheet
 
-Subtle scale on press (`0.98`, 100ms). Use on buttons, list rows, interactive cards.  
-When system **Reduce Motion** is on, renders a plain `Pressable` (no scale). Hook: `useReducedMotion()` in `src/theme/`.
-
-## LoadingSkeleton
-
-Pulse animation on `surface-muted`; static opacity when Reduce Motion is on. Parent `LoadingSkeletonGroup` sets `busy` for AT.
-
-## Section
-
-Micro **overline** label (`font-micro`, uppercase, tracking) + optional subtitle. `space-6` between sections.
-
-## EmptyState
-
-Icon 64pt, title, body, single primary CTA.
-
-## StatusChip
-
-24pt pill, `radius-full`, status fg on tint bg, `font-caption`.
+`radius-3xl` top, warm surface, floating shadow, 50% scrim. `onDismissed` for picker sequencing.
 
 ## FAB
 
-56pt circle, `color-accent`, `elevation-1`, icon inverse.  
-Label: localized “Scan receipt”. Position: [layout](layout.md#fab).
+56pt circle, accent + **fab** glow elevation.
+
+## Input
+
+Label above → 48pt min → `surface-muted`. Money: LTR, decimal pad.
+
+## PressableScale
+
+Scale 0.98 on press; plain `Pressable` when Reduce Motion.
+
+## LoadingSkeleton
+
+Pulse on `surface-muted`; static when Reduce Motion.
+
+## EmptyState
+
+Icon, title, body, single primary CTA.
+
+## StatusChip
+
+24pt pill, status fg on tint bg.
 
 ## Primitive ↔ token map
 
 | Primitive | Key tokens |
 |-----------|------------|
-| Button primary | accent, text-inverse, radius-lg |
-| Card | surface, radius-lg |
-| Input | surface-muted, border-focus |
-| Sheet | surface, radius-2xl, overlay |
-| FilterChip | accent, accent-soft, surface-muted |
-| ModalHeader | surface-elevated, border-subtle |
-| GroupedList | surface-muted (inset), border-default separators |
-| StatusChip | status-* fg/bg |
+| Button primary | accent gradient, on-accent text |
+| HeroSurface | accent-gradient, raised shadow |
+| Surface featured/dock | surface-elevated / surface-inset, raised/floating |
+| FilterChip | accent, surface-muted |
+| ModalHeader | hero gradient, on-accent text |
+| FAB | accent, fab elevation |
 
-## Theme hooks (icons & motion)
+## Theme hooks
 
 | Hook | Use |
 |------|-----|
-| `useIconColors()` | `Ionicons` / `ActivityIndicator` — never raw hex in UI |
-| `useTheme()` | Tab bar, placeholders, programmatic colors |
-| `useReducedMotion()` | Disable press scale and skeleton pulse |
+| `useIconColors()` | Ionicons / ActivityIndicator |
+| `useTheme()` | Tab bar, placeholders |
+| `useReducedMotion()` | Disable orb, scale, skeleton pulse |
 
-Tab bar in `app/(tabs)/_layout.tsx` reads `colors` from `useTheme()`.
-
-## Storybook (post-scaffold)
-
-Visual regression for all variants in EN + HE RTL — week 1 after scaffold.
+Fonts load via `useAppFonts` in `AppProviders` (Outfit + Plus Jakarta Sans).

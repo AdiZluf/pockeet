@@ -1,8 +1,10 @@
 import { View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
-import { FilterChip, PressableScale, Surface, Text } from "@/components/ui";
+import { FilterChip, GradientIconWell, PressableScale, Surface, Text } from "@/components/ui";
+import { brandGradients } from "@/theme/gradients";
 import { useIconColors } from "@/theme";
 
 const SUGGESTED_KEYS = [
@@ -20,39 +22,44 @@ export function AskPockeetCard({ onOpen }: AskPockeetCardProps) {
   const iconColors = useIconColors();
 
   return (
-    <Surface variant="elevated" className="overflow-hidden">
-      <PressableScale
-        accessibilityRole="button"
-        accessibilityLabel={t("ask.cardA11y")}
-        onPress={() => onOpen()}
-        className="gap-4 p-5"
+    <View className="overflow-hidden rounded-2xl shadow-raised">
+      <LinearGradient
+        colors={[...brandGradients.featuredBorder]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ padding: 2 }}
       >
-        <View className="flex-row items-center gap-3">
-          <View className="h-11 w-11 items-center justify-center rounded-2xl bg-accent-soft">
-            <Ionicons name="sparkles" size={22} color={iconColors.accent} />
+        <Surface variant="featured" className="overflow-hidden rounded-[22px]">
+          <PressableScale
+            accessibilityRole="button"
+            accessibilityLabel={t("ask.cardA11y")}
+            onPress={() => onOpen()}
+            className="flex-row items-center gap-4 p-5"
+          >
+            <GradientIconWell name="sparkles" size={52} iconSize={26} />
+            <View className="min-w-0 flex-1 gap-1">
+              <Text variant="titleMd" align="start">
+                {t("ask.title")}
+              </Text>
+              <Text variant="caption" muted align="start" className="leading-5">
+                {t("ask.subtitle")}
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={22} color={iconColors.accent} />
+          </PressableScale>
+          <View className="flex-row flex-wrap gap-2 border-t border-border-subtle px-5 pb-5 pt-4">
+            {SUGGESTED_KEYS.map((key) => (
+              <FilterChip
+                key={key}
+                label={t(key)}
+                selected={false}
+                onPress={() => onOpen(t(key))}
+                className="bg-surface-muted"
+              />
+            ))}
           </View>
-          <View className="min-w-0 flex-1 gap-1">
-            <Text variant="titleMd" align="start">
-              {t("ask.title")}
-            </Text>
-            <Text variant="caption" muted align="start" className="leading-5">
-              {t("ask.subtitle")}
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={20} color={iconColors.secondary} />
-        </View>
-      </PressableScale>
-      <View className="flex-row flex-wrap gap-2 border-t border-border-subtle px-5 pb-5 pt-4">
-        {SUGGESTED_KEYS.map((key) => (
-          <FilterChip
-            key={key}
-            label={t(key)}
-            selected={false}
-            onPress={() => onOpen(t(key))}
-            className="bg-surface-muted"
-          />
-        ))}
-      </View>
-    </Surface>
+        </Surface>
+      </LinearGradient>
+    </View>
   );
 }

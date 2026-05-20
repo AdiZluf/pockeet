@@ -5,7 +5,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Button, Text } from "@/components/ui";
+import { Button, Surface, Text } from "@/components/ui";
+import { surfaceElevation } from "@/theme/surfaces";
 import { useIconColors } from "@/theme";
 
 import { MAX_RECEIPT_PAGES } from "../constants";
@@ -133,8 +134,10 @@ export function CapturePreviewView() {
           })}
           accessibilityHint={t("capture.editPageHint")}
           onPress={() => openCrop()}
-          className="h-[360px] overflow-hidden rounded-xl border border-border bg-surface-muted"
+          className="overflow-hidden rounded-3xl"
+          style={surfaceElevation.floating}
         >
+          <Surface variant="elevated" className="h-[360px] overflow-hidden rounded-3xl border-0 p-0">
           {selected ? (
             <>
               <Image
@@ -156,6 +159,7 @@ export function CapturePreviewView() {
               </View>
             </>
           ) : null}
+          </Surface>
         </Pressable>
 
         <CaptureActionsPanel title={t("capture.pageActionsTitle")}>
@@ -199,10 +203,8 @@ export function CapturePreviewView() {
         </CaptureActionsPanel>
       </ScrollView>
 
-      <View
-        className="gap-2 border-t border-border-subtle bg-background px-5 pt-4"
-        style={{ paddingBottom: insets.bottom + 16 }}
-      >
+      <View className="px-5 pt-3" style={{ paddingBottom: insets.bottom + 16 }}>
+        <Surface variant="dock" className="gap-2 p-4">
         <Button
           label={isSaving ? t("capture.saving") : t("capture.saveAndAnalyze")}
           onPress={() => void handleSave()}
@@ -213,6 +215,7 @@ export function CapturePreviewView() {
         <Text variant="caption" muted align="center">
           {t("capture.savedLocallyHint")}
         </Text>
+        </Surface>
       </View>
     </View>
   );

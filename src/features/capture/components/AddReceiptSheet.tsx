@@ -2,8 +2,9 @@ import { ActivityIndicator, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
-import { PressableScale, Sheet, Text } from "@/components/ui";
+import { GradientIconWell, PressableScale, Sheet, Surface, Text } from "@/components/ui";
 import { useIconColors } from "@/theme";
+import { cn } from "@/utils/cn";
 
 type AddReceiptOption = {
   id: "camera" | "gallery" | "pdf";
@@ -12,6 +13,7 @@ type AddReceiptOption = {
   bodyKey: string;
   onPress: () => void;
   loading?: boolean;
+  recommended?: boolean;
 };
 
 type AddReceiptSheetProps = {
@@ -43,6 +45,7 @@ export function AddReceiptSheet({
       titleKey: "addReceipt.takePhoto",
       bodyKey: "addReceipt.takePhotoBody",
       onPress: () => void onTakePhoto(),
+      recommended: true,
     },
     {
       id: "gallery",
@@ -69,8 +72,8 @@ export function AddReceiptSheet({
       scrimAccessibilityLabel={t("common.closeSheet")}
       title={t("addReceipt.title")}
     >
-      <View className="gap-2 pb-2">
-        <Text variant="body" muted align="start" className="pb-2 leading-6">
+      <View className="gap-3 pb-4">
+        <Text variant="body" muted align="start" className="leading-6">
           {t("addReceipt.subtitle")}
         </Text>
         {options.map((option) => (
@@ -83,33 +86,40 @@ export function AddReceiptSheet({
             })}
             onPress={option.onPress}
             disabled={option.loading}
-            className="min-h-[72px] flex-row items-center gap-4 rounded-lg bg-surface-muted px-4 py-3.5"
           >
-            <View className="h-12 w-12 items-center justify-center rounded-lg bg-accent-soft">
-              {option.loading ? (
-                <ActivityIndicator size="small" color={iconColors.accent} />
-              ) : (
-                <Ionicons name={option.icon} size={24} color={iconColors.accent} />
+            <Surface
+              variant="elevated"
+              className={cn(
+                "min-h-[80px] flex-row items-center gap-4 p-4",
+                option.recommended && "border-2 border-accent",
               )}
-            </View>
-            <View className="min-w-0 flex-1 gap-0.5">
-              <Text variant="bodyLg" align="start">
-                {t(option.titleKey)}
-              </Text>
-              <Text variant="caption" muted align="start" className="leading-5">
-                {t(option.bodyKey)}
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={iconColors.secondary} />
+            >
+              {option.loading ? (
+                <View className="h-14 w-14 items-center justify-center">
+                  <ActivityIndicator size="small" color={iconColors.accent} />
+                </View>
+              ) : (
+                <GradientIconWell name={option.icon} size={56} iconSize={26} />
+              )}
+              <View className="min-w-0 flex-1 gap-0.5">
+                <Text variant="titleMd" align="start">
+                  {t(option.titleKey)}
+                </Text>
+                <Text variant="caption" muted align="start" className="leading-5">
+                  {t(option.bodyKey)}
+                </Text>
+              </View>
+              <Ionicons name="chevron-forward" size={22} color={iconColors.secondary} />
+            </Surface>
           </PressableScale>
         ))}
         <PressableScale
           accessibilityRole="button"
           accessibilityLabel={t("common.cancel")}
           onPress={onClose}
-          className="mt-2 min-h-[48px] items-center justify-center rounded-lg"
+          className="mt-2 min-h-[48px] items-center justify-center"
         >
-          <Text variant="label" muted>
+          <Text variant="label" className="text-accent">
             {t("common.cancel")}
           </Text>
         </PressableScale>

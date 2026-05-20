@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 
-import { ElevatedGroup, PressableScale, SectionHeader, Text } from "@/components/ui";
+import { PressableScale, SectionEyebrow, Surface, Text } from "@/components/ui";
 import type { CategoryBreakdownRow } from "@/features/home/services/homeSummary";
 import { formatMoney, moneyTextProps } from "@/utils/money";
 
@@ -40,8 +40,8 @@ export function CategoryBreakdownSection({
 
   return (
     <View className="pb-4 pt-6">
-      <SectionHeader title={t("home.categoryBreakdown")} className="mb-3" />
-      <ElevatedGroup>
+      <SectionEyebrow title={t("home.categoryBreakdown")} className="mb-3" />
+      <Surface variant="inset" className="mx-5">
         <View className="gap-5 px-5 py-5" accessibilityLabel={chartSummary}>
           {categories.map((row, index) => {
             const rowContent = (
@@ -54,7 +54,7 @@ export function CategoryBreakdownSection({
                     {formatMoney(row.amountMinor, currencyCode)}
                   </Text>
                 </View>
-                <View className="h-2 overflow-hidden rounded-full bg-surface-muted">
+                <View className="h-2.5 overflow-hidden rounded-full bg-surface-elevated">
                   <View
                     className={`h-full rounded-full ${CHART_BAR_CLASSES[index % CHART_BAR_CLASSES.length]}`}
                     style={{ width: `${Math.max(row.percent, 5)}%` }}
@@ -88,7 +88,7 @@ export function CategoryBreakdownSection({
             );
           })}
         </View>
-      </ElevatedGroup>
+      </Surface>
     </View>
   );
 }

@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import { DividerList, ElevatedGroup, ReceiptRow, SectionHeader } from "@/components/ui";
+import { DividerList, ElevatedGroup, ReceiptRow, SectionEyebrow } from "@/components/ui";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 import { useReceiptNavigation } from "@/features/receipts/hooks/useReceiptNavigation";
 
@@ -17,7 +17,7 @@ export function ReceiptQueueSection({ title, receipts, accentEdge }: ReceiptQueu
 
   return (
     <View className="pb-4 pt-6">
-      <SectionHeader title={title} className="mb-3" />
+      <SectionEyebrow title={title} className="mb-3" />
       <ElevatedGroup accentEdge={accentEdge}>
         <DividerList>
           {receipts.map((row) => (

@@ -6,6 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { BrandedLaunch } from "@/components/ui";
 import { migrateDatabase } from "@/db";
+import { useAppFonts } from "@/hooks/useAppFonts";
 import { initI18n } from "@/i18n";
 import { ThemeProvider } from "@/theme";
 
@@ -15,6 +16,7 @@ type AppProvidersProps = {
 
 export function AppProviders({ children }: AppProvidersProps) {
   const [ready, setReady] = useState(false);
+  const fontsLoaded = useAppFonts();
 
   useEffect(() => {
     void (async () => {
@@ -28,7 +30,7 @@ export function AppProviders({ children }: AppProvidersProps) {
     })();
   }, []);
 
-  if (!ready) {
+  if (!ready || !fontsLoaded) {
     return (
       <GestureHandlerRootView className="flex-1">
         <ThemeProvider mode="light">

@@ -1,10 +1,10 @@
 import { View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
 
-import { Surface, Text } from "@/components/ui";
+import { GradientIconWell, Surface, Text } from "@/components/ui";
 import type { AskResponse } from "@/features/ask/types";
-import { useIconColors } from "@/theme";
+import { brandGradients } from "@/theme/gradients";
 
 type AskMessageBubbleProps =
   | { role: "user"; text: string }
@@ -12,16 +12,20 @@ type AskMessageBubbleProps =
 
 export function AskMessageBubble(props: AskMessageBubbleProps) {
   const { t } = useTranslation();
-  const iconColors = useIconColors();
 
   if (props.role === "user") {
     return (
-      <View className="self-end max-w-[90%]">
-        <View className="rounded-2xl rounded-br-sm bg-accent px-4 py-3">
-          <Text variant="body" align="start" className="text-foreground-inverse leading-6">
+      <View className="max-w-[90%] self-end">
+        <LinearGradient
+          colors={[...brandGradients.userBubble]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          className="rounded-2xl rounded-br-sm px-4 py-3 shadow-card"
+        >
+          <Text variant="bodyLg" align="start" className="text-foreground-onAccent leading-6">
             {props.text}
           </Text>
-        </View>
+        </LinearGradient>
       </View>
     );
   }
@@ -36,18 +40,16 @@ export function AskMessageBubble(props: AskMessageBubbleProps) {
       : t("ask.basedOnSaved");
 
   return (
-    <View className="self-start max-w-[92%] gap-2">
-      <Surface variant="elevated" className="gap-3 p-4">
-        <View className="flex-row items-start gap-2.5">
-          <View className="mt-0.5 h-8 w-8 items-center justify-center rounded-lg bg-accent-soft">
-            <Ionicons name="sparkles" size={16} color={iconColors.accent} />
-          </View>
-          <Text variant="body" align="start" className="flex-1 leading-6">
+    <View className="max-w-[92%] gap-2 self-start">
+      <Surface variant="featured" className="gap-3 p-4">
+        <View className="flex-row items-start gap-3">
+          <GradientIconWell name="sparkles" size={40} iconSize={18} />
+          <Text variant="bodyLg" align="start" className="min-w-0 flex-1 leading-6">
             {response.text}
           </Text>
         </View>
         <View className="border-t border-border-subtle pt-2">
-          <Text variant="micro" muted align="start" className="leading-4">
+          <Text variant="caption" muted align="start" className="leading-4">
             {footer}
           </Text>
         </View>

@@ -24,8 +24,9 @@ import {
   LoadingSkeletonGroup,
   PressableScale,
   ReceiptAttachmentPreview,
-  SectionHeader,
+  SectionEyebrow,
   StatusChip,
+  Surface,
   Text,
 } from "@/components/ui";
 import { listCategories } from "@/db/repositories/categoryRepository";
@@ -233,9 +234,9 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
         contentContainerClassName="gap-7 pb-40"
         keyboardShouldPersistTaps="handled"
       >
-        <FadeInView className="px-5 gap-2.5" delay={0}>
-          <Text variant="titleLg" align="start">
-            {t(isReedit ? "review.titleEdit" : "review.title")}
+        <FadeInView className="gap-2.5 px-5" delay={0}>
+          <Text variant="displayLg" align="start">
+            {form.merchantName.trim() || t(isReedit ? "review.titleEdit" : "review.title")}
           </Text>
           <Text variant="body" muted align="start" className="leading-6">
             {t(
@@ -249,7 +250,8 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
         </FadeInView>
 
         {heroUri ? (
-          <FadeInView className="px-5 gap-3" delay={80}>
+          <FadeInView className="gap-3 px-5" delay={80}>
+            <View className="overflow-hidden rounded-3xl shadow-raised">
             <ReceiptAttachmentPreview
               uri={heroUri}
               accessibilityLabel={
@@ -257,6 +259,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
               }
               maxHeight={320}
             />
+            </View>
             {images.length > 1 ? (
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {images.map((image, index) => (
@@ -286,9 +289,10 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
           </FadeInView>
         ) : null}
 
-        <FadeInView className="gap-3" delay={160}>
-          <SectionHeader title={t("review.detailsSection")} />
-          <ElevatedGroup>
+        <FadeInView className="gap-3 px-5" delay={160}>
+          <SectionEyebrow title={t("review.detailsSection")} />
+          <Surface variant="featured" className="overflow-hidden p-0">
+          <ElevatedGroup className="mx-0 border-0 shadow-none">
             <DividerList insetStart={false}>
             <ReviewFieldRow
               label={t("review.merchant")}
@@ -337,11 +341,13 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
             />
             </DividerList>
           </ElevatedGroup>
+          </Surface>
         </FadeInView>
 
         <FadeInView className="gap-3 px-5" delay={240}>
-          <SectionHeader title={t("review.lineItemsSection")} />
-          <ElevatedGroup>
+          <SectionEyebrow title={t("review.lineItemsSection")} />
+          <Surface variant="featured" className="overflow-hidden p-0">
+          <ElevatedGroup className="mx-0 border-0 shadow-none">
             <DividerList insetStart={false}>
             {form.lineItems.map((item, index) => (
               <ReviewLineItemRow
@@ -373,6 +379,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
             ))}
             </DividerList>
           </ElevatedGroup>
+          </Surface>
           <Button
             variant="secondary"
             label={t("review.addLineItem")}
@@ -387,10 +394,8 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
         </FadeInView>
       </ScrollView>
 
-      <View
-        className="gap-3 border-t border-border-subtle bg-surface px-5 pt-4"
-        style={{ paddingBottom: insets.bottom + 12 }}
-      >
+      <View className="px-5 pt-3" style={{ paddingBottom: insets.bottom + 12 }}>
+        <Surface variant="dock" className="gap-3 p-4">
         {isReedit ? (
           <Button
             label={t("review.saveChanges")}
@@ -414,6 +419,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
             />
           </>
         )}
+        </Surface>
       </View>
 
       <CategoryPickerSheet

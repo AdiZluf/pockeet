@@ -10,7 +10,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Button, ModalHeader, Text } from "@/components/ui";
+import { Button, CanvasBackground, ModalHeader, Surface, Text } from "@/components/ui";
 import { respondToAskQuestion } from "@/features/ask/services/askResponder";
 import type { AskResponse } from "@/features/ask/types";
 import { useTheme } from "@/theme";
@@ -69,66 +69,66 @@ export function AskPockeetScreen() {
   );
 
   return (
-    <KeyboardAvoidingView
-      className="flex-1 bg-background"
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{ paddingTop: insets.top }}
-    >
-      <ModalHeader
-        title={t("ask.title")}
-        subtitle={t("ask.sheetSubtitle")}
-        onClose={() => router.back()}
-        closeIcon="chevron-down"
-        className="pb-3"
-      />
-
-      <ScrollView
-        ref={scrollRef}
-        className="flex-1 px-5"
-        contentContainerClassName="gap-4 pb-4"
-        keyboardShouldPersistTaps="handled"
-        onContentSizeChange={scrollToEnd}
+    <CanvasBackground>
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ paddingTop: insets.top }}
       >
-        {messages.length === 0 && !isThinking ? (
-          <AskEmptyState onSuggestionPress={(q) => void sendQuestion(q)} />
-        ) : null}
-        {messages.map((msg) =>
-          msg.role === "user" ? (
-            <AskMessageBubble key={msg.id} role="user" text={msg.text} />
-          ) : (
-            <AskMessageBubble key={msg.id} role="assistant" response={msg.response} />
-          ),
-        )}
-        {isThinking ? <AskThinkingBubble /> : null}
-      </ScrollView>
+        <ModalHeader
+          title={t("ask.title")}
+          subtitle={t("ask.sheetSubtitle")}
+          onClose={() => router.back()}
+          closeIcon="chevron-down"
+          className="pb-3"
+        />
 
-      <View
-        className="gap-3 border-t border-border-subtle bg-background px-5 pt-3"
-        style={{ paddingBottom: insets.bottom + 12 }}
-      >
-        <View className="flex-row items-end gap-2">
-          <TextInput
-            value={input}
-            onChangeText={setInput}
-            placeholder={t("ask.inputPlaceholder")}
-            placeholderTextColor={colors.textSecondary}
-            multiline
-            className="min-h-[48px] max-h-28 flex-1 rounded-2xl border border-border-subtle bg-surface px-4 py-3 text-base"
-            style={{ color: colors.textPrimary }}
-            accessibilityLabel={t("ask.inputA11y")}
-          />
-          <Button
-            label={t("ask.send")}
-            onPress={() => void sendQuestion(input)}
-            disabled={!input.trim() || isThinking}
-            block={false}
-            className="min-w-[72px] px-4"
-          />
+        <ScrollView
+          ref={scrollRef}
+          className="flex-1 px-5"
+          contentContainerClassName="gap-4 pb-4"
+          keyboardShouldPersistTaps="handled"
+          onContentSizeChange={scrollToEnd}
+        >
+          {messages.length === 0 && !isThinking ? (
+            <AskEmptyState onSuggestionPress={(q) => void sendQuestion(q)} />
+          ) : null}
+          {messages.map((msg) =>
+            msg.role === "user" ? (
+              <AskMessageBubble key={msg.id} role="user" text={msg.text} />
+            ) : (
+              <AskMessageBubble key={msg.id} role="assistant" response={msg.response} />
+            ),
+          )}
+          {isThinking ? <AskThinkingBubble /> : null}
+        </ScrollView>
+
+        <View className="px-5 pt-2" style={{ paddingBottom: insets.bottom + 12 }}>
+          <Surface variant="dock" className="gap-3 p-4">
+            <View className="flex-row items-end gap-2">
+              <TextInput
+                value={input}
+                onChangeText={setInput}
+                placeholder={t("ask.inputPlaceholder")}
+                placeholderTextColor={colors.textSecondary}
+                multiline
+                className="min-h-[48px] max-h-28 flex-1 rounded-xl bg-surface-elevated px-4 py-3 font-sans text-base text-foreground"
+                accessibilityLabel={t("ask.inputA11y")}
+              />
+              <Button
+                label={t("ask.send")}
+                onPress={() => void sendQuestion(input)}
+                disabled={!input.trim() || isThinking}
+                block={false}
+                className="min-w-[72px] px-4"
+              />
+            </View>
+            <Text variant="caption" muted align="start" className="leading-4">
+              {t("ask.disclaimer")}
+            </Text>
+          </Surface>
         </View>
-        <Text variant="micro" muted align="start" className="leading-4">
-          {t("ask.disclaimer")}
-        </Text>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </CanvasBackground>
   );
 }

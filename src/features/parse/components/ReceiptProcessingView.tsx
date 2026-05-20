@@ -14,7 +14,15 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { Button, FadeInView, ReceiptAttachmentPreview, StatusChip, Surface, Text } from "@/components/ui";
+import {
+  Button,
+  CanvasBackground,
+  FadeInView,
+  HeroSurface,
+  ReceiptAttachmentPreview,
+  StatusChip,
+  Text,
+} from "@/components/ui";
 import { isPdfUri } from "@/utils/receiptMedia";
 import { getReceiptWithImages } from "@/db/repositories/receiptRepository";
 import {
@@ -160,12 +168,11 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
   const stageKey = phase === "complete" ? "stepReady" : STAGE_KEYS[stageIndex];
 
   return (
-    <View
-      className="flex-1 bg-background px-5"
+    <CanvasBackground
       style={{ paddingTop: insets.top + 16, paddingBottom: insets.bottom + 20 }}
       accessibilityLabel={t("processing.screenLabel")}
     >
-      <FadeInView className="flex-1 items-center justify-center pb-6" delay={0}>
+      <FadeInView className="flex-1 items-center justify-center px-5 pb-6" delay={0}>
         <View
           className="w-full max-w-[340px] items-center"
           accessibilityLiveRegion="polite"
@@ -173,18 +180,18 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
             phase === "complete" ? t("processing.completeA11y") : t("processing.analyzingA11y")
           }
         >
-          <Surface variant="hero" className="w-full overflow-hidden">
-            <View className="h-1 overflow-hidden bg-surface-muted" accessibilityElementsHidden>
+          <HeroSurface className="w-full overflow-hidden">
+            <View className="h-1.5 overflow-hidden bg-white/20" accessibilityElementsHidden>
               <Animated.View
-                className={`h-full ${phase === "complete" ? "bg-status-ready" : "bg-accent"}`}
-                style={progressStyle}
+                className={`h-full ${phase === "complete" ? "bg-status-ready" : "bg-white"}`}
+                style={[progressStyle, phase !== "complete" && { shadowOpacity: 0.4 }]}
               />
             </View>
 
             <View className="items-center gap-5 px-6 py-9">
               <Animated.View style={thumbStyle} className="relative">
                 {thumbUri && isPdfUri(thumbUri) ? (
-                  <View className="w-[148px] overflow-hidden rounded-2xl">
+                  <View className="w-[148px] overflow-hidden rounded-2xl border-2 border-white/30">
                     <ReceiptAttachmentPreview
                       uri={thumbUri}
                       variant="processing"
@@ -192,7 +199,7 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
                     />
                   </View>
                 ) : thumbUri ? (
-                  <View className="overflow-hidden rounded-2xl border border-border-subtle bg-surface-muted">
+                  <View className="overflow-hidden rounded-2xl border-2 border-white/30">
                     <Image
                       source={{ uri: thumbUri }}
                       style={{ width: 148, height: 196 }}
@@ -202,14 +209,14 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
                     />
                   </View>
                 ) : (
-                  <View className="h-[196px] w-[148px] items-center justify-center rounded-2xl bg-accent-soft">
-                    <Ionicons name="document-text-outline" size={40} color={iconColors.accent} />
+                  <View className="h-[196px] w-[148px] items-center justify-center rounded-2xl bg-white/15">
+                    <Ionicons name="document-text-outline" size={40} color={iconColors.inverse} />
                   </View>
                 )}
                 {phase === "complete" ? (
                   <Animated.View
                     style={successIconStyle}
-                    className="absolute -bottom-2 -end-2 rounded-full bg-surface p-1"
+                    className="absolute -bottom-2 -end-2 rounded-full bg-surface p-1 shadow-card"
                     accessibilityElementsHidden
                   >
                     <Ionicons name="checkmark-circle" size={32} color={iconColors.accent} />
@@ -219,26 +226,26 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
 
               <View className="items-center gap-2">
                 <StatusChip variant={statusVariant} label={statusLabel} />
-                <Text variant="titleLg" align="center">
+                <Text variant="titleLg" align="center" className="text-foreground-onAccent">
                   {phase === "complete" ? t("processing.completeTitle") : t("processing.title")}
                 </Text>
-                <Text variant="body" muted align="center" className="leading-6">
+                <Text variant="body" align="center" className="text-foreground-onAccent/85 leading-6">
                   {phase === "complete"
                     ? t("processing.completeBody")
                     : t(`processing.${stageKey}`)}
                 </Text>
                 {phase === "complete" && canReview ? (
-                  <Text variant="caption" muted align="center">
+                  <Text variant="caption" align="center" className="text-foreground-onAccent/70">
                     {t("processing.openingReview")}
                   </Text>
                 ) : null}
               </View>
             </View>
-          </Surface>
+          </HeroSurface>
         </View>
       </FadeInView>
 
-      <FadeInView className="gap-3" delay={motion.duration.normal}>
+      <FadeInView className="gap-3 px-5" delay={motion.duration.normal}>
         <Button
           label={t("processing.reviewNow")}
           onPress={openReview}
@@ -250,6 +257,6 @@ export function ReceiptProcessingView({ receiptId }: ReceiptProcessingViewProps)
           onPress={goHome}
         />
       </FadeInView>
-    </View>
+    </CanvasBackground>
   );
 }

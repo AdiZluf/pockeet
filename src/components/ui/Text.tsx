@@ -15,6 +15,7 @@ export type TextProps = RNTextProps & {
     | "titleLg"
     | "displayLg"
     | "displayXl"
+    | "displayHero"
     | "micro";
   muted?: boolean;
   tabular?: boolean;
@@ -23,16 +24,17 @@ export type TextProps = RNTextProps & {
 };
 
 const variantClass: Record<NonNullable<TextProps["variant"]>, string> = {
-  displayXl: "text-display-xl text-foreground",
-  displayLg: "text-display-lg text-foreground",
-  titleLg: "text-title-lg text-foreground",
-  titleMd: "text-title-md text-foreground",
-  bodyLg: "text-body-lg text-foreground",
-  body: "text-body text-foreground",
-  bodySm: "text-body-sm text-foreground",
-  label: "text-label text-foreground",
-  caption: "text-caption text-foreground-secondary",
-  micro: "text-micro text-foreground-secondary",
+  displayHero: "text-display-hero font-display-bold text-foreground",
+  displayXl: "text-display-xl font-display text-foreground",
+  displayLg: "text-display-lg font-display text-foreground",
+  titleLg: "text-title-lg font-sans-bold text-foreground",
+  titleMd: "text-title-md font-sans-semibold text-foreground",
+  bodyLg: "text-body-lg font-sans text-foreground",
+  body: "text-body font-sans text-foreground",
+  bodySm: "text-body-sm font-sans text-foreground",
+  label: "text-label font-sans-semibold text-foreground",
+  caption: "text-caption font-sans-medium text-foreground-secondary",
+  micro: "text-micro font-sans-medium text-foreground-secondary",
 };
 
 function textAlignFor(intent: TextAlignIntent): TextStyle["textAlign"] | undefined {
@@ -65,7 +67,7 @@ export function Text({
         variantClass[variant],
         muted && "text-foreground-secondary",
         tabular && "tabular-nums",
-        variant.startsWith("display") && "tracking-tight",
+        (variant.startsWith("display") || variant === "displayHero") && "tracking-tight",
         className,
       )}
       style={[alignStyle, style]}

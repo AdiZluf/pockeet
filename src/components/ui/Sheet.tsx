@@ -49,7 +49,7 @@ export function Sheet({
         onPress={onClose}
       />
       <View
-        className="max-h-[90%] rounded-t-2xl bg-surface shadow-sheet"
+        className="max-h-[90%] rounded-t-3xl bg-surface shadow-floating"
         style={{ paddingBottom: insets.bottom + 16 }}
       >
         <View className="items-center py-2">

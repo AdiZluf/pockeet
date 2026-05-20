@@ -5,7 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
 import type { ReceiptStatusFilter } from "@/db/receiptFilters";
-import { EmptyState, LoadingSkeleton, LoadingSkeletonGroup, PressableScale, ScreenHeader } from "@/components/ui";
+import {
+  EmptyState,
+  LoadingSkeleton,
+  LoadingSkeletonGroup,
+  PressableScale,
+  ScreenHeader,
+} from "@/components/ui";
 import { AskPockeetCard } from "@/features/ask/components/AskPockeetCard";
 import { useAddReceiptSheetStore } from "@/features/capture/stores/addReceiptSheetStore";
 import { useFocusRefresh } from "@/hooks/useFocusRefresh";
@@ -101,7 +107,7 @@ export function HomeScreenContent() {
             accessibilityRole="button"
             accessibilityLabel={t("settings.open")}
             onPress={() => router.push("/settings")}
-            className="h-11 w-11 items-center justify-center rounded-full border border-border-subtle bg-surface-elevated"
+            className="h-11 w-11 items-center justify-center rounded-full border border-border-subtle bg-surface-elevated shadow-card"
           >
             <Ionicons name="settings-outline" size={22} color={iconColors.secondary} />
           </PressableScale>
@@ -148,11 +154,8 @@ export function HomeScreenContent() {
             receipts={summary.needsReview}
             accentEdge
           />
-          <ReceiptQueueSection
-            title={t("home.processing")}
-            receipts={summary.processing}
-          />
-          <View className="px-5 pt-6 pb-4">
+          <ReceiptQueueSection title={t("home.processing")} receipts={summary.processing} />
+          <View className="px-5 pb-4 pt-6">
             <AskPockeetCard
               onOpen={(prefill) =>
                 router.push(prefill ? { pathname: "/ask", params: { prefill } } : "/ask")
