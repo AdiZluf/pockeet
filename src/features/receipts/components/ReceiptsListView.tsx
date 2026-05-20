@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
+import type { ReceiptFilters } from "@/db/receiptFilters";
 import {
   DividerList,
   ElevatedGroup,
@@ -12,15 +13,16 @@ import {
   SectionHeader,
 } from "@/components/ui";
 import { useOpenCapture } from "@/features/capture/hooks/useOpenCapture";
-import { listAllReceipts } from "@/db/repositories/receiptRepository";
+import { listReceiptsFiltered } from "@/db/repositories/receiptRepository";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 import { useFocusRefresh } from "@/hooks/useFocusRefresh";
+import { isDefaultFilters } from "@/features/receipts/utils/filterParams";
 
 import { useReceiptNavigation } from "../hooks/useReceiptNavigation";
 import { formatReceiptMonth, monthBucketKey } from "../utils/receiptDisplay";
 
 function mapRows(
-  receipts: Awaited<ReturnType<typeof listAllReceipts>>,
+  receipts: Awaited<ReturnType<typeof listReceiptsFiltered>>,
 ): ReceiptSummaryRow[] {
   return receipts.map((r) => ({
     id: r.id,
@@ -35,13 +37,18 @@ function mapRows(
   }));
 }
 
-export function ReceiptsListView() {
+type ReceiptsListViewProps = {
+  filters: ReceiptFilters;
+  onClearFilters?: () => void;
+};
+
+export function ReceiptsListView({ filters, onClearFilters }: ReceiptsListViewProps) {
   const { t } = useTranslation();
   const { openReceipt } = useReceiptNavigation();
   const openCapture = useOpenCapture();
   const [refreshing, setRefreshing] = useState(false);
 
-  const loader = useCallback(async () => mapRows(await listAllReceipts()), []);
+  const loader = useCallback(async () => mapRows(await listReceiptsFiltered(filters)), [filters]);
   const { data: rows, isInitialLoad, refresh } = useFocusRefresh(loader);
 
   const onRefresh = useCallback(async () => {
@@ -62,6 +69,8 @@ export function ReceiptsListView() {
     return [...map.entries()].sort((a, b) => b[0].localeCompare(a[0]));
   }, [rows]);
 
+  const filteredEmpty = rows !== null && rows.length === 0 && !isDefaultFilters(filters);
+
   if (isInitialLoad || rows === null) {
     return (
       <View className="flex-1 gap-3 px-5 pt-4">
@@ -79,11 +88,13 @@ export function ReceiptsListView() {
     return (
       <View className="flex-1 justify-center px-5 pb-24">
         <EmptyState
-          title={t("receipts.emptyTitle")}
-          body={t("receipts.emptyBody")}
+          title={filteredEmpty ? t("receipts.filteredEmptyTitle") : t("receipts.emptyTitle")}
+          body={filteredEmpty ? t("receipts.filteredEmptyBody") : t("receipts.emptyBody")}
           icon="receipt-outline"
-          actionLabel={t("receipts.emptyAction")}
-          onAction={openCapture}
+          actionLabel={
+            filteredEmpty ? t("receipts.filters.clearAll") : t("receipts.emptyAction")
+          }
+          onAction={filteredEmpty ? onClearFilters : openCapture}
         />
       </View>
     );

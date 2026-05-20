@@ -41,11 +41,23 @@ Money: **`amountMinor: number`** + **`currencyCode: string`** — never floats.
 
 `id`, `receiptId`, `status`, `errorCode?`, `attempts` — client infers from receipt.status for MVP UI.
 
+## App preferences (MVP+)
+
+| Key | Value | Notes |
+|-----|-------|--------|
+| `default_currency` | `ILS` \| `USD` \| `EUR` | Home rollups and Ask answers use this code |
+
+Stored in `app_preferences` (`key`, `value`).
+
 ## Local analytics (computed)
 
 Rebuilt on write — not source tables in MVP:
-- monthly total by `YYYY-MM`
+- monthly total by `YYYY-MM` (filtered by `default_currency`)
 - category breakdown per month
+- status counts per month
+- delta vs previous month
+
+Receipt list filters (MVP+): period, categories, status — query `receipts` + indexes on `purchased_at`, `status`, `default_category_id`.
 
 Optional later: materialized SQLite tables if perf requires.
 

@@ -39,7 +39,7 @@ Prefer **size and weight** over color for hierarchy.
 ### Monthly story (Home)
 
 - One question: “How am I doing **this month**?”
-- One chart max; tap segment → Receipts with filter.
+- One chart max; tap category row → Receipts with month + category filter.
 - Needs-review banner only if count &gt; 0.
 
 ## Copy tone
@@ -59,7 +59,7 @@ Prefer **size and weight** over color for hierarchy.
 
 ## Deferred UX (not MVP)
 
-Edge guides, blur detection, search, filter sheets, Insights tab, duplicate warnings, subtotal/tax fields, AI insight cards, budget rings.
+Edge guides, blur detection, FTS search, Insights tab, duplicate warnings, subtotal/tax fields, real LLM insight cards, budget rings.
 
 ## i18n / RTL (summary)
 

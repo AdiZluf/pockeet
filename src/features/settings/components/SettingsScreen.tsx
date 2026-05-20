@@ -7,7 +7,10 @@ import Constants from "expo-constants";
 
 import { DevSeedActions } from "@/features/home/components/DevSeedActions";
 import { ElevatedGroup, ListRow, PressableScale, Text } from "@/components/ui";
+import { useDisplayCurrency } from "@/features/settings/hooks/useDisplayCurrency";
 import { useIconColors, useTheme } from "@/theme";
+
+import { CurrencySettingRow } from "./CurrencySettingRow";
 
 export function SettingsScreen() {
   const { t } = useTranslation();
@@ -16,6 +19,7 @@ export function SettingsScreen() {
   const iconColors = useIconColors();
   const { colors } = useTheme();
   const version = (Constants.expoConfig?.version ?? Constants.manifest?.version ?? "—") as string;
+  const { currency, setCurrency } = useDisplayCurrency();
 
   return (
     <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
@@ -48,6 +52,8 @@ export function SettingsScreen() {
         contentContainerClassName="gap-8 px-5 pb-12"
         showsVerticalScrollIndicator={false}
       >
+        <CurrencySettingRow value={currency} onChange={setCurrency} />
+
         <View className="gap-3">
           <Text variant="micro" muted align="start" className="uppercase tracking-wide">
             {t("settings.aboutSection")}

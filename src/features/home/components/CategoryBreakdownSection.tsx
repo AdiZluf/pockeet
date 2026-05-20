@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 
-import { ElevatedGroup, SectionHeader, Text } from "@/components/ui";
+import { ElevatedGroup, PressableScale, SectionHeader, Text } from "@/components/ui";
 import type { CategoryBreakdownRow } from "@/features/home/services/homeSummary";
 import { formatMoney, moneyTextProps } from "@/utils/money";
 
@@ -16,11 +16,13 @@ const CHART_BAR_CLASSES = [
 type CategoryBreakdownSectionProps = {
   categories: CategoryBreakdownRow[];
   currencyCode: string;
+  onCategoryPress?: (categoryId: string) => void;
 };
 
 export function CategoryBreakdownSection({
   categories,
   currencyCode,
+  onCategoryPress,
 }: CategoryBreakdownSectionProps) {
   const { t } = useTranslation();
 
@@ -41,28 +43,50 @@ export function CategoryBreakdownSection({
       <SectionHeader title={t("home.categoryBreakdown")} className="mb-3" />
       <ElevatedGroup>
         <View className="gap-5 px-5 py-5" accessibilityLabel={chartSummary}>
-          {categories.map((row, index) => (
-            <View key={row.categoryId} className="gap-2.5">
-              <View className="flex-row items-baseline justify-between gap-4">
-                <Text variant="bodyLg" align="start" className="flex-1 font-semibold">
-                  {row.name}
-                </Text>
-                <Text variant="label" muted tabular align="end" {...moneyTextProps}>
-                  {formatMoney(row.amountMinor, currencyCode)}
-                </Text>
-              </View>
-              <View className="h-2 overflow-hidden rounded-full bg-surface-muted">
-                <View
-                  className={`h-full rounded-full ${CHART_BAR_CLASSES[index % CHART_BAR_CLASSES.length]}`}
-                  style={{ width: `${Math.max(row.percent, 5)}%` }}
-                  accessibilityLabel={t("home.categoryBarA11y", {
-                    name: row.name,
-                    percent: row.percent,
-                  })}
-                />
-              </View>
-            </View>
-          ))}
+          {categories.map((row, index) => {
+            const rowContent = (
+              <>
+                <View className="flex-row items-baseline justify-between gap-4">
+                  <Text variant="bodyLg" align="start" className="flex-1 font-semibold">
+                    {row.name}
+                  </Text>
+                  <Text variant="label" muted tabular align="end" {...moneyTextProps}>
+                    {formatMoney(row.amountMinor, currencyCode)}
+                  </Text>
+                </View>
+                <View className="h-2 overflow-hidden rounded-full bg-surface-muted">
+                  <View
+                    className={`h-full rounded-full ${CHART_BAR_CLASSES[index % CHART_BAR_CLASSES.length]}`}
+                    style={{ width: `${Math.max(row.percent, 5)}%` }}
+                    accessibilityLabel={t("home.categoryBarA11y", {
+                      name: row.name,
+                      percent: row.percent,
+                    })}
+                  />
+                </View>
+              </>
+            );
+
+            if (!onCategoryPress) {
+              return (
+                <View key={row.categoryId} className="gap-2.5">
+                  {rowContent}
+                </View>
+              );
+            }
+
+            return (
+              <PressableScale
+                key={row.categoryId}
+                accessibilityRole="button"
+                accessibilityLabel={t("home.categoryRowA11y", { name: row.name })}
+                onPress={() => onCategoryPress(row.categoryId)}
+                className="gap-2.5"
+              >
+                {rowContent}
+              </PressableScale>
+            );
+          })}
         </View>
       </ElevatedGroup>
     </View>

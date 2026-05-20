@@ -38,9 +38,25 @@ Sign in (Apple/Google) → scan multi-page receipt → saved locally instantly �
 
 Month picker (else still include — low effort), settings (language, currency), light haptics, onboarding 2 screens.
 
+## MVP+ UI layer (post-core loop)
+
+UI-first expansion **before** cloud parse and real LLM. Strengthens monthly story and receipt management with **local SQLite queries only**.
+
+| Area | MVP+ |
+|------|------|
+| Home | Month picker, delta vs last month, status overview strip, tappable categories, Ask Pockeet card |
+| Ask Pockeet | Modal chat UI; canned keyword answers from local data |
+| Receipts | Filter sheet (month, range, categories, status), active chips, deep links from Home |
+| Settings | Default display currency (`ILS` / `USD` / `EUR`) |
+| Currency | Home totals sum matching currency only; footnote for mixed currencies |
+
+**Still excluded:** Insights tab, FTS search, real LLM, FX conversion, export, budgets.
+
+Specs: [ask-pockeet](../ux/screens/ask-pockeet.md), [receipt-filters](../ux/screens/receipt-filters.md).
+
 ## Tier 3 — Explicitly deferred
 
-See [roadmap](roadmap.md#v11). Includes: Insights tab, search/filters, dark mode UI, budgets, bank link, export, paywall, widgets, custom categories, duplicate detection, on-device OCR, full sync engine.
+See [roadmap](roadmap.md#v11). Includes: Insights tab, FTS search, dark mode UI, budgets, bank link, export, paywall, widgets, custom categories, duplicate detection, on-device OCR, full sync engine.
 
 ## Navigation (MVP)
 

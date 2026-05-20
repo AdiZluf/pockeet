@@ -9,6 +9,8 @@ type HomeMonthHeroProps = {
   totalMinor: number;
   currencyCode: string;
   hasParsedTotals: boolean;
+  deltaMinor: number | null;
+  otherCurrencyCount: number;
 };
 
 export function HomeMonthHero({
@@ -16,8 +18,23 @@ export function HomeMonthHero({
   totalMinor,
   currencyCode,
   hasParsedTotals,
+  deltaMinor,
+  otherCurrencyCount,
 }: HomeMonthHeroProps) {
   const { t } = useTranslation();
+
+  const deltaLabel =
+    deltaMinor == null
+      ? null
+      : deltaMinor === 0
+        ? t("home.deltaSame")
+        : deltaMinor > 0
+          ? t("home.deltaUp", {
+              amount: formatMoney(deltaMinor, currencyCode),
+            })
+          : t("home.deltaDown", {
+              amount: formatMoney(Math.abs(deltaMinor), currencyCode),
+            });
 
   return (
     <View className="px-5 pb-4 pt-3" accessibilityRole="header">
@@ -44,6 +61,16 @@ export function HomeMonthHero({
           <Text variant="body" muted align="start" className="mt-3 font-medium">
             {monthLabel}
           </Text>
+          {deltaLabel ? (
+            <Text variant="caption" muted align="start" className="mt-2 leading-5">
+              {deltaLabel}
+            </Text>
+          ) : null}
+          {otherCurrencyCount > 0 ? (
+            <Text variant="caption" muted align="start" className="mt-2 leading-5">
+              {t("home.otherCurrencyFootnote", { count: otherCurrencyCount })}
+            </Text>
+          ) : null}
           {!hasParsedTotals ? (
             <Text variant="caption" muted align="start" className="mt-2 leading-5">
               {t("home.monthTotalHint")}

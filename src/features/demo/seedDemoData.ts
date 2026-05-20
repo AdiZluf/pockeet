@@ -102,6 +102,15 @@ const demoReceipts: DemoReceiptSeed[] = [
     categoryId: "cat_shopping",
     lineItems: [{ name: "Books", totalMinor: 12900, categoryId: "cat_shopping" }],
   },
+  {
+    merchantName: "Amazon.com",
+    status: "ready",
+    purchasedAt: daysAgo(3),
+    currencyCode: "USD",
+    totalMinor: 4599,
+    categoryId: "cat_shopping",
+    lineItems: [{ name: "Online order", totalMinor: 4599, categoryId: "cat_shopping" }],
+  },
 ];
 
 function daysAgo(n: number) {

@@ -8,7 +8,7 @@
 | Setting | Options |
 |---------|---------|
 | Language | **Deferred v1.1+** — MVP is English-only (LTR) |
-| Currency | ILS / USD (default display) — when implemented |
+| Currency | ILS / USD / EUR (default display for Home rollups) |
 | Sign out | confirm optional |
 
 ## Excluded MVP

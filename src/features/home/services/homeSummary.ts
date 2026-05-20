@@ -1,7 +1,10 @@
 import { categorySeeds } from "@/db/seed/categories";
+import { getDefaultCurrency } from "@/db/repositories/preferencesRepository";
 import {
   getCategoryBreakdownForMonth,
+  getMonthDeltaMinor,
   getMonthReceiptTotals,
+  getStatusCountsForMonth,
   listRecentReceipts,
   listReceiptsByStatus,
 } from "@/db/repositories/receiptRepository";
@@ -26,13 +29,24 @@ export type CategoryBreakdownRow = {
   percent: number;
 };
 
+export type StatusCounts = {
+  processing: number;
+  needs_review: number;
+  ready: number;
+  failed: number;
+};
+
 export type HomeSummary = {
   monthLabel: string;
+  monthKey: string;
   totalMinor: number;
   currencyCode: string;
   hasParsedTotals: boolean;
   receiptCount: number;
   isEmpty: boolean;
+  deltaMinor: number | null;
+  otherCurrencyCount: number;
+  statusCounts: StatusCounts;
   needsReview: ReceiptSummaryRow[];
   processing: ReceiptSummaryRow[];
   recent: ReceiptSummaryRow[];
@@ -63,19 +77,30 @@ function categoryName(categoryId: string) {
 
 const DISPLAY_LOCALE = "en-US";
 
+export function monthKeyFromDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  return `${y}-${m}`;
+}
+
 export async function loadHomeSummary(referenceDate = new Date()): Promise<HomeSummary> {
+  const displayCurrency = await getDefaultCurrency();
+  const monthKey = monthKeyFromDate(referenceDate);
   const monthLabel = referenceDate.toLocaleDateString(DISPLAY_LOCALE, {
     month: "long",
     year: "numeric",
   });
 
-  const [monthTotals, needsReview, processing, recent, breakdown] = await Promise.all([
-    getMonthReceiptTotals(referenceDate),
-    listReceiptsByStatus(["needs_review"], 5),
-    listReceiptsByStatus(["processing", "draft"], 5),
-    listRecentReceipts(5),
-    getCategoryBreakdownForMonth(referenceDate),
-  ]);
+  const [monthTotals, needsReview, processing, recent, breakdown, statusCounts, deltaMinor] =
+    await Promise.all([
+      getMonthReceiptTotals(referenceDate, displayCurrency),
+      listReceiptsByStatus(["needs_review"], 5),
+      listReceiptsByStatus(["processing", "draft"], 5),
+      listRecentReceipts(5),
+      getCategoryBreakdownForMonth(referenceDate, displayCurrency),
+      getStatusCountsForMonth(referenceDate),
+      getMonthDeltaMinor(referenceDate, displayCurrency),
+    ]);
 
   const totalMinor = monthTotals.totalMinor;
   const hasParsedTotals = monthTotals.parsedCount > 0;
@@ -105,11 +130,15 @@ export async function loadHomeSummary(referenceDate = new Date()): Promise<HomeS
 
   return {
     monthLabel,
+    monthKey,
     totalMinor,
-    currencyCode: monthTotals.currencyCode,
+    currencyCode: displayCurrency,
     hasParsedTotals,
     receiptCount: monthTotals.receiptCount,
     isEmpty,
+    deltaMinor,
+    otherCurrencyCount: monthTotals.otherCurrencyCount,
+    statusCounts,
     needsReview: needsReviewRows,
     processing: processingRows,
     recent: recentRows,

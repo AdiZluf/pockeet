@@ -35,16 +35,23 @@ flowchart TD
 | Screen | Route |
 |--------|-------|
 | Home | `/(tabs)/index` |
-| Receipts | `/(tabs)/receipts` |
+| Receipts | `/(tabs)/receipts` (+ query filters) |
+| Ask Pockeet | `ask` (modal from Home) |
 | Capture | `capture/index` |
 | Preview | `capture/preview` |
 | Processing | `/receipt/[id]/processing` |
 | Review | `/receipt/[id]/review` |
 | Detail | `/receipt/[id]` |
-| Needs review | `/needs-review` |
+| Needs review | inline on Home (dedicated route deferred) |
 | Settings | modal from Home |
 | Onboarding | `(auth)/onboarding` |
 | Login | `(auth)/login` |
+
+### Receipts query params (MVP+)
+
+`/(tabs)/receipts?month=2026-05&status=needs_review&categories=cat_dining,cat_groceries&from=2026-01-01&to=2026-05-31`
+
+Used when Home category bar or status strip navigates to filtered Receipts.
 
 **One Review component** for post-scan, needs-review, and re-edit (`source`: scan | home | receipts | detail).
 
@@ -96,5 +103,7 @@ After **Looks good:** `ready`. After **Fix later:** `needs_review` (edits saved)
 | Needs review | [screens/needs-review.md](screens/needs-review.md) |
 | Receipts list | [screens/receipts-list.md](screens/receipts-list.md) |
 | Receipt detail | [screens/receipt-detail.md](screens/receipt-detail.md) |
+| Ask Pockeet | [screens/ask-pockeet.md](screens/ask-pockeet.md) |
+| Receipt filters | [screens/receipt-filters.md](screens/receipt-filters.md) |
 | Onboarding & auth | [screens/onboarding-auth.md](screens/onboarding-auth.md) |
 | Settings | [screens/settings.md](screens/settings.md) |

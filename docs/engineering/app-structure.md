@@ -30,7 +30,9 @@ pockeet/
 │   │   ├── review/
 │   │   ├── home/
 │   │   ├── receipts/
+│   │   ├── ask/
 │   │   └── settings/
+│   ├── ask.tsx                 # Ask Pockeet modal (MVP+)
 │   ├── db/
 │   │   ├── schema.ts
 │   │   ├── migrations/

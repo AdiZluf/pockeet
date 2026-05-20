@@ -1,4 +1,7 @@
-/** Default display currency for English-only MVP (Israel-focused). */
+import { useDisplayCurrency } from "@/features/settings/hooks/useDisplayCurrency";
+
+/** Default display currency from app preferences (ILS / USD / EUR). */
 export function useDefaultCurrency() {
-  return "ILS";
+  const { currency } = useDisplayCurrency();
+  return currency;
 }

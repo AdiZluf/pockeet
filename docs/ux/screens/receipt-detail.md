@@ -6,7 +6,7 @@
 ## UI
 
 - Image carousel (pinch zoom)
-- Merchant, date, category, total
+- Merchant, date, category, total (with `currencyCode`)
 - Line items
 - **Edit** → [review](review.md)
 - **Delete** (confirm sheet)

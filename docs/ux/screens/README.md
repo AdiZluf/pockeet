@@ -23,6 +23,8 @@ Wireframe-level specs. Shared conventions below; each screen has its own file.
 | 5 | Needs-review queue | [needs-review.md](needs-review.md) |
 | 6 | Receipts list | [receipts-list.md](receipts-list.md) |
 | 7 | Receipt detail | [receipt-detail.md](receipt-detail.md) |
+| 8 | Ask Pockeet | [ask-pockeet.md](ask-pockeet.md) |
+| — | Receipt filters (sheet) | [receipt-filters.md](receipt-filters.md) |
 | — | Onboarding & auth | [onboarding-auth.md](onboarding-auth.md) |
 | — | Settings | [settings.md](settings.md) |
 

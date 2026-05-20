@@ -9,7 +9,7 @@ See [mvp-scope](mvp-scope.md).
 ## v1.1 — Quality & habit
 
 - Insights tab (3-month category trends)
-- Search (SQLite FTS) + basic filters
+- Search (SQLite FTS) + saved filter presets
 - Dark mode UI (tokens already defined)
 - Duplicate receipt hints
 - Merchant logos (static pack or API)
