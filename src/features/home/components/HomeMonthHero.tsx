@@ -39,14 +39,14 @@ export function HomeMonthHero({
     <View className="px-5 pb-4 pt-2" accessibilityRole="header">
       <HeroSurface>
         <View className="px-6 pb-8 pt-6">
-          <Text variant="caption" align="start" className="text-foreground-onAccent/80">
+          <Text variant="caption" align="start" className="text-white/90">
             {t("home.monthTotal")}
           </Text>
           <Text
             variant="displayHero"
             tabular
             align="start"
-            className="mt-2 text-foreground-onAccent"
+            className="mt-2 text-white"
             {...moneyWritingProps}
           >
             {hasParsedTotals
@@ -55,16 +55,16 @@ export function HomeMonthHero({
           </Text>
           {deltaLabel && deltaTone ? (
             <View className="mt-4">
-              <DeltaChip label={deltaLabel} tone={deltaTone} />
+              <DeltaChip label={deltaLabel} tone={deltaTone} variant="hero" />
             </View>
           ) : null}
           {otherCurrencyCount > 0 ? (
-            <Text variant="caption" align="start" className="mt-3 text-foreground-onAccent/75">
+            <Text variant="caption" align="start" className="mt-3 text-white/85">
               {t("home.otherCurrencyFootnote", { count: otherCurrencyCount })}
             </Text>
           ) : null}
           {!hasParsedTotals ? (
-            <Text variant="caption" align="start" className="mt-2 text-foreground-onAccent/75">
+            <Text variant="caption" align="start" className="mt-2 text-white/85">
               {t("home.monthTotalHint")}
             </Text>
           ) : null}

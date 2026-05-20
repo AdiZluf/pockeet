@@ -15,6 +15,7 @@
     "next": "Next",
     "getStarted": "Get started",
     "progressA11y": "Step {{current}} of {{total}}",
+    "swipeHint": "Swipe to explore, or tap Next",
     "slides": {
       "scan": {
         "title": "Scan receipts in seconds",
