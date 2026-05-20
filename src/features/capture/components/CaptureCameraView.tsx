@@ -12,8 +12,6 @@ import { Text } from "@/components/ui";
 import { a11y, useIconColors } from "@/theme";
 
 import { MAX_RECEIPT_PAGES } from "../constants";
-import { useUploadReceiptPdf } from "../hooks/useUploadReceiptPdf";
-import { usePickReceiptGallery } from "../hooks/usePickReceiptGallery";
 import { useCaptureSessionStore } from "../stores/captureSessionStore";
 import { ThumbnailStrip } from "./ThumbnailStrip";
 import { CapturePermissionView } from "./CapturePermissionView";
@@ -26,8 +24,6 @@ export function CaptureCameraView() {
   const cameraRef = useRef<CameraView>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [isCapturing, setIsCapturing] = useState(false);
-  const [isUploadingPdf, setIsUploadingPdf] = useState(false);
-  const uploadPdf = useUploadReceiptPdf();
 
   const images = useCaptureSessionStore((s) => s.images);
   const selectedIndex = useCaptureSessionStore((s) => s.selectedIndex);
@@ -35,7 +31,6 @@ export function CaptureCameraView() {
   const selectImage = useCaptureSessionStore((s) => s.selectImage);
   const canAddMore = useCaptureSessionStore((s) => s.canAddMore);
   const reset = useCaptureSessionStore((s) => s.reset);
-  const pickGallery = usePickReceiptGallery();
 
   const handleClose = () => {
     if (images.length === 0) {
@@ -85,19 +80,6 @@ export function CaptureCameraView() {
     } finally {
       setIsCapturing(false);
     }
-  };
-
-  const handlePickPdf = async () => {
-    setIsUploadingPdf(true);
-    try {
-      await uploadPdf();
-    } finally {
-      setIsUploadingPdf(false);
-    }
-  };
-
-  const handlePickGallery = async () => {
-    await pickGallery();
   };
 
   if (!permission) {
@@ -162,19 +144,10 @@ export function CaptureCameraView() {
         ) : null}
 
         <View
-          className="absolute bottom-0 left-0 right-0 flex-row items-center justify-between px-10"
+          className="absolute bottom-0 left-0 right-0 items-center"
           style={{ paddingBottom: insets.bottom + 24 }}
           pointerEvents="box-none"
         >
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t("capture.gallery")}
-            onPress={() => void handlePickGallery()}
-            className="h-12 w-12 items-center justify-center rounded-full bg-overlay"
-          >
-            <Ionicons name="images-outline" size={26} color={iconColors.inverse} />
-          </Pressable>
-
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={t("capture.shutter")}
@@ -184,17 +157,6 @@ export function CaptureCameraView() {
             style={{ width: a11y.fabSize + 8, height: a11y.fabSize + 8, opacity: canAddMore() ? 1 : 0.5 }}
           >
             <View className="h-full w-full rounded-full bg-foreground-inverse" />
-          </Pressable>
-
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t("capture.uploadPdf")}
-            accessibilityState={{ busy: isUploadingPdf, disabled: isUploadingPdf }}
-            onPress={() => void handlePickPdf()}
-            disabled={isUploadingPdf}
-            className="h-12 w-12 items-center justify-center rounded-full bg-overlay"
-          >
-            <Ionicons name="document-outline" size={26} color={iconColors.inverse} />
           </Pressable>
         </View>
       </View>

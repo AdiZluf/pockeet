@@ -27,7 +27,7 @@ export function CurrencySettingRow({ value, onChange }: CurrencySettingRowProps)
       <Text variant="micro" muted align="start" className="uppercase tracking-wide">
         {t("settings.currencySection")}
       </Text>
-      <View className="flex-row flex-wrap gap-2">
+      <View className="flex-row justify-center align-middle flex-wrap gap-2">
         {SUPPORTED_DISPLAY_CURRENCIES.map((code) => (
           <PressableScale
             key={code}

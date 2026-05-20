@@ -12,7 +12,7 @@ import {
   ReceiptRow,
   SectionHeader,
 } from "@/components/ui";
-import { useOpenCapture } from "@/features/capture/hooks/useOpenCapture";
+import { useAddReceiptSheetStore } from "@/features/capture/stores/addReceiptSheetStore";
 import { listReceiptsFiltered } from "@/db/repositories/receiptRepository";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 import { useFocusRefresh } from "@/hooks/useFocusRefresh";
@@ -45,7 +45,7 @@ type ReceiptsListViewProps = {
 export function ReceiptsListView({ filters, onClearFilters }: ReceiptsListViewProps) {
   const { t } = useTranslation();
   const { openReceipt } = useReceiptNavigation();
-  const openCapture = useOpenCapture();
+  const openAddReceipt = useAddReceiptSheetStore((s) => s.open);
   const [refreshing, setRefreshing] = useState(false);
 
   const loader = useCallback(async () => mapRows(await listReceiptsFiltered(filters)), [filters]);
@@ -94,7 +94,7 @@ export function ReceiptsListView({ filters, onClearFilters }: ReceiptsListViewPr
           actionLabel={
             filteredEmpty ? t("receipts.filters.clearAll") : t("receipts.emptyAction")
           }
-          onAction={filteredEmpty ? onClearFilters : openCapture}
+          onAction={filteredEmpty ? onClearFilters : openAddReceipt}
         />
       </View>
     );
