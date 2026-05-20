@@ -18,6 +18,7 @@ export default function RootLayout() {
         />
         <Stack.Screen name="receipt/[id]/index" />
         <Stack.Screen name="receipt/[id]/processing" />
+        <Stack.Screen name="receipt/[id]/review" />
         <Stack.Screen
           name="settings"
           options={{ presentation: "modal", animation: "slide_from_bottom" }}

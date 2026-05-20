@@ -62,7 +62,14 @@ export default function ReceiptProcessingScreen() {
         </Surface>
       </View>
 
-      <Button label={t("processing.continueBackground")} variant="text" onPress={goHome} />
+      <View className="gap-3">
+        <Button
+          label={t("processing.reviewNow")}
+          onPress={() => id && router.push({ pathname: "/receipt/[id]/review", params: { id, source: "scan" } })}
+          disabled={!id}
+        />
+        <Button label={t("processing.continueBackground")} variant="text" onPress={goHome} />
+      </View>
     </View>
   );
 }

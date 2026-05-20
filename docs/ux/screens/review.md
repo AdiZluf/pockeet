@@ -36,7 +36,14 @@ Merchant, date, total, category, line items.
 
 ## States
 
-Skeleton while loading parse; empty items prompt; save error toast.
+Skeleton while loading; empty line-item row by default; save error alert.
+
+## Implementation (MVP)
+
+- Route: `app/receipt/[id]/review.tsx` · `ReceiptReviewView`
+- Save: `updateReceiptFromReview` in SQLite (local only)
+- Navigation: needs-review rows → review; detail **Edit**; processing **Review now**
+- Re-edit uses **Save changes** (`source=detail`); first pass uses **Looks good** / **Fix later**
 
 ## RTL
 

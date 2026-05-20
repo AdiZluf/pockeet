@@ -1,4 +1,5 @@
 import { and, desc, eq, gte, isNull, lt, sql } from "drizzle-orm";
+import { randomUUID } from "expo-crypto";
 
 import { db } from "../client";
 import { lineItems, receiptImages, receipts, type ReceiptStatus } from "../schema";
@@ -127,6 +128,52 @@ export async function listAllReceipts() {
       },
     },
   });
+}
+
+export type UpdateReceiptReviewInput = {
+  receiptId: string;
+  merchantName: string;
+  purchasedAt: string;
+  totalMinor: number;
+  defaultCategoryId: string | null;
+  status: ReceiptStatus;
+  lineItems: {
+    id?: string;
+    name: string;
+    totalMinor: number;
+    categoryId?: string;
+  }[];
+};
+
+export async function updateReceiptFromReview(input: UpdateReceiptReviewInput) {
+  const now = new Date().toISOString();
+
+  await db
+    .update(receipts)
+    .set({
+      merchantName: input.merchantName,
+      purchasedAt: input.purchasedAt,
+      totalMinor: input.totalMinor,
+      defaultCategoryId: input.defaultCategoryId,
+      status: input.status,
+      updatedAt: now,
+    })
+    .where(eq(receipts.id, input.receiptId));
+
+  await db.delete(lineItems).where(eq(lineItems.receiptId, input.receiptId));
+
+  if (input.lineItems.length > 0) {
+    await insertLineItems(
+      input.lineItems.map((item, index) => ({
+        id: item.id ?? randomUUID(),
+        receiptId: input.receiptId,
+        sortOrder: index,
+        name: item.name.trim(),
+        totalMinor: item.totalMinor,
+        categoryId: item.categoryId ?? input.defaultCategoryId ?? undefined,
+      })),
+    );
+  }
 }
 
 export async function softDeleteReceipt(receiptId: string) {

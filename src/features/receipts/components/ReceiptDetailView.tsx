@@ -14,6 +14,7 @@ import {
 } from "@/db/repositories/receiptRepository";
 import { formatMoney } from "@/utils/money";
 
+import { useReceiptNavigation } from "../hooks/useReceiptNavigation";
 import {
   formatReceiptDate,
   isParsedReceipt,
@@ -32,6 +33,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const iconColors = useIconColors();
+  const { openReview } = useReceiptNavigation();
   const [receipt, setReceipt] = useState<ReceiptDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
@@ -171,13 +173,29 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
             </View>
           </Surface>
         ) : (
-          <Surface variant="inset" className="gap-2 p-5">
+          <Surface variant="inset" className="gap-3 p-5">
             <Text variant="label">{t("receiptDetail.stillAnalyzingTitle")}</Text>
             <Text variant="body" muted>
               {t("receiptDetail.stillAnalyzingBody")}
             </Text>
+            <Button
+              variant="secondary"
+              label={t("receiptDetail.addDetails")}
+              onPress={() => openReview(receiptId, "detail")}
+              block={false}
+              className="self-start px-5"
+            />
           </Surface>
         )}
+
+        {receipt.status === "ready" || receipt.status === "needs_review" ? (
+          <Button
+            label={t("receiptDetail.edit")}
+            variant="secondary"
+            onPress={() => openReview(receiptId, "detail")}
+            className="mt-2"
+          />
+        ) : null}
       </ScrollView>
     </View>
   );
