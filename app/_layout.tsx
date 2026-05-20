@@ -16,9 +16,12 @@ export default function RootLayout() {
           name="capture"
           options={{ presentation: "fullScreenModal", animation: "slide_from_bottom" }}
         />
-        <Stack.Screen name="receipt/[id]/index" />
-        <Stack.Screen name="receipt/[id]/processing" />
-        <Stack.Screen name="receipt/[id]/review" />
+        <Stack.Screen name="receipt/[id]/index" options={{ animation: "fade" }} />
+        <Stack.Screen
+          name="receipt/[id]/processing"
+          options={{ animation: "fade_from_bottom" }}
+        />
+        <Stack.Screen name="receipt/[id]/review" options={{ animation: "fade" }} />
         <Stack.Screen
           name="settings"
           options={{ presentation: "modal", animation: "slide_from_bottom" }}

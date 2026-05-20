@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Alert, Image, Pressable, View } from "react-native";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
 
 import { Button, Text } from "@/components/ui";
 import { useIconColors } from "@/theme";
@@ -12,6 +12,7 @@ import { MAX_RECEIPT_PAGES } from "../constants";
 import { useDefaultCurrency } from "../hooks/useDefaultCurrency";
 import { saveReceiptLocally } from "../services/saveReceiptLocally";
 import { useCaptureSessionStore } from "../stores/captureSessionStore";
+import { CaptureActionButton, CaptureActionsPanel } from "./CaptureActionButton";
 import { ThumbnailStrip } from "./ThumbnailStrip";
 
 export function CapturePreviewView() {
@@ -29,6 +30,7 @@ export function CapturePreviewView() {
   const reset = useCaptureSessionStore((s) => s.reset);
 
   const selected = images[selectedIndex];
+  const canAddPage = images.length < MAX_RECEIPT_PAGES;
 
   const handleBack = () => {
     router.back();
@@ -82,9 +84,9 @@ export function CapturePreviewView() {
           accessibilityLabel={t("capture.back")}
           onPress={handleBack}
           hitSlop={12}
-          className="h-11 w-11 items-center justify-center"
+          className="h-11 w-11 items-center justify-center rounded-full bg-surface-elevated border border-border"
         >
-          <Ionicons name="chevron-back" size={28} color={iconColors.primary} />
+          <Ionicons name="chevron-back" size={24} color={iconColors.primary} />
         </Pressable>
         <Text variant="label">
           {t("capture.pageCount", { count: images.length, max: MAX_RECEIPT_PAGES })}
@@ -105,52 +107,73 @@ export function CapturePreviewView() {
         accessibilityLabel={t("capture.previewImage", { page: selectedIndex + 1 })}
         accessibilityHint={t("capture.editPageHint")}
         onPress={() => openCrop()}
-        className="mx-5 mt-4 flex-1 overflow-hidden rounded-lg bg-surface-muted"
+        className="mx-5 mt-3 min-h-0 flex-1 overflow-hidden rounded-xl border border-border bg-surface-muted"
       >
         {selected ? (
-          <Image
-            source={{ uri: selected.uri }}
-            className="h-full w-full"
-            resizeMode="contain"
-          />
+          <>
+            <Image
+              source={{ uri: selected.uri }}
+              className="h-full w-full"
+              resizeMode="contain"
+            />
+            <View className="absolute inset-x-0 bottom-0 flex-row items-center justify-center gap-2 bg-overlay px-4 py-3">
+              <Ionicons name="crop-outline" size={18} color={iconColors.inverse} />
+              <Text variant="label" className="text-foreground-inverse">
+                {t("capture.editImage")}
+              </Text>
+            </View>
+          </>
         ) : null}
       </Pressable>
 
-      <View className="flex-row gap-3 px-5 py-4">
-        <Button
-          variant="secondary"
-          label={t("capture.editImage")}
-          onPress={() => openCrop()}
-          block={false}
-          className="flex-1"
-        />
-        <Button
-          variant="secondary"
-          label={t("capture.removePage")}
-          onPress={handleDeletePage}
-          block={false}
-          className="flex-1"
-        />
-      </View>
+      <View className="shrink-0 gap-4 px-5 pt-4">
+        <CaptureActionsPanel title={t("capture.pageActionsTitle")}>
+          <View className="flex-row gap-3">
+            <CaptureActionButton
+              variant="default"
+              icon="crop-outline"
+              label={t("capture.editImage")}
+              onPress={() => openCrop()}
+              block={false}
+              className="flex-1"
+            />
+            <CaptureActionButton
+              variant="destructive"
+              icon="trash-outline"
+              label={t("capture.removePage")}
+              onPress={handleDeletePage}
+              block={false}
+              className="flex-1"
+            />
+          </View>
+          <CaptureActionButton
+            variant="emphasis"
+            icon="add-circle-outline"
+            label={t("capture.addPage")}
+            onPress={handleBack}
+            disabled={!canAddPage}
+            accessibilityLabel={
+              canAddPage
+                ? t("capture.addPage")
+                : t("capture.addPageDisabledA11y", { max: MAX_RECEIPT_PAGES })
+            }
+          />
+        </CaptureActionsPanel>
 
-      <View className="px-5 pb-2">
-        <Button
-          variant="secondary"
-          label={t("capture.addPage")}
-          onPress={handleBack}
-        />
-      </View>
-
-      <View className="px-5" style={{ paddingBottom: insets.bottom + 16 }}>
-        <Button
-          label={isSaving ? t("capture.saving") : t("capture.saveAndAnalyze")}
-          onPress={() => void handleSave()}
-          loading={isSaving}
-          disabled={isSaving}
-        />
-        <Text variant="caption" muted align="center" className="mt-2">
-          {t("capture.savedLocallyHint")}
-        </Text>
+        <View
+          className="gap-2 border-t border-border-subtle pt-4"
+          style={{ paddingBottom: insets.bottom + 16 }}
+        >
+          <Button
+            label={isSaving ? t("capture.saving") : t("capture.saveAndAnalyze")}
+            onPress={() => void handleSave()}
+            loading={isSaving}
+            disabled={isSaving}
+          />
+          <Text variant="caption" muted align="center">
+            {t("capture.savedLocallyHint")}
+          </Text>
+        </View>
       </View>
     </View>
   );

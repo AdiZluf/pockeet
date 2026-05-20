@@ -22,3 +22,5 @@ export { Section, type SectionProps } from "./Section";
 export { Sheet, type SheetProps } from "./Sheet";
 export { StatusChip, type ReceiptStatusVariant, type StatusChipProps } from "./StatusChip";
 export { Text, type TextProps } from "./Text";
+export { FadeInView, type FadeInViewProps } from "./FadeInView";
+export { ReceiptHeroImage, type ReceiptHeroImageProps } from "./ReceiptHeroImage";

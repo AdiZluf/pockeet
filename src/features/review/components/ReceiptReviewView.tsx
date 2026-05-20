@@ -18,11 +18,13 @@ import {
   Button,
   DividerList,
   ElevatedGroup,
+  FadeInView,
   LoadingSkeleton,
   LoadingSkeletonGroup,
+  PressableScale,
+  ReceiptHeroImage,
   SectionHeader,
   StatusChip,
-  Surface,
   Text,
 } from "@/components/ui";
 import { listCategories } from "@/db/repositories/categoryRepository";
@@ -66,6 +68,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
 
   const isReedit = source === "detail";
   const isManualEntry = receiptStatus === "processing" || receiptStatus === "draft";
+  const isFreshParse = source === "scan" && receiptStatus === "needs_review";
 
   const load = useCallback(async () => {
     const [receipt, categoryRows] = await Promise.all([
@@ -161,11 +164,21 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
 
   if (loading) {
     return (
-      <View className="flex-1 bg-background px-5 pt-4" style={{ paddingTop: insets.top }}>
-        <LoadingSkeletonGroup busy label={t("common.loading")}>
-          <LoadingSkeleton height={220} rounded="xl" />
-          <LoadingSkeleton height={120} rounded="xl" />
-          <LoadingSkeleton height={160} rounded="xl" />
+      <View className="flex-1 bg-background px-5" style={{ paddingTop: insets.top + 8 }}>
+        <LoadingSkeletonGroup busy label={t("common.loading")} className="gap-6 pt-2">
+          <View className="gap-3">
+            <LoadingSkeleton height={28} width="55%" rounded="md" />
+            <LoadingSkeleton height={18} width="85%" rounded="md" />
+          </View>
+          <LoadingSkeleton height={300} rounded="xl" />
+          <View className="gap-3">
+            <LoadingSkeleton height={16} width="40%" rounded="md" />
+            <LoadingSkeleton height={200} rounded="xl" />
+          </View>
+          <View className="gap-3">
+            <LoadingSkeleton height={16} width="35%" rounded="md" />
+            <LoadingSkeleton height={140} rounded="xl" />
+          </View>
         </LoadingSkeletonGroup>
       </View>
     );
@@ -208,33 +221,35 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
 
       <ScrollView
         className="flex-1"
-        contentContainerClassName="gap-6 pb-40"
+        contentContainerClassName="gap-7 pb-40"
         keyboardShouldPersistTaps="handled"
       >
-        <View className="px-5 gap-3">
+        <FadeInView className="px-5 gap-2.5" delay={0}>
           <Text variant="titleLg" align="start">
             {t(isReedit ? "review.titleEdit" : "review.title")}
           </Text>
-          <Text variant="body" muted align="start">
-            {t(isManualEntry ? "review.subtitleManual" : "review.subtitle")}
+          <Text variant="body" muted align="start" className="leading-6">
+            {t(
+              isManualEntry
+                ? "review.subtitleManual"
+                : isFreshParse
+                  ? "review.subtitleParsed"
+                  : "review.subtitle",
+            )}
           </Text>
-        </View>
+        </FadeInView>
 
         {heroUri ? (
-          <View className="px-5 gap-3">
-            <Surface variant="panel" className="overflow-hidden p-0">
-              <Image
-                source={{ uri: heroUri }}
-                className="w-full bg-surface-muted"
-                style={{ aspectRatio: 3 / 4, maxHeight: 360 }}
-                resizeMode="cover"
-                accessibilityLabel={t("review.heroImage")}
-              />
-            </Surface>
+          <FadeInView className="px-5 gap-3" delay={80}>
+            <ReceiptHeroImage
+              uri={heroUri}
+              accessibilityLabel={t("review.heroImage")}
+              maxHeight={320}
+            />
             {images.length > 1 ? (
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} className="gap-2">
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {images.map((image, index) => (
-                  <Pressable
+                  <PressableScale
                     key={image.id}
                     onPress={() => setSelectedImageIndex(index)}
                     accessibilityRole="button"
@@ -243,18 +258,18 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
                       total: images.length,
                     })}
                     className={`me-2 overflow-hidden rounded-lg border-2 ${
-                      index === selectedImageIndex ? "border-accent" : "border-transparent"
+                      index === selectedImageIndex ? "border-accent" : "border-border-subtle"
                     }`}
                   >
                     <Image source={{ uri: image.localUri }} className="h-16 w-12" resizeMode="cover" />
-                  </Pressable>
+                  </PressableScale>
                 ))}
               </ScrollView>
             ) : null}
-          </View>
+          </FadeInView>
         ) : null}
 
-        <View className="gap-3">
+        <FadeInView className="gap-3" delay={160}>
           <SectionHeader title={t("review.detailsSection")} />
           <ElevatedGroup>
             <DividerList insetStart={false}>
@@ -305,9 +320,9 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
             />
             </DividerList>
           </ElevatedGroup>
-        </View>
+        </FadeInView>
 
-        <View className="gap-3 px-5">
+        <FadeInView className="gap-3 px-5" delay={240}>
           <SectionHeader title={t("review.lineItemsSection")} />
           <ElevatedGroup>
             <DividerList insetStart={false}>
@@ -352,7 +367,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
             block={false}
             className="mt-3 self-start px-5"
           />
-        </View>
+        </FadeInView>
       </ScrollView>
 
       <View

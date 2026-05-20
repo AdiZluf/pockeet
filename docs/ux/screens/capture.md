@@ -18,9 +18,9 @@
 
 ## Preview
 
-- Filmstrip + large selected preview
-- Add page / Retake / Delete page
-- Primary: **Save & analyze** → SQLite `processing` + → [processing](processing.md)
+- Filmstrip + large selected preview (crop hint on image + selected thumb badge)
+- **Page actions** panel: Edit image, Remove page (destructive tonal), Add page (emphasis)
+- Primary **Save & analyze** docked below panel → SQLite `processing` + → [processing](processing.md)
 
 | State | UI |
 |-------|-----|
@@ -28,6 +28,12 @@
 | Offline | Same CTA + “Will analyze when online” |
 
 **Excluded MVP:** drag-reorder pages (capture order only).
+
+## Crop (`capture/crop`)
+
+- Header cancel uses filled secondary-style control (not text-only)
+- **Crop frame** in upper workspace; footer panel with hint + Cancel / **Use crop**
+- Pinch/pan inside frame; accent outline; overlay dims outside crop
 
 ## RTL
 

@@ -5,7 +5,8 @@
 
 ## Layout
 
-- Image filmstrip (view only; full-screen zoom)
+- Receipt hero image (elevated frame, accent strip) + optional page filmstrip
+- Staggered fade-in sections after load; scan flow uses “parsed” subtitle copy
 - Merchant, date, total, receipt category
 - Line items list (+ Add, swipe delete)
 - **Looks good** (primary) · **Fix later** (secondary)
@@ -36,7 +37,11 @@ Merchant, date, total, category, line items.
 
 ## States
 
-Skeleton while loading; empty line-item row by default; save error alert.
+Layout-matched skeleton while loading; empty line-item row by default; save error alert.
+
+## Motion
+
+Stack uses fade into review from processing. Section entrances respect Reduce Motion.
 
 ## Implementation (MVP)
 

@@ -17,6 +17,8 @@ const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 import { Button, Text } from "@/components/ui";
 
+import { CaptureActionButton, CaptureActionsPanel } from "./CaptureActionButton";
+
 import { cropSessionImage } from "../services/cropSessionImage";
 import { useCaptureSessionStore } from "../stores/captureSessionStore";
 import {
@@ -27,6 +29,8 @@ import {
 } from "../utils/computeCropRect";
 
 const CROP_PADDING = 20;
+const HEADER_HEIGHT = 52;
+const FOOTER_BASE_HEIGHT = 148;
 
 type CaptureCropViewProps = {
   imageId: string;
@@ -54,11 +58,14 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
 
   const cropWindow = useMemo(() => {
     const cropWidth = screenWidth - CROP_PADDING * 2;
-    const cropHeight = Math.min(cropWidth * 1.35, screenHeight * 0.52);
-    const cropTop = Math.max(insets.top + 72, (screenHeight - cropHeight) * 0.38);
+    const workspaceTop = insets.top + HEADER_HEIGHT + 12;
+    const workspaceBottom = screenHeight - (FOOTER_BASE_HEIGHT + insets.bottom);
+    const workspaceHeight = Math.max(200, workspaceBottom - workspaceTop);
+    const cropHeight = Math.min(cropWidth * 1.35, workspaceHeight * 0.82);
+    const cropTop = workspaceTop + Math.max(8, (workspaceHeight - cropHeight) * 0.06);
     const cropLeft = CROP_PADDING;
     return { cropWidth, cropHeight, cropTop, cropLeft };
-  }, [screenWidth, screenHeight, insets.top]);
+  }, [screenWidth, screenHeight, insets.bottom, insets.top]);
 
   const scale = useSharedValue(1);
   const savedScale = useSharedValue(1);
@@ -257,20 +264,23 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
   const { cropWidth, cropHeight, cropTop, cropLeft } = cropWindow;
 
   return (
-    <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
-      <View className="flex-row items-center justify-between px-5 py-3">
-        <Button
-          variant="text"
+    <View className="flex-1 bg-background">
+      <View
+        className="flex-row items-center justify-between px-5 py-3"
+        style={{ paddingTop: insets.top, minHeight: insets.top + HEADER_HEIGHT }}
+      >
+        <CaptureActionButton
+          variant="default"
           label={t("common.cancel")}
           onPress={handleCancel}
           block={false}
-          className="min-h-[44px] px-0"
+          className="min-w-[100px] px-3"
         />
         <Text variant="label">{t("capture.cropTitle")}</Text>
-        <View className="w-16" />
+        <View className="min-w-[100px]" />
       </View>
 
-      <View className="flex-1">
+      <View className="relative min-h-0 flex-1">
         {!isReady ? (
           <View className="flex-1 items-center justify-center">
             <ActivityIndicator accessibilityLabel={t("common.loading")} />
@@ -304,7 +314,7 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
             />
 
             <View
-              className="absolute overflow-hidden rounded-lg border-2 border-foreground-inverse"
+              className="absolute overflow-hidden rounded-xl border-2 border-foreground-inverse"
               style={{
                 top: cropTop,
                 left: cropLeft,
@@ -327,7 +337,7 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
 
             <View
               pointerEvents="none"
-              className="absolute rounded-lg border-2 border-accent"
+              className="absolute rounded-xl border-2 border-accent"
               style={{
                 top: cropTop,
                 left: cropLeft,
@@ -339,30 +349,33 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
         )}
       </View>
 
-      <Text variant="caption" muted align="center" className="px-5">
-        {t("capture.cropHint")}
-      </Text>
-
       <View
-        className="flex-row items-center gap-3 px-5 pt-4"
+        className="shrink-0 border-t border-border-subtle bg-background px-5 pt-4"
         style={{ paddingBottom: insets.bottom + 16 }}
       >
-        <Button
-          variant="secondary"
-          label={t("common.cancel")}
-          onPress={handleCancel}
-          block={false}
-          className="flex-1"
-          disabled={isApplying}
-        />
-        <Button
-          label={isApplying ? t("capture.cropApplying") : t("capture.cropApply")}
-          onPress={() => void handleApply()}
-          block={false}
-          className="flex-1"
-          loading={isApplying}
-          disabled={!isReady || isApplying}
-        />
+        <CaptureActionsPanel>
+          <Text variant="body" muted align="center" className="leading-5">
+            {t("capture.cropHint")}
+          </Text>
+          <View className="flex-row gap-3">
+            <CaptureActionButton
+              variant="default"
+              label={t("common.cancel")}
+              onPress={handleCancel}
+              block={false}
+              className="flex-1"
+              disabled={isApplying}
+            />
+            <Button
+              label={isApplying ? t("capture.cropApplying") : t("capture.cropApply")}
+              onPress={() => void handleApply()}
+              block={false}
+              className="flex-1"
+              loading={isApplying}
+              disabled={!isReady || isApplying}
+            />
+          </View>
+        </CaptureActionsPanel>
       </View>
     </View>
   );

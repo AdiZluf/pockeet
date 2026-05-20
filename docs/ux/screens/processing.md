@@ -1,32 +1,34 @@
 # Processing
 
 **Route:** `/receipt/[id]/processing`  
-**Purpose:** Set expectation while upload + parse run; allow escape.
+**Purpose:** Set expectation while local fake parse runs; allow escape.
 
 ## UI
 
-- Thumbnail, status line, indeterminate progress
-- **Continue in background** → Home (row shows `processing`)
-- Optional Close → confirm → Home
+- Hero card with receipt thumbnail, accent progress strip, staged status copy
+- Stages (~2s): reading → extracting → organizing → ready
+- Success: checkmark on thumbnail, light haptic, brief pause (~720ms) before review
+- **Review now** (enabled when parse completes) · **Continue in background** → Home
 
 ## Behavior
 
 | Event | Navigation |
 |-------|------------|
-| Parse complete | Auto `replace` → [review](review.md) (~300ms success) |
-| Failed | Retry + Enter manually → review with empty template |
-| Offline | “Saved — analyze when online” + Go home |
+| Parse complete | Auto `replace` → [review](review.md) (fade) after success beat |
+| User leaves early | Parse continues in background (started on save) |
 
-Poll parse status ~2.5s while foregrounded.
+Poll SQLite ~400ms while foregrounded. In-flight parse deduped per receipt id.
 
-## States
+## Motion
 
-Uploading → Analyzing → Success | Failed | Offline queued
-
-## Excluded MVP
-
-Cancel job UI, raw OCR display, fake % progress.
+- Fade-in hero and footer actions
+- Thumbnail scale-in; progress bar eases over parse duration
+- Respects system Reduce Motion (instant progress, no scale)
 
 ## a11y
 
-`accessibilityLiveRegion` for status changes — [accessibility](../../accessibility/README.md).
+`accessibilityLiveRegion="polite"` on status card — [accessibility](../../accessibility/README.md).
+
+## Excluded MVP
+
+Cancel job UI, raw OCR display, percentage labels.
