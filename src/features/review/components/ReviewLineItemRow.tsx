@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui";
 import { useIconColors, useTheme } from "@/theme";
-import { moneyWritingProps, textInputAlignStartStyle } from "@/utils/rtl";
+import { moneyWritingProps, textInputAlignStyle } from "@/utils/money";
 
 type ReviewLineItemRowProps = {
   name: string;
@@ -36,7 +36,7 @@ export function ReviewLineItemRow({
         <View className="min-w-0 flex-1 gap-2">
           <TextInput
             className="min-h-[40px] p-0 text-body text-foreground"
-            style={textInputAlignStartStyle}
+            style={textInputAlignStyle}
             placeholder={t("review.lineItemNamePlaceholder")}
             placeholderTextColor={placeholderColor}
             value={name}
@@ -45,7 +45,7 @@ export function ReviewLineItemRow({
           />
           <TextInput
             className="min-h-[40px] p-0 text-label text-foreground"
-            style={[textInputAlignStartStyle, moneyWritingProps.style]}
+            style={[textInputAlignStyle, moneyWritingProps.style]}
             placeholder={t("review.lineItemAmountPlaceholder")}
             placeholderTextColor={placeholderColor}
             value={amountInput}

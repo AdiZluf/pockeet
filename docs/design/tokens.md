@@ -45,7 +45,7 @@ Dark mappings defined for v1.1. Styling: **NativeWind v4** (recommended) reading
 | `font-caption` | 13/18 | 400 | Chips, meta |
 | `font-micro` | 11/16 | 500 | Tabs |
 
-**Families:** `font-sans` — SF Pro Text / Roboto; **Heebo** when `he`. `font-display` — SF Pro Rounded for money.  
+**Families:** `font-sans` — SF Pro Text / Roboto (English-only MVP). `font-display` — SF Pro Rounded for money.  
 **Money:** always `tabular-nums`.
 
 ## Elevation

@@ -41,9 +41,8 @@ pockeet/
 │   │   └── parse/
 │   ├── theme/                # tokens — see design/tokens.md
 │   ├── i18n/
-│   │   ├── en.json
-│   │   └── he.json
-│   └── utils/                # money, dates, rtl
+│   │   └── locales/en.json
+│   └── utils/                # money, dates
 ├── supabase/
 │   └── functions/parse-receipt/
 ├── docs/                     # this documentation

@@ -7,7 +7,7 @@ alwaysApply: true
 
 # Pockeet
 
-Mobile receipt app: scan → parse → review → monthly clarity. EN/HE, RTL, calm premium UI.
+Mobile receipt app: scan → parse → review → monthly clarity. English-only MVP (LTR); calm premium UI.
 
 ## Required reading (before features)
 
@@ -24,7 +24,7 @@ Mobile receipt app: scan → parse → review → monthly clarity. EN/HE, RTL, c
 - Money: `amountMinor` + `currencyCode`
 - One chart max on Home; 2 tabs + FAB for MVP
 - 44pt min touch targets; WCAG AA-oriented defaults
-- RTL: logical start/end; amounts stay LTR
+- LTR layout only for MVP; amounts stay LTR-formatted
 
 ## Docs index
 

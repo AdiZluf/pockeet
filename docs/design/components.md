@@ -49,7 +49,7 @@ Hairline separators between rows inside an `ElevatedGroup`.
 
 ## SectionHeader
 
-Editorial section title (`title-md`) + optional subtitle. Sentence case; `Text align="start"` on copy (not NativeWind `text-start` — unsupported in RN).
+Editorial section title (`title-md`) + optional subtitle. Sentence case; `Text align="start"` on copy.
 
 ## ReceiptRow
 

@@ -1,7 +1,8 @@
-import { Text as RNText, type TextProps as RNTextProps } from "react-native";
+import { Text as RNText, type TextProps as RNTextProps, type TextStyle } from "react-native";
 
 import { cn } from "@/utils/cn";
-import { textAlignFor, type TextAlignIntent } from "@/utils/rtl";
+
+export type TextAlignIntent = "auto" | "start" | "end" | "center";
 
 export type TextProps = RNTextProps & {
   variant?:
@@ -17,7 +18,7 @@ export type TextProps = RNTextProps & {
     | "micro";
   muted?: boolean;
   tabular?: boolean;
-  /** Logical alignment; default auto (native bidi). Prefer start for titles/row copy. */
+  /** Text alignment (LTR). */
   align?: TextAlignIntent;
 };
 
@@ -33,6 +34,19 @@ const variantClass: Record<NonNullable<TextProps["variant"]>, string> = {
   caption: "text-caption text-foreground-secondary",
   micro: "text-micro text-foreground-secondary",
 };
+
+function textAlignFor(intent: TextAlignIntent): TextStyle["textAlign"] | undefined {
+  switch (intent) {
+    case "center":
+      return "center";
+    case "start":
+      return "left";
+    case "end":
+      return "right";
+    case "auto":
+      return undefined;
+  }
+}
 
 export function Text({
   variant = "body",

@@ -15,7 +15,7 @@ Locked for MVP unless [decisions](decisions.md) records a change.
 | Local DB | expo-sqlite + **Drizzle** |
 | Server state | TanStack Query |
 | Ephemeral | Zustand |
-| i18n | expo-localization + i18next |
+| i18n | i18next (English-only MVP; Hebrew/RTL v1.1+) |
 | Images | expo-image, expo-image-manipulator |
 | Camera | expo-camera |
 

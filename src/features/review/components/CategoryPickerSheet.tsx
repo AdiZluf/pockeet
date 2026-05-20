@@ -21,8 +21,7 @@ export function CategoryPickerSheet({
   onSelect,
   onClose,
 }: CategoryPickerSheetProps) {
-  const { t, i18n } = useTranslation();
-  const isHe = i18n.language.startsWith("he");
+  const { t } = useTranslation();
 
   return (
     <Sheet visible={visible} onClose={onClose} title={t("review.categorySheetTitle")}>
@@ -33,7 +32,7 @@ export function CategoryPickerSheet({
               key={category.id}
               title={
                 <Text variant="bodyLg" className={selectedId === category.id ? "text-accent" : undefined}>
-                  {isHe ? category.nameHe : category.nameEn}
+                  {category.nameEn}
                 </Text>
               }
               trailing={

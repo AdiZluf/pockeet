@@ -4,13 +4,8 @@ import { useTranslation } from "react-i18next";
 
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 import { useIconColors } from "@/theme";
-import { formatMoney } from "@/utils/money";
-import {
-  getDisclosureChevronIcon,
-  moneyTextProps,
-  trailingColumnClass,
-} from "@/utils/rtl";
 import { cn } from "@/utils/cn";
+import { formatMoney, moneyTextProps } from "@/utils/money";
 
 import {
   formatReceiptDate,
@@ -45,7 +40,7 @@ export type ReceiptRowProps = {
 };
 
 export function ReceiptRow({ receipt, onPress, showAmount = true, compact }: ReceiptRowProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const iconColors = useIconColors();
   const title =
     receipt.merchantName ??
@@ -70,13 +65,13 @@ export function ReceiptRow({ receipt, onPress, showAmount = true, compact }: Rec
           {title}
         </Text>
         <Text variant="caption" muted align="start">
-          {formatReceiptDate(receipt.purchasedAt ?? receipt.createdAt, i18n.language)}
+          {formatReceiptDate(receipt.purchasedAt ?? receipt.createdAt)}
         </Text>
       </View>
-      <View className={cn("gap-1 pe-1", trailingColumnClass())}>
+      <View className="items-end gap-1 pe-1">
         {showAmount && parsed && receipt.totalMinor != null ? (
           <Text variant="body" className="font-semibold tabular-nums" {...moneyTextProps}>
-            {formatMoney(receipt.totalMinor, receipt.currencyCode, i18n.language)}
+            {formatMoney(receipt.totalMinor, receipt.currencyCode)}
           </Text>
         ) : null}
         <View className="flex-row items-center gap-1.5">
@@ -89,7 +84,7 @@ export function ReceiptRow({ receipt, onPress, showAmount = true, compact }: Rec
           </Text>
         </View>
       </View>
-      <Ionicons name={getDisclosureChevronIcon()} size={18} color={iconColors.tertiary} />
+      <Ionicons name="chevron-forward" size={18} color={iconColors.tertiary} />
     </PressableScale>
   );
 }

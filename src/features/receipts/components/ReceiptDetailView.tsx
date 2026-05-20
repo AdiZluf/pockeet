@@ -7,12 +7,11 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { Button, StatusChip, Surface, Text } from "@/components/ui";
 import { useIconColors } from "@/theme";
-import { getBackChevronIcon, moneyWritingProps } from "@/utils/rtl";
+import { formatMoney, moneyWritingProps } from "@/utils/money";
 import {
   getReceiptWithImages,
   softDeleteReceipt,
 } from "@/db/repositories/receiptRepository";
-import { formatMoney } from "@/utils/money";
 
 import { useReceiptNavigation } from "../hooks/useReceiptNavigation";
 import {
@@ -29,7 +28,7 @@ type ReceiptDetailViewProps = {
 type ReceiptDetail = NonNullable<Awaited<ReturnType<typeof getReceiptWithImages>>>;
 
 export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const iconColors = useIconColors();
@@ -97,11 +96,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
   const parsed = isParsedReceipt(receipt.status, receipt.totalMinor);
   const title =
     receipt.merchantName ?? t("receipts.unnamedReceipt", { count: receipt.images.length || 1 });
-  const categoryName = receipt.defaultCategory
-    ? i18n.language.startsWith("he")
-      ? receipt.defaultCategory.nameHe
-      : receipt.defaultCategory.nameEn
-    : null;
+  const categoryName = receipt.defaultCategory?.nameEn ?? null;
 
   return (
     <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
@@ -113,7 +108,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
           hitSlop={12}
           className="h-11 w-11 items-center justify-center rounded-full bg-surface-muted"
         >
-          <Ionicons name={getBackChevronIcon()} size={24} color={iconColors.primary} />
+          <Ionicons name="chevron-back" size={24} color={iconColors.primary} />
         </Pressable>
         <Button
           variant="text"
@@ -136,7 +131,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
             {title}
           </Text>
           <Text variant="body" muted align="start">
-            {formatReceiptDate(receipt.purchasedAt ?? receipt.createdAt, i18n.language)}
+            {formatReceiptDate(receipt.purchasedAt ?? receipt.createdAt)}
           </Text>
         </View>
 
@@ -163,7 +158,7 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
                 {t("receiptDetail.total")}
               </Text>
               <Text variant="displayLg" tabular align="start" {...moneyWritingProps}>
-                {formatMoney(receipt.totalMinor, receipt.currencyCode, i18n.language)}
+                {formatMoney(receipt.totalMinor, receipt.currencyCode)}
               </Text>
               {categoryName ? (
                 <Text variant="bodySm" muted align="start">

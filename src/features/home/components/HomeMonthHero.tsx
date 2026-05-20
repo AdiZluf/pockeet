@@ -2,8 +2,7 @@ import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import { Surface, Text } from "@/components/ui";
-import { formatMoney } from "@/utils/money";
-import { moneyWritingProps } from "@/utils/rtl";
+import { formatMoney, moneyWritingProps } from "@/utils/money";
 
 type HomeMonthHeroProps = {
   monthLabel: string;
@@ -20,7 +19,7 @@ export function HomeMonthHero({
   hasParsedTotals,
   usesMockCategories,
 }: HomeMonthHeroProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <View className="px-5 pb-4 pt-2" accessibilityRole="header">
@@ -41,7 +40,7 @@ export function HomeMonthHero({
             {...moneyWritingProps}
           >
             {hasParsedTotals
-              ? formatMoney(totalMinor, currencyCode, i18n.language)
+              ? formatMoney(totalMinor, currencyCode)
               : t("home.monthTotalPending")}
           </Text>
           <Text variant="body" muted align="start" className="mt-3 font-medium">

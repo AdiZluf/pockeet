@@ -3,8 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { ElevatedGroup, SectionHeader, Text } from "@/components/ui";
 import type { CategoryBreakdownRow } from "@/features/home/services/homeSummary";
-import { formatMoney } from "@/utils/money";
-import { moneyTextProps } from "@/utils/rtl";
+import { formatMoney, moneyTextProps } from "@/utils/money";
 
 const CHART_BAR_CLASSES = [
   "bg-chart-1",
@@ -25,7 +24,7 @@ export function CategoryBreakdownSection({
   currencyCode,
   usesMockCategories,
 }: CategoryBreakdownSectionProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   if (categories.length === 0) return null;
 
@@ -35,7 +34,7 @@ export function CategoryBreakdownSection({
       ? t("home.categoryChartSummary", {
           name: top.name,
           percent: top.percent,
-          amount: formatMoney(top.amountMinor, currencyCode, i18n.language),
+          amount: formatMoney(top.amountMinor, currencyCode),
         })
       : undefined;
 
@@ -55,7 +54,7 @@ export function CategoryBreakdownSection({
                   {row.name}
                 </Text>
                 <Text variant="label" muted tabular align="end" {...moneyTextProps}>
-                  {formatMoney(row.amountMinor, currencyCode, i18n.language)}
+                  {formatMoney(row.amountMinor, currencyCode)}
                 </Text>
               </View>
               <View className="h-2 overflow-hidden rounded-full bg-surface-muted">

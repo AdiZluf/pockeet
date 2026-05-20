@@ -14,7 +14,7 @@ Instructions for AI assistants working in this repo. Humans: see [onboarding](on
 - **Capture never blocks on network.**
 - **One Review surface** for all edits; detail is read-only.
 - **Max 1 chart** on Home; no Insights tab in MVP.
-- **EN + HE + RTL** — logical layout; money LTR.
+- **English-only MVP (LTR)** — Hebrew + RTL deferred to v1.1+; money LTR-formatted.
 - **No financial shame UI** — neutral totals, muted deltas.
 
 ## Code constraints

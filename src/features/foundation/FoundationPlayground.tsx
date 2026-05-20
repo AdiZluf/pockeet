@@ -16,7 +16,6 @@ import {
   StatusChip,
   Text,
 } from "@/components/ui";
-import { setAppLocale, type AppLocale } from "@/i18n";
 import { formatMoney } from "@/utils/money";
 
 type FoundationPlaygroundProps = {
@@ -25,14 +24,9 @@ type FoundationPlaygroundProps = {
 };
 
 export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {}) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sampleInput, setSampleInput] = useState("");
-
-  const toggleLocale = () => {
-    const next: AppLocale = i18n.language === "he" ? "en" : "he";
-    void setAppLocale(next);
-  };
 
   const body = (
     <>
@@ -41,30 +35,14 @@ export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {})
           <Text variant="body" muted className="mt-1">
             {t("foundation.subtitle")}
           </Text>
-          <View className="mt-4">
-            <Button
-              variant="secondary"
-              label={
-                i18n.language === "he"
-                  ? t("foundation.toggleLocaleEn")
-                  : t("foundation.toggleLocale")
-              }
-              onPress={toggleLocale}
-              block={false}
-              className="self-start px-6"
-            />
-            <Text variant="caption" muted className="mt-2">
-              {t("settings.languageReloadHint")}
-            </Text>
-          </View>
         </View>
 
         <Section title="Typography & money" first className="px-5">
           <Text variant="displayXl" tabular>
-            {formatMoney(428050, "ILS", i18n.language)}
+            {formatMoney(428050, "ILS")}
           </Text>
           <Text variant="caption" muted>
-            Tabular nums · LTR amounts in RTL UI
+            Tabular nums · LTR amounts
           </Text>
         </Section>
 
@@ -117,7 +95,7 @@ export function FoundationPlayground({ nested }: FoundationPlaygroundProps = {})
               }
               trailing={
                 <Text variant="label" tabular>
-                  {formatMoney(34280, "ILS", i18n.language)}
+                  {formatMoney(34280, "ILS")}
                 </Text>
               }
             />

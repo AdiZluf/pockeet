@@ -9,15 +9,7 @@
   },
   "settings": {
     "title": "Settings",
-    "open": "Settings",
-    "languageSection": "Language",
-    "languageEn": "English",
-    "languageHe": "עברית",
-    "languageEnA11y": "English",
-    "languageEnA11ySelected": "English, selected",
-    "languageHeA11y": "Hebrew",
-    "languageHeA11ySelected": "Hebrew, selected",
-    "languageReloadHint": "The app refreshes when switching between English and Hebrew so layout direction updates correctly."
+    "open": "Settings"
   },
   "tabs": {
     "home": "Home",
@@ -25,9 +17,7 @@
   },
   "foundation": {
     "title": "UI foundations",
-    "subtitle": "Design system primitives — not product screens.",
-    "toggleLocale": "עברית",
-    "toggleLocaleEn": "English"
+    "subtitle": "Design system primitives — not product screens."
   },
   "fab": {
     "scanReceipt": "Scan receipt"

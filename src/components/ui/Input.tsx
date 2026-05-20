@@ -3,7 +3,7 @@ import { TextInput, View, type TextInputProps } from "react-native";
 
 import { useTheme } from "@/theme";
 import { cn } from "@/utils/cn";
-import { moneyWritingProps, textInputAlignStartStyle } from "@/utils/rtl";
+import { moneyWritingProps, textInputAlignStyle } from "@/utils/money";
 
 import { Text } from "./Text";
 
@@ -48,7 +48,7 @@ export function Input({
           setFocused(false);
           onBlur?.(e);
         }}
-        style={[textInputAlignStartStyle, money ? moneyWritingProps.style : undefined, style]}
+        style={[textInputAlignStyle, money ? moneyWritingProps.style : undefined, style]}
         {...(money ? { writingDirection: moneyWritingProps.writingDirection } : {})}
         {...props}
       />

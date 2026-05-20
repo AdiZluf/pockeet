@@ -19,7 +19,7 @@ import { useReceiptNavigation } from "../hooks/useReceiptNavigation";
 import { formatReceiptMonth, monthBucketKey } from "../utils/receiptDisplay";
 
 export function ReceiptsListView() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { openReceipt } = useReceiptNavigation();
   const [rows, setRows] = useState<ReceiptSummaryRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -100,7 +100,6 @@ export function ReceiptsListView() {
           <SectionHeader
             title={formatReceiptMonth(
               monthRows[0]?.purchasedAt ?? monthRows[0]?.createdAt,
-              i18n.language,
             )}
           />
           <ElevatedGroup>

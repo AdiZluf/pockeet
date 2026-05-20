@@ -7,7 +7,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { Button, Text } from "@/components/ui";
 import { useIconColors } from "@/theme";
-import { getBackChevronIcon } from "@/utils/rtl";
 
 import { MAX_RECEIPT_PAGES } from "../constants";
 import { useDefaultCurrency } from "../hooks/useDefaultCurrency";
@@ -85,7 +84,7 @@ export function CapturePreviewView() {
           hitSlop={12}
           className="h-11 w-11 items-center justify-center"
         >
-          <Ionicons name={getBackChevronIcon()} size={28} color={iconColors.primary} />
+          <Ionicons name="chevron-back" size={28} color={iconColors.primary} />
         </Pressable>
         <Text variant="label">
           {t("capture.pageCount", { count: images.length, max: MAX_RECEIPT_PAGES })}

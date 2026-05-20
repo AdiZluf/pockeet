@@ -62,23 +62,28 @@ function toRow(
   };
 }
 
-function categoryName(categoryId: string, locale: string) {
+function categoryName(categoryId: string) {
   const seed = categorySeeds.find((c) => c.id === categoryId);
   if (!seed) return categoryId;
-  return locale.startsWith("he") ? seed.nameHe : seed.nameEn;
+  return seed.nameEn;
 }
 
-function buildMockCategories(totalMinor: number, locale: string): CategoryBreakdownRow[] {
+function buildMockCategories(totalMinor: number): CategoryBreakdownRow[] {
   return MOCK_CATEGORY_SHARES.map((share) => ({
     categoryId: share.categoryId,
-    name: categoryName(share.categoryId, locale),
+    name: categoryName(share.categoryId),
     amountMinor: Math.round((totalMinor * share.percent) / 100),
     percent: share.percent,
   }));
 }
 
-export async function loadHomeSummary(locale: string, referenceDate = new Date()): Promise<HomeSummary> {
-  const monthLabel = referenceDate.toLocaleDateString(locale, { month: "long", year: "numeric" });
+const DISPLAY_LOCALE = "en-US";
+
+export async function loadHomeSummary(referenceDate = new Date()): Promise<HomeSummary> {
+  const monthLabel = referenceDate.toLocaleDateString(DISPLAY_LOCALE, {
+    month: "long",
+    year: "numeric",
+  });
 
   const [monthTotals, needsReview, processing, recent, breakdown] = await Promise.all([
     getMonthReceiptTotals(referenceDate),
@@ -98,17 +103,17 @@ export async function loadHomeSummary(locale: string, referenceDate = new Date()
     categories = breakdown
       .map((row) => ({
         categoryId: row.categoryId,
-        name: categoryName(row.categoryId, locale),
+        name: categoryName(row.categoryId),
         amountMinor: row.amountMinor,
         percent: Math.round((row.amountMinor / totalMinor) * 100),
       }))
       .sort((a, b) => b.amountMinor - a.amountMinor)
       .slice(0, 5);
   } else if (totalMinor > 0) {
-    categories = buildMockCategories(totalMinor, locale);
+    categories = buildMockCategories(totalMinor);
     usesMockCategories = true;
   } else if (hasParsedTotals === false) {
-    categories = buildMockCategories(42000, locale);
+    categories = buildMockCategories(42000);
     usesMockCategories = true;
   }
 

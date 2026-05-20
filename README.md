@@ -1,6 +1,6 @@
 # Pockeet
 
-Mobile app for scanning receipts and understanding monthly spending — calm, premium, bilingual (EN/HE).
+Mobile app for scanning receipts and understanding monthly spending (English-only MVP).
 
 ## Documentation
 
@@ -28,4 +28,4 @@ npm run typecheck
 
 ## Status
 
-**Foundations scaffolded** — Expo SDK 54, expo-router 6, NativeWind, theme tokens, i18n/RTL, SQLite/Drizzle, UI primitives. See [app structure](docs/engineering/app-structure.md).
+**Foundations scaffolded** — Expo SDK 54, expo-router 6, NativeWind, theme tokens, English i18n (LTR), SQLite/Drizzle, UI primitives. See [app structure](docs/engineering/app-structure.md).

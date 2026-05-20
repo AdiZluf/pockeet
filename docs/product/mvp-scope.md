@@ -17,7 +17,7 @@ flowchart LR
 
 ## Lean MVP (one paragraph)
 
-Sign in (Apple/Google) → scan multi-page receipt → saved locally instantly → cloud parses → user reviews/edits merchant, date, total, items, category → receipt `ready` → Home shows this month’s total, delta vs last month, one category chart, needs-review queue. EN + HE with RTL. **2 tabs + FAB.** No budgets, bank link, Insights tab, search, or paywall.
+Sign in (Apple/Google) → scan multi-page receipt → saved locally instantly → cloud parses → user reviews/edits merchant, date, total, items, category → receipt `ready` → Home shows this month’s total, delta vs last month, one category chart, needs-review queue. **English-only UI (LTR)** for MVP; Hebrew + RTL deferred to v1.1+. **2 tabs + FAB.** No budgets, bank link, Insights tab, search, or paywall.
 
 ## Tier 1 — Must ship
 
@@ -28,7 +28,7 @@ Sign in (Apple/Google) → scan multi-page receipt → saved locally instantly �
 | Review | Edit fields; “Looks good” / “Fix later” |
 | Home | Month total, delta, one chart, needs-review, recent 5 |
 | Receipts | List + detail → edit via Review |
-| i18n | EN + HE UI, RTL, Hebrew receipt OCR |
+| i18n | English UI only (LTR); Hebrew + RTL in v1.1+ |
 | Auth | Apple + Google (Supabase) |
 | Data | `amountMinor` + `currencyCode`; receipt status enum |
 

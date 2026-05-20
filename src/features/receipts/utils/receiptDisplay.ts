@@ -12,7 +12,9 @@ export function receiptStatusI18nKey(status: ReceiptStatus) {
   return `status.${status}` as const;
 }
 
-export function formatReceiptDate(iso: string | null | undefined, locale: string) {
+const DISPLAY_LOCALE = "en-US";
+
+export function formatReceiptDate(iso: string | null | undefined, locale = DISPLAY_LOCALE) {
   const date = iso ? new Date(iso) : new Date();
   return date.toLocaleDateString(locale, {
     day: "numeric",
@@ -21,7 +23,7 @@ export function formatReceiptDate(iso: string | null | undefined, locale: string
   });
 }
 
-export function formatReceiptMonth(iso: string | null | undefined, locale: string) {
+export function formatReceiptMonth(iso: string | null | undefined, locale = DISPLAY_LOCALE) {
   const date = iso ? new Date(iso) : new Date();
   return date.toLocaleDateString(locale, {
     month: "long",

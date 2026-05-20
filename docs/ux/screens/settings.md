@@ -1,19 +1,19 @@
 # Settings
 
 **Route:** modal from Home gear  
-**Purpose:** Locale preferences and sign out.
+**Purpose:** App preferences (MVP minimal).
 
 ## Fields (MVP)
 
 | Setting | Options |
 |---------|---------|
-| Language | English / עברית — persisted in SQLite; **one** app reload when LTR↔RTL changes (guarded by `rtl_reload_pending`) |
-| Currency | ILS / USD (default display) |
+| Language | **Deferred v1.1+** — MVP is English-only (LTR) |
+| Currency | ILS / USD (default display) — when implemented |
 | Sign out | confirm optional |
 
 ## Excluded MVP
 
-Delete account UI (API stub only), notifications, theme/dark toggle (v1.1).
+Delete account UI (API stub only), notifications, theme/dark toggle, language picker (v1.1+).
 
 ## a11y
 

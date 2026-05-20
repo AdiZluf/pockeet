@@ -55,19 +55,14 @@ Separator: inset from start gutter, `border-default` hairline.
 - Pull-to-refresh: Home + Receipts only.
 - No horizontal scroll except filmstrip / chart if required.
 
-## RTL
+## Layout direction (MVP)
 
-| Mirror | Do not mirror |
-|--------|----------------|
-| Tabs, FAB side (`end-5`), chevrons (`getBackChevronIcon`, `getDisclosureChevronIcon`), padding start/end, `trailingColumnClass` for amount columns | Digits, decimal keyboard |
-| Form label edge | Chart bar meaning (keep readable) |
-| Filmstrip scroll origin | Currency display order (`moneyTextProps` on amounts) |
+**English-only, LTR.** `initI18n()` locks `I18nManager` to LTR at startup. Hebrew + RTL deferred to v1.1+.
 
-**Rule:** mirror flow, not numbers.  
-Design HE screens early — not mirrored EN comps.
+| LTR pattern | Notes |
+|-------------|--------|
+| `Text align="start"` / `"end"` | Physical left/right in LTR |
+| `moneyTextProps` on amounts | LTR digits, right-aligned in rows |
+| `chevron-back` / `chevron-forward` | Fixed for LTR navigation |
 
-**Implementation:** `needsRtlReload()` compares `I18nManager.isRTL` to locale before any `forceRTL`. Reload runs **once** per transition; `rtl_reload_pending` in `app_preferences` prevents startup loops. Settings: Home gear → `/settings` modal.
-
-## Implementation
-
-Use `marginStart`/`paddingEnd` or NativeWind logical utilities — never hardcode `left`/`right` in shared layout.
+Prefer logical `ms`/`me`/`ps`/`pe` where harmless for future RTL — avoid hardcoding `left`/`right` in shared layout when easy.

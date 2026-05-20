@@ -1,6 +1,4 @@
-import { useTranslation } from "react-i18next";
-
+/** Default display currency for English-only MVP (Israel-focused). */
 export function useDefaultCurrency() {
-  const { i18n } = useTranslation();
-  return i18n.language === "he" ? "ILS" : "USD";
+  return "ILS";
 }

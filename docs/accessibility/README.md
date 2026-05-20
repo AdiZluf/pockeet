@@ -75,11 +75,10 @@ Honor `Reduce Motion` (implemented via `useReducedMotion()` in `src/theme/`):
 - Parent `busy` while loading.
 - Parse failure: `alert` or live region + labeled Retry.
 
-## RTL
+## Layout direction
 
-Mirror layout flow; **isolate** bidi for mixed merchant names.  
-Switching EN↔HE reloads the app so `I18nManager` direction applies (Settings from Home gear).  
-Money uses `moneyTextProps` (LTR). Numbers and charts stay LTR — [layout](../design/layout.md#rtl).
+MVP is **English-only (LTR)**. Hebrew + RTL deferred to v1.1+.  
+Money uses `moneyTextProps` (LTR digits). Numbers and charts stay LTR — [layout](../design/layout.md#layout-direction-mvp).
 
 ## QA (each release)
 

@@ -28,7 +28,6 @@ import {
 import { listCategories } from "@/db/repositories/categoryRepository";
 import { getReceiptWithImages } from "@/db/repositories/receiptRepository";
 import { useIconColors } from "@/theme";
-import { getBackChevronIcon } from "@/utils/rtl";
 
 import { saveReceiptReview, validateForSave } from "../services/saveReceiptReview";
 import type { ReviewFormDraft, ReviewSource } from "../types";
@@ -49,7 +48,7 @@ type ReceiptReviewViewProps = {
 type FieldErrors = Partial<Record<"merchant" | "date" | "total" | "lineItems", string>>;
 
 export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const iconColors = useIconColors();
@@ -97,8 +96,8 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
     if (!form?.categoryId) return null;
     const cat = categories.find((c) => c.id === form.categoryId);
     if (!cat) return null;
-    return i18n.language.startsWith("he") ? cat.nameHe : cat.nameEn;
-  }, [categories, form?.categoryId, i18n.language]);
+    return cat.nameEn;
+  }, [categories, form?.categoryId]);
 
   const updateForm = (patch: Partial<ReviewFormDraft>) => {
     setForm((prev) => (prev ? { ...prev, ...patch } : prev));
@@ -199,7 +198,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
           hitSlop={12}
           className="h-11 w-11 items-center justify-center rounded-full"
         >
-          <Ionicons name={getBackChevronIcon()} size={24} color={iconColors.primary} />
+          <Ionicons name="chevron-back" size={24} color={iconColors.primary} />
         </Pressable>
         <StatusChip
           variant={receiptStatusVariant(receiptStatus as Parameters<typeof receiptStatusVariant>[0])}

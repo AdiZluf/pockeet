@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { migrateDatabase } from "@/db";
-import { bootstrapI18n } from "@/i18n";
+import { initI18n } from "@/i18n";
 import { ThemeProvider } from "@/theme";
 
 type AppProvidersProps = {
@@ -18,10 +18,8 @@ export function AppProviders({ children }: AppProvidersProps) {
     void (async () => {
       try {
         await migrateDatabase();
-        const reloaded = await bootstrapI18n();
-        if (!reloaded) {
-          setReady(true);
-        }
+        await initI18n();
+        setReady(true);
       } catch {
         setReady(true);
       }

@@ -14,15 +14,15 @@ import { ReceiptQueueSection } from "./ReceiptQueueSection";
 import { RecentReceiptsSection } from "./RecentReceiptsSection";
 
 export function HomeScreenContent() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [summary, setSummary] = useState<HomeSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const load = useCallback(async () => {
-    const data = await loadHomeSummary(i18n.language);
+    const data = await loadHomeSummary();
     setSummary(data);
-  }, [i18n.language]);
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
