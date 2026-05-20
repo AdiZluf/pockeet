@@ -75,7 +75,11 @@
     "chooseGallery": "Choose from gallery",
     "chooseGalleryBody": "Import one or more photos from your library",
     "uploadPdf": "Upload PDF",
-    "uploadPdfBody": "Browse files for a digital receipt PDF"
+    "uploadPdfBody": "Browse files for a digital receipt PDF",
+    "galleryFailedTitle": "Couldn't import photos",
+    "galleryFailedBody": "Please try again or use Take photo.",
+    "pdfInvalidTitle": "Not a PDF",
+    "pdfInvalidBody": "Please choose a PDF receipt file."
   },
   "status": {
     "processing": "Analyzing…",

@@ -17,6 +17,7 @@ type AddReceiptOption = {
 type AddReceiptSheetProps = {
   visible: boolean;
   onClose: () => void;
+  onDismissed?: () => void;
   onTakePhoto: () => void;
   onChooseGallery: () => void;
   onUploadPdf: () => void;
@@ -26,6 +27,7 @@ type AddReceiptSheetProps = {
 export function AddReceiptSheet({
   visible,
   onClose,
+  onDismissed,
   onTakePhoto,
   onChooseGallery,
   onUploadPdf,
@@ -40,36 +42,32 @@ export function AddReceiptSheet({
       icon: "camera-outline",
       titleKey: "addReceipt.takePhoto",
       bodyKey: "addReceipt.takePhotoBody",
-      onPress: () => {
-        onClose();
-        onTakePhoto();
-      },
+      onPress: () => void onTakePhoto(),
     },
     {
       id: "gallery",
       icon: "images-outline",
       titleKey: "addReceipt.chooseGallery",
       bodyKey: "addReceipt.chooseGalleryBody",
-      onPress: () => {
-        onClose();
-        onChooseGallery();
-      },
+      onPress: () => void onChooseGallery(),
     },
     {
       id: "pdf",
       icon: "document-text-outline",
       titleKey: "addReceipt.uploadPdf",
       bodyKey: "addReceipt.uploadPdfBody",
-      onPress: () => {
-        onClose();
-        onUploadPdf();
-      },
+      onPress: () => void onUploadPdf(),
       loading: pdfLoading,
     },
   ];
 
   return (
-    <Sheet visible={visible} onClose={onClose} title={t("addReceipt.title")}>
+    <Sheet
+      visible={visible}
+      onClose={onClose}
+      onDismissed={onDismissed}
+      title={t("addReceipt.title")}
+    >
       <View className="gap-2 pb-2">
         <Text variant="body" muted align="start" className="pb-2 leading-6">
           {t("addReceipt.subtitle")}

@@ -13,6 +13,8 @@ import { Text } from "./Text";
 export type SheetProps = ModalProps & {
   visible: boolean;
   onClose: () => void;
+  /** iOS: fired after dismiss animation; use to run native pickers blocked by Modal. */
+  onDismissed?: () => void;
   title?: string;
   children: React.ReactNode;
   footer?: React.ReactNode;
@@ -21,6 +23,7 @@ export type SheetProps = ModalProps & {
 export function Sheet({
   visible,
   onClose,
+  onDismissed,
   title,
   children,
   footer,
@@ -34,6 +37,7 @@ export function Sheet({
       transparent
       animationType="slide"
       onRequestClose={onClose}
+      onDismiss={onDismissed}
       {...modalProps}
     >
       <Pressable

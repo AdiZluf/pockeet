@@ -3,10 +3,11 @@ import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-import { pickReceiptPdf } from "../services/pickReceiptPdf";
+import { getDefaultCurrency } from "@/db/repositories/preferencesRepository";
+
+import { pickReceiptPdfWithFeedback } from "../services/pickReceiptPdf";
 import { savePdfReceiptLocally } from "../services/savePdfReceiptLocally";
 import { useCaptureSessionStore } from "../stores/captureSessionStore";
-import { useDefaultCurrency } from "./useDefaultCurrency";
 
 type UploadPdfOptions = {
   /** When true, confirm discarding an in-progress photo session before upload. */
@@ -16,17 +17,28 @@ type UploadPdfOptions = {
 export function useUploadReceiptPdf() {
   const { t } = useTranslation();
   const router = useRouter();
-  const currencyCode = useDefaultCurrency();
   const reset = useCaptureSessionStore((s) => s.reset);
 
   const runUpload = async () => {
-    const picked = await pickReceiptPdf();
-    if (!picked) return;
+    const pick = await pickReceiptPdfWithFeedback(t);
+    if (pick.status === "canceled") return;
+    if (pick.status === "invalid" || pick.status === "error") {
+      return;
+    }
 
-    const receiptId = await savePdfReceiptLocally(picked.uri, picked.name, currencyCode);
-    reset();
-    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    router.replace(`/receipt/${receiptId}/processing`);
+    try {
+      const currencyCode = await getDefaultCurrency();
+      const receiptId = await savePdfReceiptLocally(
+        pick.file.uri,
+        pick.file.name,
+        currencyCode,
+      );
+      reset();
+      void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      router.replace(`/receipt/${receiptId}/processing`);
+    } catch {
+      Alert.alert(t("capture.pdfFailedTitle"), t("capture.pdfFailedBody"));
+    }
   };
 
   return async (options?: UploadPdfOptions) => {
@@ -49,23 +61,13 @@ export function useUploadReceiptPdf() {
         {
           text: t("capture.uploadPdf"),
           onPress: () => {
-            void (async () => {
-              try {
-                await runUpload();
-              } catch {
-                Alert.alert(t("capture.pdfFailedTitle"), t("capture.pdfFailedBody"));
-              }
-            })();
+            void runUpload();
           },
         },
       ]);
       return;
     }
 
-    try {
-      await runUpload();
-    } catch {
-      Alert.alert(t("capture.pdfFailedTitle"), t("capture.pdfFailedBody"));
-    }
+    await runUpload();
   };
 }
