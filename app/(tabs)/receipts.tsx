@@ -2,11 +2,12 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
-import { FAB, Text } from "@/components/ui";
+import { FAB, ScreenHeader } from "@/components/ui";
 import { useOpenCapture } from "@/features/capture/hooks/useOpenCapture";
+import { ReceiptsListView } from "@/features/receipts/components/ReceiptsListView";
 
 /**
- * Receipts tab placeholder — list UI not implemented.
+ * Receipts tab — local history grouped by month.
  * @see docs/ux/screens/receipts-list.md
  */
 export default function ReceiptsTabScreen() {
@@ -15,14 +16,9 @@ export default function ReceiptsTabScreen() {
   const openCapture = useOpenCapture();
 
   return (
-    <View
-      className="flex-1 items-center justify-center bg-background px-5"
-      style={{ paddingTop: insets.top }}
-    >
-      <Text variant="titleMd">{t("tabs.receipts")}</Text>
-      <Text variant="body" muted className="mt-2 text-center">
-        Scaffold only — history list comes in product phase.
-      </Text>
+    <View className="flex-1 bg-background" style={{ paddingTop: insets.top }}>
+      <ScreenHeader title={t("tabs.receipts")} subtitle={t("receipts.subtitle")} large />
+      <ReceiptsListView />
       <FAB accessibilityLabel={t("fab.scanReceipt")} onPress={openCapture} />
     </View>
   );

@@ -18,7 +18,12 @@
     --color-accent: #1f6f78;
     --color-accent-hover: #185a61;
     --color-accent-muted: rgba(31, 111, 120, 0.12);
+    --color-accent-soft: rgba(31, 111, 120, 0.08);
+    --color-hero-wash: linear-gradient(180deg, rgba(31, 111, 120, 0.06) 0%, transparent 100%);
     --color-overlay: rgba(28, 25, 23, 0.4);
+
+    --shadow-card: 0 4px 20px rgba(28, 25, 23, 0.06);
+    --shadow-fab: 0 8px 24px rgba(31, 111, 120, 0.28);
 
     --status-processing-fg: #5b6b7a;
     --status-processing-bg: rgba(91, 107, 122, 0.1);

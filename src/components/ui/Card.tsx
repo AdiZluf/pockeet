@@ -1,41 +1,39 @@
-import { Pressable, View, type PressableProps, type ViewProps } from "react-native";
+import { type PressableProps, type ViewProps } from "react-native";
 
 import { cn } from "@/utils/cn";
 
+import { PressableScale } from "./PressableScale";
+import { Surface, type SurfaceVariant } from "./Surface";
+
 export type CardProps = ViewProps & {
   interactive?: boolean;
+  variant?: SurfaceVariant;
   onPress?: PressableProps["onPress"];
 };
 
 export function Card({
   interactive,
   onPress,
+  variant = "default",
   className,
   children,
   ...props
 }: CardProps) {
-  const classes = cn(
-    "rounded-lg bg-surface p-4",
-    interactive && "border border-border",
-    className,
-  );
+  const elevated = variant === "elevated" || variant === "hero";
 
   if (interactive && onPress) {
     return (
-      <Pressable
-        accessibilityRole="button"
-        onPress={onPress}
-        className={classes}
-        {...(props as PressableProps)}
-      >
-        {children}
-      </Pressable>
+      <PressableScale accessibilityRole="button" onPress={onPress}>
+        <Surface variant={elevated ? "elevated" : variant} className={cn("p-4", className)}>
+          {children}
+        </Surface>
+      </PressableScale>
     );
   }
 
   return (
-    <View className={classes} {...props}>
+    <Surface variant={elevated ? "elevated" : variant} className={cn("p-4", className)} {...props}>
       {children}
-    </View>
+    </Surface>
   );
 }

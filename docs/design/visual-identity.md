@@ -38,9 +38,9 @@ Weight/size before color.
 
 ## Cards & elevation
 
-- Cards group content — not every row.
-- Shadow: **FAB, sheets, capture bar only** — see [tokens](tokens.md#elevation).
-- Home hero: open canvas, not heavy card.
+- **Surface** groups content — inset wells for lists, elevated cards for focus, hero for money moments.
+- Shadow: **elevated cards, FAB, sheets** — see [tokens](tokens.md#elevation).
+- Home hero: typography-led `Surface` hero with thin accent strip — not a form panel.
 
 ## Charts
 

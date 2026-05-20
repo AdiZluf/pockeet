@@ -74,9 +74,53 @@
     "continueBackground": "המשך ברקע"
   },
   "home": {
+    "greeting": "Pockeet",
     "recentReceipts": "קבלות אחרונות",
-    "receiptPlaceholder": "קבלה · {{n}} תמונות",
-    "receiptRowA11y": "קבלה, סטטוס {{status}}"
+    "monthTotal": "החודש",
+    "monthTotalPending": "—",
+    "monthTotalHint": "סכומים יופיעו אחרי ניתוח הקבלות.",
+    "demoCategoryHint": "כולל פיצול קטגוריות לדמו כשיש מעט נתונים.",
+    "categoryBreakdown": "לפי קטגוריה",
+    "categoryBreakdownDemo": "פיצול לדוגמה — עדיין לא מהקבלות שלך.",
+    "categoryBarA11y": "{{name}}, {{percent}} אחוז",
+    "needsReview": "נדרשת בדיקה",
+    "processing": "בניתוח"
+  },
+  "receipts": {
+    "subtitle": "כל מה שנשמר במכשיר הזה",
+    "unnamedReceipt": "קבלה · {{count}} תמונות",
+    "rowA11y": "{{merchant}}, {{status}}",
+    "emptyTitle": "אין קבלות עדיין",
+    "emptyBody": "סרקו קבלה ראשונה עם כפתור ה־+."
+  },
+  "receiptDetail": {
+    "title": "קבלה",
+    "total": "סה״כ",
+    "category": "קטגוריה · {{name}}",
+    "stillAnalyzingTitle": "עדיין בניתוח",
+    "stillAnalyzingBody": "שם העסק, תאריך וסכום יופיעו אחרי הניתוח.",
+    "images": "תמונות",
+    "noImages": "לא נשמרו תמונות לקבלה זו.",
+    "imagePage": "תמונת קבלה {{page}}",
+    "delete": "מחק",
+    "deleteTitle": "למחוק את הקבלה?",
+    "deleteBody": "הקבלה תוסר מהמכשיר.",
+    "deleteConfirm": "מחק",
+    "notFound": "הקבלה לא נמצאה."
+  },
+  "demo": {
+    "banner": "מצב פיתוח — טעינת קבלות לדוגמה להדגמה.",
+    "seed": "טען נתוני דמו",
+    "reset": "נקה דמו",
+    "seededTitle": "נתוני הדמו נטענו",
+    "seededBody": "נוספו {{count}} קבלות לדוגמה.",
+    "alreadySeededTitle": "נתוני דמו קיימים",
+    "alreadySeededBody": "נקו את נתוני הדמו לפני טעינה מחדש.",
+    "seedFailedTitle": "לא הצלחנו לטעון דמו",
+    "seedFailedBody": "נסו שוב.",
+    "resetTitle": "לנקות קבלות דמו?",
+    "resetBody": "רק קבלות שסומנו כדמו יוסרו.",
+    "resetConfirm": "נקה"
   },
   "a11y": {
     "foundationScreen": "מגרש רכיבי ממשק"

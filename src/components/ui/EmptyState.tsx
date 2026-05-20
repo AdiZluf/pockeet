@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Button } from "./Button";
+import { Surface } from "./Surface";
 import { Text } from "./Text";
 
 export type EmptyStateProps = {
@@ -17,19 +18,27 @@ export function EmptyState({
   body,
   actionLabel,
   onAction,
-  icon = "document-text-outline",
+  icon = "sparkles-outline",
 }: EmptyStateProps) {
   return (
-    <View className="items-center gap-4 px-5 py-10" accessibilityRole="text">
-      <Ionicons name={icon} size={64} color="#78716C" />
-      <Text variant="titleMd" className="text-center">
-        {title}
-      </Text>
-      <Text variant="body" muted className="text-center">
-        {body}
-      </Text>
+    <View
+      className="items-center gap-5 px-6 py-12"
+      accessibilityRole="text"
+      accessibilityLabel={`${title}. ${body}`}
+    >
+      <Surface variant="inset" className="h-20 w-20 items-center justify-center rounded-full">
+        <Ionicons name={icon} size={36} color="#1F6F78" />
+      </Surface>
+      <View className="max-w-[280px] items-center gap-2">
+        <Text variant="titleMd" className="text-center">
+          {title}
+        </Text>
+        <Text variant="body" muted className="text-center leading-6">
+          {body}
+        </Text>
+      </View>
       {actionLabel && onAction ? (
-        <Button label={actionLabel} onPress={onAction} block={false} className="px-8" />
+        <Button label={actionLabel} onPress={onAction} block={false} className="min-w-[200px]" />
       ) : null}
     </View>
   );

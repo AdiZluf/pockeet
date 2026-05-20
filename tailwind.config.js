@@ -25,6 +25,7 @@ module.exports = {
         accent: {
           DEFAULT: "var(--color-accent)",
           muted: "var(--color-accent-muted)",
+          soft: "var(--color-accent-soft)",
           hover: "var(--color-accent-hover)",
         },
         overlay: "var(--color-overlay)",
@@ -92,9 +93,14 @@ module.exports = {
         micro: ["11px", { lineHeight: "16px", fontWeight: "500" }],
       },
       boxShadow: {
-        fab: "0px 2px 8px rgba(28, 25, 23, 0.08)",
+        card: "var(--shadow-card)",
+        fab: "var(--shadow-fab)",
         sheet: "0px 8px 24px rgba(28, 25, 23, 0.12)",
-        "fab-pressed": "0px 12px 32px rgba(28, 25, 23, 0.16)",
+        "fab-pressed": "0px 12px 32px rgba(31, 111, 120, 0.32)",
+      },
+      letterSpacing: {
+        tight: "-0.3px",
+        wide: "0.4px",
       },
     },
   },

@@ -1,45 +1,49 @@
-import { Pressable, type PressableProps } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { a11y } from "@/theme";
+import { a11y, surfaceElevation } from "@/theme";
 import { cn } from "@/utils/cn";
 
-export type FABProps = PressableProps & {
+import { PressableScale } from "./PressableScale";
+
+export type FABProps = {
   accessibilityLabel: string;
   visible?: boolean;
   tabBarOffset?: number;
+  onPress?: () => void;
+  className?: string;
 };
 
 export function FAB({
   accessibilityLabel,
   visible = true,
   tabBarOffset = 49,
+  onPress,
   className,
-  ...props
 }: FABProps) {
   const insets = useSafeAreaInsets();
 
   if (!visible) return null;
 
-  const bottom = insets.bottom + tabBarOffset + 16;
+  const bottom = insets.bottom + tabBarOffset + 20;
 
   return (
-    <Pressable
+    <PressableScale
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      onPress={onPress}
       className={cn(
-        "absolute end-5 items-center justify-center rounded-full bg-accent shadow-fab",
+        "absolute end-5 items-center justify-center rounded-full bg-accent",
         className,
       )}
       style={{
         bottom,
         width: a11y.fabSize,
         height: a11y.fabSize,
+        ...surfaceElevation.fab,
       }}
-      {...props}
     >
       <Ionicons name="camera" size={26} color="#FFFCF9" />
-    </Pressable>
+    </PressableScale>
   );
 }

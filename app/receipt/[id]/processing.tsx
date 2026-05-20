@@ -4,7 +4,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Button, StatusChip, Text } from "@/components/ui";
+import { Button, StatusChip, Surface, Text } from "@/components/ui";
 import { getReceiptWithImages } from "@/db/repositories/receiptRepository";
 
 export default function ReceiptProcessingScreen() {
@@ -33,27 +33,31 @@ export default function ReceiptProcessingScreen() {
       accessibilityLabel={t("processing.screenLabel")}
     >
       <View className="flex-1 items-center justify-center">
-        {thumbUri ? (
-          <Image
-            source={{ uri: thumbUri }}
-            className="mb-6 h-40 w-32 rounded-md bg-surface-muted"
-            resizeMode="cover"
-            accessibilityLabel={t("processing.thumbnailLabel")}
-          />
-        ) : (
-          <View className="mb-6 h-40 w-32 items-center justify-center rounded-md bg-surface-muted">
-            <ActivityIndicator />
-          </View>
-        )}
+        <Surface variant="hero" className="w-full max-w-[320px] overflow-hidden">
+          <View className="h-1 bg-accent" accessibilityElementsHidden />
+          <View className="items-center gap-4 px-6 py-8">
+            {thumbUri ? (
+              <Image
+                source={{ uri: thumbUri }}
+                className="h-44 w-36 rounded-xl bg-surface-muted"
+                resizeMode="cover"
+                accessibilityLabel={t("processing.thumbnailLabel")}
+              />
+            ) : (
+              <View className="h-44 w-36 items-center justify-center rounded-xl bg-accent-soft">
+                <ActivityIndicator color="#1F6F78" />
+              </View>
+            )}
 
-        <StatusChip variant="processing" label={t("status.processing")} />
-        <Text variant="titleMd" className="mt-4 text-center">
-          {t("processing.title")}
-        </Text>
-        <Text variant="body" muted className="mt-2 text-center">
-          {t("processing.bodyLocal")}
-        </Text>
-        <ActivityIndicator className="mt-6" accessibilityLabel={t("status.processing")} />
+            <StatusChip variant="processing" label={t("status.processing")} />
+            <Text variant="titleLg" className="text-center">
+              {t("processing.title")}
+            </Text>
+            <Text variant="body" muted className="text-center leading-6">
+              {t("processing.bodyLocal")}
+            </Text>
+          </View>
+        </Surface>
       </View>
 
       <Button label={t("processing.continueBackground")} variant="text" onPress={goHome} />

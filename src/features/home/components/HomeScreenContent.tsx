@@ -1,0 +1,80 @@
+import { useCallback, useState } from "react";
+import { RefreshControl, ScrollView, View } from "react-native";
+import { useFocusEffect } from "expo-router";
+import { useTranslation } from "react-i18next";
+
+import { LoadingSkeleton, LoadingSkeletonGroup, ScreenHeader } from "@/components/ui";
+
+import { loadHomeSummary, type HomeSummary } from "../services/homeSummary";
+import { CategoryBreakdownSection } from "./CategoryBreakdownSection";
+import { DevSeedActions } from "./DevSeedActions";
+import { HomeMonthHero } from "./HomeMonthHero";
+import { ReceiptQueueSection } from "./ReceiptQueueSection";
+import { RecentReceiptsSection } from "./RecentReceiptsSection";
+
+export function HomeScreenContent() {
+  const { t, i18n } = useTranslation();
+  const [summary, setSummary] = useState<HomeSummary | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const load = useCallback(async () => {
+    const data = await loadHomeSummary(i18n.language);
+    setSummary(data);
+  }, [i18n.language]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+      void load().finally(() => setLoading(false));
+    }, [load]),
+  );
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await load();
+    setRefreshing(false);
+  }, [load]);
+
+  if (loading || !summary) {
+    return (
+      <View className="flex-1 gap-6 px-5 pt-2">
+        <LoadingSkeletonGroup busy label={t("common.loading")}>
+          <LoadingSkeleton height={32} width="55%" rounded="lg" />
+          <LoadingSkeleton height={140} rounded="xl" />
+          <LoadingSkeleton height={120} rounded="xl" />
+          <LoadingSkeleton height={88} rounded="xl" />
+        </LoadingSkeletonGroup>
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView
+      className="flex-1"
+      contentContainerClassName="gap-7 pb-36 pt-1"
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => void onRefresh()} />}
+    >
+      <ScreenHeader title={t("home.greeting")} subtitle={summary.monthLabel} large />
+      <DevSeedActions onSeeded={() => void load()} />
+      <HomeMonthHero
+        totalMinor={summary.totalMinor}
+        currencyCode={summary.currencyCode}
+        hasParsedTotals={summary.hasParsedTotals}
+        usesMockCategories={summary.usesMockCategories}
+      />
+      <CategoryBreakdownSection
+        categories={summary.categories}
+        currencyCode={summary.currencyCode}
+        usesMockCategories={summary.usesMockCategories}
+      />
+      <ReceiptQueueSection
+        title={t("home.needsReview")}
+        receipts={summary.needsReview}
+        highlight
+      />
+      <ReceiptQueueSection title={t("home.processing")} receipts={summary.processing} />
+      <RecentReceiptsSection />
+    </ScrollView>
+  );
+}

@@ -28,11 +28,11 @@ export type StatusChipProps = {
 export function StatusChip({ variant, label }: StatusChipProps) {
   return (
     <View
-      className={cn("h-6 justify-center rounded-full px-2", chipClasses[variant])}
+      className={cn("h-7 justify-center rounded-full px-2.5", chipClasses[variant])}
       accessibilityRole="text"
       accessibilityLabel={label}
     >
-      <Text variant="caption" className={textClasses[variant]}>
+      <Text variant="micro" className={textClasses[variant]}>
         {label}
       </Text>
     </View>

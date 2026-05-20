@@ -52,12 +52,22 @@ Dark mappings defined for v1.1. Styling: **NativeWind v4** (recommended) reading
 
 | Token | Use |
 |-------|-----|
-| `elevation-0` | Default |
-| `elevation-1` | FAB |
-| `elevation-2` | Sheet, capture bar |
-| `elevation-3` | FAB pressed |
+| `elevation-0` | Default surfaces |
+| `elevation-1` | Elevated cards, list groups |
+| `elevation-2` | Sheet |
+| `shadow-fab` | FAB (teal-tinted, soft) |
 
-Shadow: soft, large blur, low opacity `#1C1917` — never crisp drops.
+Shadow: soft, large blur, low opacity — never crisp drops. Implement via `surfaceElevation` in `src/theme/surfaces.ts`.
+
+## Accent usage
+
+| Token | Use |
+|-------|-----|
+| `accent` | FAB, primary button, hero strip, chart emphasis |
+| `accent-muted` | Chips, icon wells |
+| `accent-soft` | Chart track, thumbnail placeholder |
+
+~≤10% of Home pixels accent-colored; money stays `text-primary`.
 
 ## Semantic colors (light)
 

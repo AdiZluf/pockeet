@@ -1,17 +1,26 @@
+import { useEffect } from "react";
 import { View, type ViewProps } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 
+import { motion } from "@/theme";
 import { cn } from "@/utils/cn";
 
 export type LoadingSkeletonProps = ViewProps & {
   height?: number;
   width?: number | `${number}%`;
-  rounded?: "sm" | "md" | "lg" | "full";
+  rounded?: "sm" | "md" | "lg" | "xl" | "full";
 };
 
 const roundedClass = {
   sm: "rounded-sm",
   md: "rounded-md",
   lg: "rounded-lg",
+  xl: "rounded-xl",
   full: "rounded-full",
 };
 
@@ -22,12 +31,26 @@ export function LoadingSkeleton({
   className,
   ...props
 }: LoadingSkeletonProps) {
+  const opacity = useSharedValue(0.55);
+
+  useEffect(() => {
+    opacity.value = withRepeat(
+      withTiming(1, { duration: motion.duration.slow * 3 }),
+      -1,
+      true,
+    );
+  }, [opacity]);
+
+  const pulseStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
   return (
-    <View
+    <Animated.View
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
+      style={[pulseStyle, { height, width }]}
       className={cn("bg-surface-muted", roundedClass[rounded], className)}
-      style={{ height, width }}
       {...props}
     />
   );
@@ -40,15 +63,16 @@ export type LoadingSkeletonGroupProps = ViewProps & {
 
 export function LoadingSkeletonGroup({
   busy,
-  label = "Loading",
+  label,
   children,
   className,
   ...props
 }: LoadingSkeletonGroupProps) {
   return (
     <View
+      accessibilityRole="progressbar"
+      accessibilityState={{ busy: !!busy }}
       accessibilityLabel={label}
-      accessibilityState={{ busy }}
       className={cn("gap-3", className)}
       {...props}
     >

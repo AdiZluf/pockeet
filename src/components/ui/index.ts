@@ -1,5 +1,8 @@
 export { Button, type ButtonProps, type ButtonVariant } from "./Button";
 export { Card, type CardProps } from "./Card";
+export { PressableScale } from "./PressableScale";
+export { ScreenHeader, type ScreenHeaderProps } from "./ScreenHeader";
+export { Surface, type SurfaceProps, type SurfaceVariant } from "./Surface";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { FAB, type FABProps } from "./FAB";
 export { Input, type InputProps } from "./Input";

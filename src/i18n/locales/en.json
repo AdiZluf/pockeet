@@ -74,9 +74,53 @@
     "continueBackground": "Continue in background"
   },
   "home": {
+    "greeting": "Pockeet",
     "recentReceipts": "Recent receipts",
-    "receiptPlaceholder": "Receipt · {{n}} photos",
-    "receiptRowA11y": "Receipt, status {{status}}"
+    "monthTotal": "This month",
+    "monthTotalPending": "—",
+    "monthTotalHint": "Totals appear after receipts are analyzed.",
+    "demoCategoryHint": "Includes demo category split when data is sparse.",
+    "categoryBreakdown": "By category",
+    "categoryBreakdownDemo": "Sample breakdown for demo — not from your receipts yet.",
+    "categoryBarA11y": "{{name}}, {{percent}} percent",
+    "needsReview": "Needs review",
+    "processing": "Still analyzing"
+  },
+  "receipts": {
+    "subtitle": "Everything you've saved on this device",
+    "unnamedReceipt": "Receipt · {{count}} photos",
+    "rowA11y": "{{merchant}}, {{status}}",
+    "emptyTitle": "No receipts yet",
+    "emptyBody": "Scan your first receipt with the + button."
+  },
+  "receiptDetail": {
+    "title": "Receipt",
+    "total": "Total",
+    "category": "Category · {{name}}",
+    "stillAnalyzingTitle": "Still analyzing",
+    "stillAnalyzingBody": "Merchant, date, and total will appear after parsing.",
+    "images": "Photos",
+    "noImages": "No photos saved for this receipt.",
+    "imagePage": "Receipt photo {{page}}",
+    "delete": "Delete",
+    "deleteTitle": "Delete receipt?",
+    "deleteBody": "This removes the receipt from your device.",
+    "deleteConfirm": "Delete",
+    "notFound": "Receipt not found."
+  },
+  "demo": {
+    "banner": "Dev only — load sample receipts for demos.",
+    "seed": "Load demo data",
+    "reset": "Clear demo",
+    "seededTitle": "Demo data loaded",
+    "seededBody": "Added {{count}} sample receipts.",
+    "alreadySeededTitle": "Demo data exists",
+    "alreadySeededBody": "Clear demo data first to reload samples.",
+    "seedFailedTitle": "Couldn't load demo data",
+    "seedFailedBody": "Please try again.",
+    "resetTitle": "Clear demo receipts?",
+    "resetBody": "Only sample receipts tagged as demo will be removed.",
+    "resetConfirm": "Clear"
   },
   "a11y": {
     "foundationScreen": "UI foundations playground"

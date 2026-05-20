@@ -1,30 +1,17 @@
 import { useCallback, useState } from "react";
-import { View } from "react-native";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-import { Card, ListRow, StatusChip, Text } from "@/components/ui";
+import { Section, Surface } from "@/components/ui";
 import { listRecentReceipts } from "@/db/repositories/receiptRepository";
-import type { ReceiptStatus } from "@/db/schema";
-
-type RecentRow = {
-  id: string;
-  status: ReceiptStatus;
-  createdAt: string;
-  imageCount: number;
-};
-
-function statusVariant(status: ReceiptStatus): "processing" | "review" | "ready" | "failed" {
-  if (status === "needs_review") return "review";
-  if (status === "ready") return "ready";
-  if (status === "failed") return "failed";
-  return "processing";
-}
+import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
+import { ReceiptListRow } from "@/features/receipts/components/ReceiptListRow";
+import { useReceiptNavigation } from "@/features/receipts/hooks/useReceiptNavigation";
 
 export function RecentReceiptsSection() {
   const { t } = useTranslation();
-  const router = useRouter();
-  const [rows, setRows] = useState<RecentRow[]>([]);
+  const { openReceipt } = useReceiptNavigation();
+  const [rows, setRows] = useState<ReceiptSummaryRow[]>([]);
 
   const load = useCallback(async () => {
     const receipts = await listRecentReceipts(5);
@@ -32,7 +19,12 @@ export function RecentReceiptsSection() {
       receipts.map((r) => ({
         id: r.id,
         status: r.status,
+        merchantName: r.merchantName,
+        purchasedAt: r.purchasedAt,
         createdAt: r.createdAt,
+        totalMinor: r.totalMinor,
+        currencyCode: r.currencyCode,
+        thumbUri: r.images[0]?.localUri ?? null,
         imageCount: r.images.length,
       })),
     );
@@ -47,36 +39,16 @@ export function RecentReceiptsSection() {
   if (rows.length === 0) return null;
 
   return (
-    <View className="px-5">
-      <Text variant="titleMd" className="mb-3">
-        {t("home.recentReceipts")}
-      </Text>
-      <Card className="p-0 overflow-hidden">
-        {rows.map((row, index) => (
-          <View key={row.id}>
-            <ListRow
-              title={<Text variant="label">{t("home.receiptPlaceholder", { n: row.imageCount })}</Text>}
-              subtitle={
-                <Text variant="caption" muted>
-                  {new Date(row.createdAt).toLocaleString()}
-                </Text>
-              }
-              trailing={
-                <StatusChip variant={statusVariant(row.status)} label={t(`status.${row.status === "needs_review" ? "needs_review" : row.status}`)} />
-              }
-              onPress={() => {
-                if (row.status === "processing") {
-                  router.push(`/receipt/${row.id}/processing`);
-                }
-              }}
-              accessibilityLabel={t("home.receiptRowA11y", {
-                status: t(`status.${row.status === "needs_review" ? "needs_review" : row.status}`),
-              })}
-            />
-            {index < rows.length - 1 ? <View className="ms-5 h-px bg-border" /> : null}
-          </View>
+    <Section title={t("home.recentReceipts")} className="px-5">
+      <Surface variant="elevated" className="overflow-hidden p-1">
+        {rows.map((row) => (
+          <ReceiptListRow
+            key={row.id}
+            receipt={row}
+            onPress={() => openReceipt(row.id, row.status)}
+          />
         ))}
-      </Card>
-    </View>
+      </Surface>
+    </Section>
   );
 }

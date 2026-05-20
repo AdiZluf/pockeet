@@ -1,8 +1,9 @@
-import { ActivityIndicator, Pressable, type PressableProps } from "react-native";
+import { ActivityIndicator, type PressableProps } from "react-native";
 
-import { a11y } from "@/theme";
+import { a11y, motion } from "@/theme";
 import { cn } from "@/utils/cn";
 
+import { PressableScale } from "./PressableScale";
 import { Text } from "./Text";
 
 export type ButtonVariant = "primary" | "secondary" | "destructive" | "text";
@@ -15,8 +16,8 @@ export type ButtonProps = PressableProps & {
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-accent",
-  secondary: "bg-surface-muted border border-border",
+  primary: "bg-accent shadow-card",
+  secondary: "bg-surface-elevated border border-border-subtle",
   destructive: "bg-transparent",
   text: "bg-transparent",
 };
@@ -41,12 +42,13 @@ export function Button({
   const isDisabled = disabled || loading;
 
   return (
-    <Pressable
+    <PressableScale
       accessibilityRole="button"
       accessibilityState={{ disabled: isDisabled, busy: loading, ...accessibilityState }}
       disabled={isDisabled}
+      scaleTo={isDisabled ? 1 : motion.scale.pressed}
       className={cn(
-        "min-h-[52px] items-center justify-center rounded-lg px-4",
+        "min-h-[52px] items-center justify-center rounded-xl px-5",
         variantClasses[variant],
         block && "w-full",
         isDisabled && "opacity-45",
@@ -62,6 +64,6 @@ export function Button({
           {label}
         </Text>
       )}
-    </Pressable>
+    </PressableScale>
   );
 }

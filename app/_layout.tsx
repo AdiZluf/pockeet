@@ -16,6 +16,7 @@ export default function RootLayout() {
           name="capture"
           options={{ presentation: "fullScreenModal", animation: "slide_from_bottom" }}
         />
+        <Stack.Screen name="receipt/[id]/index" />
         <Stack.Screen name="receipt/[id]/processing" />
       </Stack>
     </AppProviders>

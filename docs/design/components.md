@@ -23,14 +23,28 @@ States: pressed opacity 0.92, disabled 0.45, loading keeps width.
 a11y: `role="button"`, `accessibilityState.busy/disabled`.  
 No icon-only without `accessibilityLabel`.
 
-## Card
+## Surface
 
 | Variant | Spec |
 |---------|------|
-| flat | `surface`, `radius-lg`, pad `space-4` |
-| interactive | full-surface press; optional hairline border |
+| default | `surface`, `radius-xl`, no shadow |
+| elevated | `surface-elevated`, hairline border, soft card shadow |
+| inset | `surface-muted`, grouped list well |
+| hero | `radius-2xl`, accent top strip optional, typography-led |
 
-Max **2** nested cards per screen section. No shadow unless spec says otherwise.
+Prefer **Surface** over ad-hoc `View` backgrounds in features.
+
+## Card
+
+Composable wrapper around **Surface** (+ optional `PressableScale` when interactive).
+
+| Variant | Spec |
+|---------|------|
+| default | Surface default, pad `space-4` |
+| elevated / hero | Surface elevated/hero |
+| interactive | PressableScale + elevated |
+
+Max **2** nested surfaces per screen section.
 
 ## Input
 
@@ -50,9 +64,17 @@ a11y: focus trap, return focus on dismiss.
 Slots: leading, title, subtitle, trailing.  
 Pressable: combined a11y label e.g. “Shufersal, 342 shekels, May 18, needs review”.
 
+## ScreenHeader
+
+Editorial screen title (`display-lg` or `title-lg`) + optional subtitle. Use instead of bare `Text` titles in tabs.
+
+## PressableScale
+
+Subtle scale on press (`0.98`, 100ms). Use on buttons, list rows, interactive cards. Respects [motion](../accessibility/README.md#motion).
+
 ## Section
 
-Optional `font-title-md` + `space-6` top (first section `space-4`).
+Micro **overline** label (`font-micro`, uppercase, tracking) + optional subtitle. `space-6` between sections.
 
 ## EmptyState
 
