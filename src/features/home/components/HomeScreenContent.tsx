@@ -124,31 +124,22 @@ export function HomeScreenContent() {
             currencyCode={summary.currencyCode}
             onCategoryPress={(categoryId) => openFiltered({ categories: [categoryId] })}
           />
+          <View className="px-5 pt-4">
+            <AskPockeetCard
+              onOpen={(prefill) =>
+                router.push(prefill ? { pathname: "/ask", params: { prefill } } : "/ask")
+              }
+            />
+          </View>
           <HomeStatusOverview
             counts={summary.statusCounts}
             onStatusPress={(status) => openFiltered({ status })}
           />
-          {summary.needsReview.length > 0 ? (
-            <ReceiptQueueSection
-              title={t("home.needsReview")}
-              receipts={summary.needsReview}
-              accentEdge
-            />
-          ) : null}
-          {summary.processing.length > 0 ? (
-            <ReceiptQueueSection title={t("home.processing")} receipts={summary.processing} />
-          ) : null}
           <RecentReceiptsSection onSeeAll={openAllReceipts} />
         </>
       )}
 
-      <View className="px-5 pt-4">
-        <AskPockeetCard
-          onOpen={(prefill) =>
-            router.push(prefill ? { pathname: "/ask", params: { prefill } } : "/ask")
-          }
-        />
-      </View>
+
     </ScrollView>
   );
 }
