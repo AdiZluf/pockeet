@@ -9,7 +9,10 @@
   },
   "settings": {
     "title": "Settings",
-    "open": "Settings"
+    "open": "Settings",
+    "aboutSection": "About",
+    "appName": "Pockeet",
+    "version": "Version {{version}}"
   },
   "tabs": {
     "home": "Home",

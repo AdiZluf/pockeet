@@ -36,7 +36,4 @@ export async function initI18n(): Promise<void> {
   return initPromise;
 }
 
-/** @deprecated Use initI18n */
-export const bootstrapI18n = initI18n;
-
 export default i18n;
