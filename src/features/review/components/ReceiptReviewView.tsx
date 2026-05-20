@@ -16,11 +16,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import {
   Button,
-  GroupedList,
+  DividerList,
+  ElevatedGroup,
   LoadingSkeleton,
   LoadingSkeletonGroup,
-  Section,
+  SectionHeader,
   StatusChip,
+  Surface,
   Text,
 } from "@/components/ui";
 import { listCategories } from "@/db/repositories/categoryRepository";
@@ -211,21 +213,25 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
         keyboardShouldPersistTaps="handled"
       >
         <View className="px-5 gap-3">
-          <Text variant="titleLg">{t(isReedit ? "review.titleEdit" : "review.title")}</Text>
-          <Text variant="body" muted>
+          <Text variant="titleLg" align="start">
+            {t(isReedit ? "review.titleEdit" : "review.title")}
+          </Text>
+          <Text variant="body" muted align="start">
             {t(isManualEntry ? "review.subtitleManual" : "review.subtitle")}
           </Text>
         </View>
 
         {heroUri ? (
           <View className="px-5 gap-3">
-            <Image
-              source={{ uri: heroUri }}
-              className="w-full rounded-2xl bg-surface-muted"
-              style={{ aspectRatio: 3 / 4, maxHeight: 360 }}
-              resizeMode="cover"
-              accessibilityLabel={t("review.heroImage")}
-            />
+            <Surface variant="panel" className="overflow-hidden p-0">
+              <Image
+                source={{ uri: heroUri }}
+                className="w-full bg-surface-muted"
+                style={{ aspectRatio: 3 / 4, maxHeight: 360 }}
+                resizeMode="cover"
+                accessibilityLabel={t("review.heroImage")}
+              />
+            </Surface>
             {images.length > 1 ? (
               <ScrollView horizontal showsHorizontalScrollIndicator={false} className="gap-2">
                 {images.map((image, index) => (
@@ -249,8 +255,10 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
           </View>
         ) : null}
 
-        <Section title={t("review.detailsSection")} className="px-5">
-          <GroupedList>
+        <View className="gap-3">
+          <SectionHeader title={t("review.detailsSection")} />
+          <ElevatedGroup>
+            <DividerList insetStart={false}>
             <ReviewFieldRow
               label={t("review.merchant")}
               value={form.merchantName}
@@ -277,11 +285,11 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
               })}
               onPress={() => setCategorySheetOpen(true)}
             >
-              <Text variant="caption" muted>
+              <Text variant="caption" muted align="start">
                 {t("review.category")}
               </Text>
               <View className="flex-row items-center justify-between gap-3">
-                <Text variant="bodyLg" className="flex-1">
+                <Text variant="bodyLg" align="start" className="flex-1">
                   {selectedCategoryName ?? t("review.categoryPlaceholder")}
                 </Text>
                 <Ionicons name="chevron-down" size={20} color={iconColors.tertiary} />
@@ -296,11 +304,14 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
               money
               keyboardType="decimal-pad"
             />
-          </GroupedList>
-        </Section>
+            </DividerList>
+          </ElevatedGroup>
+        </View>
 
-        <Section title={t("review.lineItemsSection")} className="px-5">
-          <GroupedList>
+        <View className="gap-3 px-5">
+          <SectionHeader title={t("review.lineItemsSection")} />
+          <ElevatedGroup>
+            <DividerList insetStart={false}>
             {form.lineItems.map((item, index) => (
               <ReviewLineItemRow
                 key={item.id}
@@ -329,7 +340,8 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
                 error={index === 0 ? fieldErrors.lineItems : undefined}
               />
             ))}
-          </GroupedList>
+            </DividerList>
+          </ElevatedGroup>
           <Button
             variant="secondary"
             label={t("review.addLineItem")}
@@ -341,7 +353,7 @@ export function ReceiptReviewView({ receiptId, source }: ReceiptReviewViewProps)
             block={false}
             className="mt-3 self-start px-5"
           />
-        </Section>
+        </View>
       </ScrollView>
 
       <View

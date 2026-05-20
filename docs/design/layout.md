@@ -59,7 +59,7 @@ Separator: inset from start gutter, `border-default` hairline.
 
 | Mirror | Do not mirror |
 |--------|----------------|
-| Tabs, FAB side (`end-5`), chevrons (`getBackChevronIcon`), padding start/end | Digits, decimal keyboard |
+| Tabs, FAB side (`end-5`), chevrons (`getBackChevronIcon`, `getDisclosureChevronIcon`), padding start/end, `trailingColumnClass` for amount columns | Digits, decimal keyboard |
 | Form label edge | Chart bar meaning (keep readable) |
 | Filmstrip scroll origin | Currency display order (`moneyTextProps` on amounts) |
 

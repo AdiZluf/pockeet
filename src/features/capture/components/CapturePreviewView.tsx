@@ -149,7 +149,7 @@ export function CapturePreviewView() {
           loading={isSaving}
           disabled={isSaving}
         />
-        <Text variant="caption" muted className="mt-2 text-center">
+        <Text variant="caption" muted align="center" className="mt-2">
           {t("capture.savedLocallyHint")}
         </Text>
       </View>

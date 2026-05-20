@@ -30,9 +30,31 @@ No icon-only without `accessibilityLabel`.
 | default | `surface`, `radius-xl`, no shadow |
 | elevated | `surface-elevated`, hairline border, soft card shadow |
 | inset | `surface-muted`, grouped list well |
-| hero | `radius-2xl`, accent top strip optional, typography-led |
+| hero | `radius-2xl`, accent top strip + `accent-soft` wash |
+| panel | `radius-2xl`, elevated card (lists, review imagery) |
 
 Prefer **Surface** over ad-hoc `View` backgrounds in features.
+
+## ElevatedGroup
+
+Premium **panel** card (`Surface variant="panel"`) with card shadow. Optional `accentEdge` leading stripe (needs-review).  
+Use for Home/Receipts receipt queues, category breakdown, settings language picker, review form sections.
+
+## DividerList
+
+Hairline separators between rows inside an `ElevatedGroup`.  
+| Prop | Use |
+|------|-----|
+| `insetStart` | `ms-[4.5rem]` past thumbnail (receipt rows); `false` for form/settings rows |
+
+## SectionHeader
+
+Editorial section title (`title-md`) + optional subtitle. Sentence case; `Text align="start"` on copy (not NativeWind `text-start` — unsupported in RN).
+
+## ReceiptRow
+
+Canonical receipt list row: thumbnail, merchant, date, amount (LTR), status dot + label, RTL disclosure chevron.  
+Use inside `ElevatedGroup` + `DividerList` on Home and Receipts tab.
 
 ## GroupedList
 
@@ -40,10 +62,10 @@ iOS Settings–style **inset** well (`Surface variant="inset"`) with hairline se
 
 | Prop | Use |
 |------|-----|
-| `highlight` | Optional 3pt `accent` leading stripe (e.g. needs-review queue) |
+| `highlight` | Optional 3pt `accent` leading stripe |
 
-Use for receipt lists on Home and Receipts tab — **not** elevated card + manual dividers.  
-Separator inset: `ms-16` from leading thumbnail. Children are typically `ListRow` or custom row content (e.g. category bars).
+Legacy inset well; prefer **ElevatedGroup** + **DividerList** for primary content lists.  
+Separator inset: `ms-[4.5rem]` when rows include a thumbnail.
 
 ## Card
 

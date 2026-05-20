@@ -37,7 +37,7 @@ export function GroupedList({
         <View key={index}>
           {index > 0 ? (
             <View
-              className="ms-16 me-4 h-px bg-border"
+              className="ms-[4.5rem] me-4 h-px bg-border-subtle"
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
             />

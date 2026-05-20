@@ -5,11 +5,11 @@
 
 ## Layout (top → bottom)
 
-1. Month picker + Settings (trailing)
-2. Hero: total this month + delta vs last month (neutral framing)
-3. One category chart (tap → Receipts filtered)
-4. Needs-review banner (if count &gt; 0)
-5. Recent receipts (max 5) + “See all” → Receipts tab
+1. Quiet app bar + Settings
+2. Hero: **typography-led** month total (amount → month label)
+3. Category breakdown (flat bars on background, no inset card)
+4. Needs-review rows (flat list, accent edge — if count &gt; 0)
+5. Processing + recent receipts (flat rows, chevron affordance)
 
 ## Actions
 

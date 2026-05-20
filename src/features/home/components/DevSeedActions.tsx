@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Pressable, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
-import { Button, Surface, Text } from "@/components/ui";
+import { Text } from "@/components/ui";
 import { resetDemoData, seedDemoData } from "@/features/demo/seedDemoData";
 
 type DevSeedActionsProps = {
@@ -54,29 +54,20 @@ export function DevSeedActions({ onSeeded }: DevSeedActionsProps) {
   };
 
   return (
-    <Surface variant="inset" className="mx-5 gap-3 p-4">
-      <Text variant="caption" muted>
+    <View className="mx-5 mb-2 flex-row flex-wrap gap-x-4 gap-y-1 border-b border-border-subtle pb-3">
+      <Text variant="caption" muted className="w-full">
         {t("demo.banner")}
       </Text>
-      <View className="flex-row gap-2">
-        <Button
-          variant="secondary"
-          label={t("demo.seed")}
-          onPress={() => void handleSeed()}
-          block={false}
-          className="flex-1"
-          loading={busy}
-          disabled={busy}
-        />
-        <Button
-          variant="text"
-          label={t("demo.reset")}
-          onPress={handleReset}
-          block={false}
-          className="flex-1"
-          disabled={busy}
-        />
-      </View>
-    </Surface>
+      <Pressable disabled={busy} onPress={() => void handleSeed()} accessibilityRole="button">
+        <Text variant="caption" className="text-accent">
+          {t("demo.seed")}
+        </Text>
+      </Pressable>
+      <Pressable disabled={busy} onPress={handleReset} accessibilityRole="button">
+        <Text variant="caption" muted>
+          {t("demo.reset")}
+        </Text>
+      </Pressable>
+    </View>
   );
 }

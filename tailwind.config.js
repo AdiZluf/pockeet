@@ -26,6 +26,7 @@ module.exports = {
           DEFAULT: "var(--color-accent)",
           muted: "var(--color-accent-muted)",
           soft: "var(--color-accent-soft)",
+          glow: "var(--color-accent-glow)",
           hover: "var(--color-accent-hover)",
         },
         overlay: "var(--color-overlay)",

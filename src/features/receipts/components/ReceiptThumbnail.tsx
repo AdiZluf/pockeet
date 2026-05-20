@@ -12,7 +12,7 @@ type ReceiptThumbnailProps = {
 
 const sizeClasses = {
   sm: "h-12 w-10",
-  md: "h-14 w-11",
+  md: "h-[52px] w-11",
 };
 
 export function ReceiptThumbnail({ uri, className, size = "md" }: ReceiptThumbnailProps) {
@@ -23,7 +23,7 @@ export function ReceiptThumbnail({ uri, className, size = "md" }: ReceiptThumbna
       <Image
         source={{ uri }}
         className={cn(
-          "rounded-lg border border-border-subtle bg-surface-muted",
+          "rounded-xl border-2 border-surface bg-surface-muted",
           sizeClasses[size],
           className,
         )}
@@ -36,7 +36,7 @@ export function ReceiptThumbnail({ uri, className, size = "md" }: ReceiptThumbna
   return (
     <View
       className={cn(
-        "items-center justify-center rounded-lg border border-border-subtle bg-accent-soft",
+        "items-center justify-center rounded-xl border-2 border-surface bg-accent-soft",
         sizeClasses[size],
         className,
       )}

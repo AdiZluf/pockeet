@@ -25,10 +25,10 @@ export function CapturePermissionView({
         <Surface variant="inset" className="h-16 w-16 items-center justify-center rounded-full">
           <Ionicons name="camera-outline" size={32} color={iconColors.accent} />
         </Surface>
-        <Text variant="titleMd" className="text-center">
+        <Text variant="titleMd" align="center">
           {t("capture.permissionTitle")}
         </Text>
-        <Text variant="body" muted className="text-center leading-6">
+        <Text variant="body" muted align="center" className="leading-6">
           {t("capture.permissionBody")}
         </Text>
         <View className="mt-2 w-full gap-3">

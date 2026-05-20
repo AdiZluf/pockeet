@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { GroupedList, ListRow, PressableScale, Text } from "@/components/ui";
+import { DividerList, ElevatedGroup, ListRow, PressableScale, Text } from "@/components/ui";
 import { setAppLocale, type AppLocale } from "@/i18n";
 import { useIconColors } from "@/theme";
 import { getBackChevronIcon } from "@/utils/rtl";
@@ -35,47 +35,49 @@ export function SettingsScreen() {
         >
           <Ionicons name={getBackChevronIcon()} size={24} color={iconColors.primary} />
         </PressableScale>
-        <Text variant="titleLg" className="flex-1">
+        <Text variant="titleLg" align="start" className="flex-1">
           {t("settings.title")}
         </Text>
       </View>
 
       <View className="gap-6 px-5">
         <View className="gap-3">
-          <Text variant="micro" muted className="uppercase tracking-wide">
+          <Text variant="micro" muted align="start" className="uppercase tracking-wide">
             {t("settings.languageSection")}
           </Text>
-          <GroupedList>
-            <ListRow
-              title={<Text variant="bodyLg">{t("settings.languageEn")}</Text>}
-              trailing={
-                currentLocale === "en" ? (
-                  <Ionicons name="checkmark" size={22} color={iconColors.accent} />
-                ) : null
-              }
-              onPress={() => selectLocale("en")}
-              accessibilityLabel={
-                currentLocale === "en"
-                  ? t("settings.languageEnA11ySelected")
-                  : t("settings.languageEnA11y")
-              }
-            />
-            <ListRow
-              title={<Text variant="bodyLg">{t("settings.languageHe")}</Text>}
-              trailing={
-                currentLocale === "he" ? (
-                  <Ionicons name="checkmark" size={22} color={iconColors.accent} />
-                ) : null
-              }
-              onPress={() => selectLocale("he")}
-              accessibilityLabel={
-                currentLocale === "he"
-                  ? t("settings.languageHeA11ySelected")
-                  : t("settings.languageHeA11y")
-              }
-            />
-          </GroupedList>
-          <Text variant="caption" muted className="leading-5">
+          <ElevatedGroup className="mx-0">
+            <DividerList insetStart={false}>
+              <ListRow
+                title={<Text variant="bodyLg" align="start">{t("settings.languageEn")}</Text>}
+                trailing={
+                  currentLocale === "en" ? (
+                    <Ionicons name="checkmark" size={22} color={iconColors.accent} />
+                  ) : null
+                }
+                onPress={() => selectLocale("en")}
+                accessibilityLabel={
+                  currentLocale === "en"
+                    ? t("settings.languageEnA11ySelected")
+                    : t("settings.languageEnA11y")
+                }
+              />
+              <ListRow
+                title={<Text variant="bodyLg" align="start">{t("settings.languageHe")}</Text>}
+                trailing={
+                  currentLocale === "he" ? (
+                    <Ionicons name="checkmark" size={22} color={iconColors.accent} />
+                  ) : null
+                }
+                onPress={() => selectLocale("he")}
+                accessibilityLabel={
+                  currentLocale === "he"
+                    ? t("settings.languageHeA11ySelected")
+                    : t("settings.languageHeA11y")
+                }
+              />
+            </DividerList>
+          </ElevatedGroup>
+          <Text variant="caption" muted align="start" className="leading-5">
             {t("settings.languageReloadHint")}
           </Text>
         </View>

@@ -4,18 +4,19 @@ import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 import {
+  DividerList,
+  ElevatedGroup,
   EmptyState,
-  GroupedList,
   LoadingSkeleton,
   LoadingSkeletonGroup,
-  Section,
+  ReceiptRow,
+  SectionHeader,
 } from "@/components/ui";
 import { listAllReceipts } from "@/db/repositories/receiptRepository";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
 
 import { useReceiptNavigation } from "../hooks/useReceiptNavigation";
 import { formatReceiptMonth, monthBucketKey } from "../utils/receiptDisplay";
-import { ReceiptListRow } from "./ReceiptListRow";
 
 export function ReceiptsListView() {
   const { t, i18n } = useTranslation();
@@ -91,26 +92,29 @@ export function ReceiptsListView() {
   return (
     <ScrollView
       className="flex-1"
-      contentContainerClassName="gap-6 pb-36 pt-2"
+      contentContainerClassName="gap-8 pb-36 pt-2"
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => void onRefresh()} />}
     >
-      {grouped.map(([key, monthRows], sectionIndex) => (
-        <Section
-          key={key}
-          title={formatReceiptMonth(monthRows[0]?.purchasedAt ?? monthRows[0]?.createdAt, i18n.language)}
-          className="px-5"
-          first={sectionIndex === 0}
-        >
-          <GroupedList>
-            {monthRows.map((row) => (
-              <ReceiptListRow
-                key={row.id}
-                receipt={row}
-                onPress={() => openReceipt(row.id, row.status)}
-              />
-            ))}
-          </GroupedList>
-        </Section>
+      {grouped.map(([key, monthRows]) => (
+        <View key={key} className="gap-3">
+          <SectionHeader
+            title={formatReceiptMonth(
+              monthRows[0]?.purchasedAt ?? monthRows[0]?.createdAt,
+              i18n.language,
+            )}
+          />
+          <ElevatedGroup>
+            <DividerList>
+              {monthRows.map((row) => (
+                <ReceiptRow
+                  key={row.id}
+                  receipt={row}
+                  onPress={() => openReceipt(row.id, row.status)}
+                />
+              ))}
+            </DividerList>
+          </ElevatedGroup>
+        </View>
       ))}
     </ScrollView>
   );

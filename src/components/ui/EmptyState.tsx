@@ -30,14 +30,17 @@ export function EmptyState({
       accessibilityRole="text"
       accessibilityLabel={`${title}. ${body}`}
     >
-      <Surface variant="inset" className="h-20 w-20 items-center justify-center rounded-full">
+      <Surface
+        variant="inset"
+        className="h-20 w-20 items-center justify-center rounded-2xl bg-accent-soft"
+      >
         <Ionicons name={icon} size={36} color={iconColors.accent} />
       </Surface>
       <View className="max-w-[280px] items-center gap-2">
-        <Text variant="titleMd" className="text-center">
+        <Text variant="titleMd" align="center">
           {title}
         </Text>
-        <Text variant="body" muted className="text-center leading-6">
+        <Text variant="body" muted align="center" className="leading-6">
           {body}
         </Text>
       </View>

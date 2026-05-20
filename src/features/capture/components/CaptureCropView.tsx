@@ -339,7 +339,7 @@ export function CaptureCropView({ imageId }: CaptureCropViewProps) {
         )}
       </View>
 
-      <Text variant="caption" muted className="px-5 text-center">
+      <Text variant="caption" muted align="center" className="px-5">
         {t("capture.cropHint")}
       </Text>
 

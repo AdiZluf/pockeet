@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
+import { View } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-import { GroupedList, Section } from "@/components/ui";
+import { DividerList, ElevatedGroup, ReceiptRow, SectionHeader } from "@/components/ui";
 import { listRecentReceipts } from "@/db/repositories/receiptRepository";
 import type { ReceiptSummaryRow } from "@/features/home/services/homeSummary";
-import { ReceiptListRow } from "@/features/receipts/components/ReceiptListRow";
 import { useReceiptNavigation } from "@/features/receipts/hooks/useReceiptNavigation";
 
 export function RecentReceiptsSection() {
@@ -39,16 +39,19 @@ export function RecentReceiptsSection() {
   if (rows.length === 0) return null;
 
   return (
-    <Section title={t("home.recentReceipts")} className="px-5">
-      <GroupedList>
-        {rows.map((row) => (
-          <ReceiptListRow
-            key={row.id}
-            receipt={row}
-            onPress={() => openReceipt(row.id, row.status)}
-          />
-        ))}
-      </GroupedList>
-    </Section>
+    <View className="pb-4 pt-6">
+      <SectionHeader title={t("home.recentReceipts")} className="mb-3" />
+      <ElevatedGroup>
+        <DividerList>
+          {rows.map((row) => (
+            <ReceiptRow
+              key={row.id}
+              receipt={row}
+              onPress={() => openReceipt(row.id, row.status)}
+            />
+          ))}
+        </DividerList>
+      </ElevatedGroup>
+    </View>
   );
 }

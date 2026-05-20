@@ -22,11 +22,11 @@ export function ScreenHeader({
   return (
     <View className={cn("flex-row items-start justify-between gap-4 px-5 pb-1 pt-2", className)} {...props}>
       <View className="min-w-0 flex-1 gap-1">
-        <Text variant={large ? "displayLg" : "titleLg"} className="tracking-tight">
+        <Text variant={large ? "displayLg" : "titleLg"} align="start" className="tracking-tight">
           {title}
         </Text>
         {subtitle ? (
-          <Text variant="body" muted>
+          <Text variant="body" muted align="start">
             {subtitle}
           </Text>
         ) : null}

@@ -3,7 +3,7 @@ import { TextInput, View, type TextInputProps } from "react-native";
 
 import { useTheme } from "@/theme";
 import { cn } from "@/utils/cn";
-import { moneyTextProps } from "@/utils/rtl";
+import { moneyWritingProps, textInputAlignStartStyle } from "@/utils/rtl";
 
 import { Text } from "./Text";
 
@@ -18,6 +18,7 @@ export function Input({
   error,
   money,
   className,
+  style,
   onFocus,
   onBlur,
   ...props
@@ -27,7 +28,9 @@ export function Input({
 
   return (
     <View className="gap-1">
-      <Text variant="label">{label}</Text>
+      <Text variant="label" align="start">
+        {label}
+      </Text>
       <TextInput
         className={cn(
           "min-h-[48px] rounded-sm bg-surface-muted px-3 text-body text-foreground",
@@ -45,12 +48,14 @@ export function Input({
           setFocused(false);
           onBlur?.(e);
         }}
-        {...(money ? moneyTextProps : {})}
+        style={[textInputAlignStartStyle, money ? moneyWritingProps.style : undefined, style]}
+        {...(money ? { writingDirection: moneyWritingProps.writingDirection } : {})}
         {...props}
       />
       {error ? (
         <Text
           variant="caption"
+          align="start"
           className="text-status-failed"
           accessibilityLiveRegion="polite"
         >

@@ -1,6 +1,7 @@
 import { Text as RNText, type TextProps as RNTextProps } from "react-native";
 
 import { cn } from "@/utils/cn";
+import { textAlignFor, type TextAlignIntent } from "@/utils/rtl";
 
 export type TextProps = RNTextProps & {
   variant?:
@@ -16,6 +17,8 @@ export type TextProps = RNTextProps & {
     | "micro";
   muted?: boolean;
   tabular?: boolean;
+  /** Logical alignment; default auto (native bidi). Prefer start for titles/row copy. */
+  align?: TextAlignIntent;
 };
 
 const variantClass: Record<NonNullable<TextProps["variant"]>, string> = {
@@ -35,9 +38,13 @@ export function Text({
   variant = "body",
   muted,
   tabular,
+  align = "auto",
   className,
+  style,
   ...props
 }: TextProps) {
+  const alignStyle = align === "auto" ? undefined : { textAlign: textAlignFor(align) };
+
   return (
     <RNText
       className={cn(
@@ -47,6 +54,7 @@ export function Text({
         variant.startsWith("display") && "tracking-tight",
         className,
       )}
+      style={[alignStyle, style]}
       {...props}
     />
   );

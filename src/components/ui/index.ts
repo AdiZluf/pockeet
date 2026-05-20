@@ -6,6 +6,10 @@ export { Surface, type SurfaceProps, type SurfaceVariant } from "./Surface";
 export { EmptyState, type EmptyStateProps } from "./EmptyState";
 export { FAB, type FABProps } from "./FAB";
 export { GroupedList, type GroupedListProps } from "./GroupedList";
+export { ElevatedGroup, type ElevatedGroupProps } from "./ElevatedGroup";
+export { DividerList, type DividerListProps } from "./DividerList";
+export { SectionHeader, type SectionHeaderProps } from "./SectionHeader";
+export { ReceiptRow, type ReceiptRowProps } from "./ReceiptRow";
 export { Input, type InputProps } from "./Input";
 export {
   LoadingSkeleton,

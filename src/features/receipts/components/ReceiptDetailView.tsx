@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { Button, StatusChip, Surface, Text } from "@/components/ui";
 import { useIconColors } from "@/theme";
-import { getBackChevronIcon, moneyTextProps } from "@/utils/rtl";
+import { getBackChevronIcon, moneyWritingProps } from "@/utils/rtl";
 import {
   getReceiptWithImages,
   softDeleteReceipt,
@@ -132,10 +132,10 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
             variant={receiptStatusVariant(receipt.status)}
             label={t(receiptStatusI18nKey(receipt.status))}
           />
-          <Text variant="displayLg" className="leading-tight">
+          <Text variant="displayLg" align="start" className="leading-tight">
             {title}
           </Text>
-          <Text variant="body" muted>
+          <Text variant="body" muted align="start">
             {formatReceiptDate(receipt.purchasedAt ?? receipt.createdAt, i18n.language)}
           </Text>
         </View>
@@ -158,15 +158,15 @@ export function ReceiptDetailView({ receiptId }: ReceiptDetailViewProps) {
         {parsed && receipt.totalMinor != null ? (
           <Surface variant="hero" className="overflow-hidden">
             <View className="h-1 bg-accent" accessibilityElementsHidden />
-            <View className="gap-2 px-6 py-5">
-              <Text variant="micro" muted className="uppercase tracking-wide">
+            <View className="gap-2 bg-accent-soft px-6 py-5">
+              <Text variant="micro" muted align="start" className="uppercase tracking-wide">
                 {t("receiptDetail.total")}
               </Text>
-              <Text variant="displayLg" tabular {...moneyTextProps}>
+              <Text variant="displayLg" tabular align="start" {...moneyWritingProps}>
                 {formatMoney(receipt.totalMinor, receipt.currencyCode, i18n.language)}
               </Text>
               {categoryName ? (
-                <Text variant="bodySm" muted>
+                <Text variant="bodySm" muted align="start">
                   {t("receiptDetail.category", { name: categoryName })}
                 </Text>
               ) : null}

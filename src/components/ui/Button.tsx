@@ -63,7 +63,7 @@ export function Button({
           color={variant === "primary" ? iconColors.inverse : iconColors.accent}
         />
       ) : (
-        <Text variant="label" className={labelClasses[variant]}>
+        <Text variant="label" align="center" className={labelClasses[variant]}>
           {label}
         </Text>
       )}

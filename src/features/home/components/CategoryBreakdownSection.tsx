@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 
-import { GroupedList, Section, Text } from "@/components/ui";
+import { ElevatedGroup, SectionHeader, Text } from "@/components/ui";
 import type { CategoryBreakdownRow } from "@/features/home/services/homeSummary";
 import { formatMoney } from "@/utils/money";
 import { moneyTextProps } from "@/utils/rtl";
@@ -40,33 +40,38 @@ export function CategoryBreakdownSection({
       : undefined;
 
   return (
-    <Section
-      title={t("home.categoryBreakdown")}
-      subtitle={usesMockCategories ? t("home.categoryBreakdownDemo") : undefined}
-      className="px-5"
-    >
-      <GroupedList accessibilityLabel={chartSummary}>
-        {categories.map((row, index) => (
-          <View key={row.categoryId} className="gap-2.5 px-4 py-3.5">
-            <View className="flex-row items-baseline justify-between gap-3">
-              <Text variant="label">{row.name}</Text>
-              <Text variant="caption" muted tabular {...moneyTextProps}>
-                {formatMoney(row.amountMinor, currencyCode, i18n.language)}
-              </Text>
+    <View className="pb-2 pt-6">
+      <SectionHeader
+        title={t("home.categoryBreakdown")}
+        subtitle={usesMockCategories ? t("home.categoryBreakdownDemo") : undefined}
+        className="mb-3"
+      />
+      <ElevatedGroup>
+        <View className="gap-5 px-5 py-5" accessibilityLabel={chartSummary}>
+          {categories.map((row, index) => (
+            <View key={row.categoryId} className="gap-2.5">
+              <View className="flex-row items-baseline justify-between gap-4">
+                <Text variant="bodyLg" align="start" className="flex-1 font-semibold">
+                  {row.name}
+                </Text>
+                <Text variant="label" muted tabular align="end" {...moneyTextProps}>
+                  {formatMoney(row.amountMinor, currencyCode, i18n.language)}
+                </Text>
+              </View>
+              <View className="h-2 overflow-hidden rounded-full bg-surface-muted">
+                <View
+                  className={`h-full rounded-full ${CHART_BAR_CLASSES[index % CHART_BAR_CLASSES.length]}`}
+                  style={{ width: `${Math.max(row.percent, 5)}%` }}
+                  accessibilityLabel={t("home.categoryBarA11y", {
+                    name: row.name,
+                    percent: row.percent,
+                  })}
+                />
+              </View>
             </View>
-            <View className="h-2.5 overflow-hidden rounded-full bg-accent-soft">
-              <View
-                className={`h-full rounded-full opacity-[0.85] ${CHART_BAR_CLASSES[index % CHART_BAR_CLASSES.length]}`}
-                style={{ width: `${Math.max(row.percent, 6)}%` }}
-                accessibilityLabel={t("home.categoryBarA11y", {
-                  name: row.name,
-                  percent: row.percent,
-                })}
-              />
-            </View>
-          </View>
-        ))}
-      </GroupedList>
-    </Section>
+          ))}
+        </View>
+      </ElevatedGroup>
+    </View>
   );
 }

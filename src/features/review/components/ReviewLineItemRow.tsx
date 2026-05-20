@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { Text } from "@/components/ui";
 import { useIconColors, useTheme } from "@/theme";
-import { moneyTextProps } from "@/utils/rtl";
+import { moneyWritingProps, textInputAlignStartStyle } from "@/utils/rtl";
 
 type ReviewLineItemRowProps = {
   name: string;
@@ -36,6 +36,7 @@ export function ReviewLineItemRow({
         <View className="min-w-0 flex-1 gap-2">
           <TextInput
             className="min-h-[40px] p-0 text-body text-foreground"
+            style={textInputAlignStartStyle}
             placeholder={t("review.lineItemNamePlaceholder")}
             placeholderTextColor={placeholderColor}
             value={name}
@@ -44,13 +45,13 @@ export function ReviewLineItemRow({
           />
           <TextInput
             className="min-h-[40px] p-0 text-label text-foreground"
+            style={[textInputAlignStartStyle, moneyWritingProps.style]}
             placeholder={t("review.lineItemAmountPlaceholder")}
             placeholderTextColor={placeholderColor}
             value={amountInput}
             onChangeText={onChangeAmount}
             keyboardType="decimal-pad"
             accessibilityLabel={t("review.lineItemAmountLabel")}
-            {...moneyTextProps}
           />
         </View>
         {canRemove ? (
@@ -66,7 +67,7 @@ export function ReviewLineItemRow({
         ) : null}
       </View>
       {error ? (
-        <Text variant="caption" className="text-status-failed">
+        <Text variant="caption" align="start" className="text-status-failed">
           {error}
         </Text>
       ) : null}

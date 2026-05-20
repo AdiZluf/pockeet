@@ -21,11 +21,16 @@ export default function TabLayout() {
           marginBottom: Platform.OS === "ios" ? 0 : 4,
         },
         tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.borderDefault,
+          backgroundColor: colors.surfaceElevated,
+          borderTopColor: colors.borderSubtle,
           borderTopWidth: 0.5,
           height: Platform.OS === "ios" ? 88 : 64,
           paddingTop: 8,
+          shadowColor: "#1C1917",
+          shadowOffset: { width: 0, height: -4 },
+          shadowOpacity: 0.04,
+          shadowRadius: 12,
+          elevation: 8,
         },
       }}
     >
